@@ -29,7 +29,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if (actionID == ACTION_PREVIOUS_MENU ):
-			self.close()
+			self.panda.quit()
 
 	def onClick(self, controlID):
 		if (controlID == 200): #List Item

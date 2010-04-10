@@ -97,18 +97,22 @@ class Panda:
 		if self.die:
 			return
 		self.gui.doModal()
-		if self.playing:
-			self.player.stop()
-		del self.gui
-		del self.player
+		self.cleanup()
+		xbmc.sleep( 500 ) #Wait to make sure everything finishes
 
 	def stop( self ):
 		self.playing = False
 
+	def cleanup( self ):
+		if self.playing:
+			self.playing = False
+			self.player.stop()
+		del self.gui
+		del self.player
+
 	def quit( self ):
 		if self.gui != None:
 			self.gui.close()
-		self.die = True
 
 if __name__ == '__main__':
 	if not ( os.path.exists( os.path.join( scriptPath, "crypt_key_input.h" ) ) \
