@@ -1,6 +1,13 @@
 import xbmc, xbmcgui
 import os
-from libpandora.pandora import Pandora
+
+try:
+	from libpandora.pandora import Pandora
+except AttributeError, e:
+	xbmcgui.Dialog().ok( "PANDORA", \
+						 "ERROR: Something is wrong with your encryption keys." )
+	raise e
+
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
