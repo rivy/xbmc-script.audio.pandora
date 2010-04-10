@@ -20,10 +20,14 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 	def onInit(self):
 		print "PANDORA: Window Initalized"
 		self.list = self.getControl(200)
+		dlg = xbmcgui.DialogProgress()
+		dlg.create( "PANDORA", "Fetching Stations" )
+		dlg.update( 0 )
 		for s in self.panda.getStations():
 			tmp = xbmcgui.ListItem(s["stationName"])
 			tmp.setProperty( "stationId", s["stationId"] )
 			self.list.addItem(tmp)
+		dlg.close()
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()

@@ -48,7 +48,12 @@ class Panda:
 		pwd = self.settings.getSetting( "password" )
 		if user == "" or pwd == "":
 			return False
-		return self.pandora.authListener( user, pwd )
+		dlg = xbmcgui.DialogProgress()
+		dlg.create( "PANDORA", "Logging In..." )
+		dlg.update( 0 )
+		ret = self.pandora.authListener( user, pwd )
+		dlg.close()
+		return ret
 
 	def playStation( self, stationId ):
 		self.curStation = stationId
