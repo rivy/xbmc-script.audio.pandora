@@ -5,6 +5,7 @@ KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467
 
 ACTION_PREVIOUS_MENU = 10
+ACTION_NEXT_ITEM = 14
 
 BTN_THUMB_DN = 330
 BTN_THUMB_UP = 331
@@ -34,6 +35,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		actionID   =  action.getId()
 		if (actionID == ACTION_PREVIOUS_MENU ):
 			self.panda.quit()
+		elif (actionID == ACTION_NEXT_ITEM ):
+			self.panda.skipSong()
 
 	def onClick(self, controlID):
 		if (controlID == 200): #List Item

@@ -105,6 +105,10 @@ class Panda:
 			#Out of songs, grab some more while playing
 			self.getMoreSongs()
 
+	def skipSong( self ):
+		self.skip = True
+		self.player.stop()
+
 	def main( self ):
 		if self.die:
 			return
@@ -116,6 +120,7 @@ class Panda:
 		self.playing = False
 
 	def cleanup( self ):
+		self.skip = False
 		if self.playing:
 			self.playing = False
 			self.player.stop()
