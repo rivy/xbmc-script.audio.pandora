@@ -15,6 +15,11 @@ __title__ = "Pandora"
 
 scriptPath = os.getcwd().replace(';','')
 
+def GetGuiSetting( type, name ):
+	resp = xbmc.executehttpapi( "GetGuiSetting( %d, %s )" %( type, name ) )
+	resp = resp.replace( "<li>", "" )
+	return resp
+
 class PandaException( Exception ):
 	pass
 
@@ -32,6 +37,17 @@ class Panda:
 		
 		fmt = self.settings.getSetting( "format" )
 		self.pandora = Pandora( fmt )
+
+		#Proxy settings
+		if GetGuiSetting( 1, "network.usehttpproxy" ):
+			proxy_info = {
+				"host" : GetGuiSetting( 3, "network.httpproxyserver" ),
+				"port" : GetGuiSetting( 3, "network.httpproxyport" ),
+				"user" : GetGuiSetting( 3, "network.httpproxyusername" ),
+				"pass" : GetGuiSetting( 3, "network.httpproxypassword" )
+			}
+			self.pandora.setProxy( proxy_info )
+
 		
 		self.pandora.sync()
 		
