@@ -1,5 +1,5 @@
 import xmlrpclib
-from urllib2 import urlopen
+import urllib2
 import time
 
 import crypt
@@ -44,7 +44,7 @@ class Pandora:
 		req = xmlrpclib.dumps( (), "misc.sync" ).replace( "\n", "" )
 		enc = crypt.encryptString( req )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -56,7 +56,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -80,7 +80,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -101,7 +101,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
