@@ -20,6 +20,9 @@ class PandaPlayer( xbmc.Player ):
 			if not "pandora.com" in self.getPlayingFile():
 				self.panda.playing = False
 				self.panda.quit()
+			else:
+				#Show Visualization (disappears after each song...)
+				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
 
 	def onPlayBackEnded( self ):
 		print "PANDORA: onPlayBackEnded"

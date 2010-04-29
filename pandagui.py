@@ -12,6 +12,7 @@ BTN_THUMB_UP = 331
 BTN_PLAY_PAUSE = 332
 BTN_SKIP = 333
 BTN_INFO = 334
+BTN_HIDE = 335
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
 	def __init__(self,strXMLname, strFallbackPath,strDefaultName,bforeFallback=0,panda=None):
@@ -34,7 +35,10 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if (actionID == ACTION_PREVIOUS_MENU ):
-			self.panda.quit()
+			if xbmc.getCondVisibility( "StringCompare(Window.Property(HidePlayer),True)" ):
+				xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
+			else:
+				self.panda.quit()
 		elif (actionID == ACTION_NEXT_ITEM ):
 			self.panda.skipSong()
 
@@ -53,6 +57,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.panda.playNextSong()
 			elif controlID == BTN_INFO:
 				pass #TODO
+			elif controlID == BTN_HIDE:
+				pass #Handled by skin
 
 	def onFocus(self, controlID):
 		pass
