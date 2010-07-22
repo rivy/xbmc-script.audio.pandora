@@ -15,30 +15,39 @@ BTN_INFO = 334
 BTN_HIDE = 335
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
-	def __init__(self,strXMLname, strFallbackPath,strDefaultName,bforeFallback=0,panda=None):
-		xbmcgui.WindowXMLDialog.__init__( self, strXMLname, strFallbackPath, strDefaultName, bforeFallback )
+	def __init__(self,strXMLname, strFallbackPath,strDefaultName,strRes,bforeFallback=0,panda=None):
+		xbmcgui.WindowXMLDialog.__init__( self, strXMLname, strFallbackPath, strDefaultName, strRes)
 		self.panda = panda
 
 	def onInit(self):
-		print "PANDORA: Window Initalized"
+		print "PANDORA: Window Initalized!!!"
 		self.list = self.getControl(200)
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Fetching Stations" )
 		dlg.update( 0 )
+		print "Getting Stations"
 		for s in self.panda.getStations():
 			tmp = xbmcgui.ListItem(s["stationName"])
 			tmp.setProperty( "stationId", s["stationId"] )
 			self.list.addItem(tmp)
+		print "Stations Received!"
 		dlg.close()
+		print "Dialog Closed"
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if (actionID == ACTION_PREVIOUS_MENU ):
-			if xbmc.getCondVisibility( "StringCompare(Window.Property(HidePlayer),True)" ):
-				xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
+			#if xbmc.getCondVisibility( "StringCompare(Window.Property(HidePlayer),False" ):
+			if xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' ):
+				print "SHOW PLAYER"
+				xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
+				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
 			else:
+				print "QUIT PANDORA"
 				self.panda.quit()
+
+
 		elif (actionID == ACTION_NEXT_ITEM ):
 			self.panda.skipSong()
 

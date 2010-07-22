@@ -1,13 +1,22 @@
 <skin>
-  <defaultresolution>ntsc</defaultresolution>
-  <defaultresolutionwide>ntsc</defaultresolutionwide>
+
+  <defaultresolution>NTSC</defaultresolution>
+
+  <defaultresolutionwide>NTSC</defaultresolutionwide>
+
   <version>1.0</version>
+
   
-  <!-- amount to zoom skin to remove overscan compensation -->
-  <zoom>0</zoom>
+<!-- amount to zoom skin to remove overscan compensation -->
+
+    <zoom>0</zoom>
+
+    <credits>
+
+      <skinname>Default</skinname>
+
+      <name>Pandora</name>
   
-  <credits>
-    <skinname>Default</skinname>
-    <name>Pandora</name>
   </credits>
+
 </skin>

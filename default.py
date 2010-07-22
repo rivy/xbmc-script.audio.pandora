@@ -1,5 +1,6 @@
 import xbmc, xbmcgui
 import os
+import xbmcaddon
 
 try:
 	from libpandora.pandora import Pandora
@@ -12,6 +13,7 @@ from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 __title__ = "Pandora"
+__settings__ = xbmcaddon.Addon(id='script.xbmc.pandora')
 
 scriptPath = os.getcwd().replace(';','')
 
@@ -28,7 +30,8 @@ class Panda:
 		self.playing = False
 		self.skip = False
 		self.die = False
-		self.settings = xbmc.Settings( path=scriptPath )
+		# self.settings = xbmc.Settings( path=scriptPath )
+		self.settings = __settings__
 		
 		fmt = self.settings.getSetting( "format" )
 		self.pandora = Pandora( fmt )
@@ -41,15 +44,22 @@ class Panda:
 					"Check username/password and try again.", \
 					"Show Settings?" )
 			if resp:
+				print "Opening Settings!"
 				self.settings.openSettings()
 			else:
+				print "Not Opening Settings!"
 				self.quit()
 				return
 
+		print scriptPath
 		self.player = PandaPlayer( panda = self )
+		print "Player Initialized!"
+		scriptSkinPath = os.path.join(scriptPath,"resources")
+		print scriptSkinPath
 		self.gui = PandaGUI( "script-pandora.xml", scriptPath, \
-							 "Default", panda = self )
-	
+							 "Default", "NTSC", panda = self )
+		print "Gui Initialized!"
+
 	def auth( self ):
 		user = self.settings.getSetting( "username" )
 		pwd = self.settings.getSetting( "password" )
@@ -73,10 +83,12 @@ class Panda:
 		return self.pandora.getStations()
 	
 	def getMoreSongs( self ):
+		print "Getting More Songs"
 		if self.curStation == "":
 			raise PandaException()
 		items = []
 		fragment = self.pandora.getFragment( self.curStation )
+		print "Parsing Fragments"
 		for s in fragment:
 			item = xbmcgui.ListItem( s["songTitle"] )
 			item.setIconImage( s["artRadio"] )
@@ -96,7 +108,9 @@ class Panda:
 			raise PandaException()
 		try:
 			next = self.playlist.pop( 0 )
+			print "Playing Next Song"
 			self.player.playSong( next )
+			print "Next Song Playing"
 			art = next[1].getProperty( "Cover" )
 			self.gui.setProperty( "AlbumArt", art )
 		except IndexError:
@@ -112,7 +126,9 @@ class Panda:
 	def main( self ):
 		if self.die:
 			return
+		print "Doing Modal"
 		self.gui.doModal()
+		print "Modal Done"
 		self.cleanup()
 		xbmc.sleep( 500 ) #Wait to make sure everything finishes
 
