@@ -1,5 +1,8 @@
-import xbmc, xbmcgui
-import os
+import xbmcgui
+dlg = xbmcgui.DialogProgress()
+dlg.create( "PANDORA", "Loading Script..." )
+dlg.update( 0 )
+import xbmc, os
 import xbmcaddon
 
 try:
@@ -30,7 +33,6 @@ class Panda:
 		self.playing = False
 		self.skip = False
 		self.die = False
-		# self.settings = xbmc.Settings( path=scriptPath )
 		self.settings = __settings__
 		
 		fmt = self.settings.getSetting( "format" )
@@ -44,21 +46,15 @@ class Panda:
 					"Check username/password and try again.", \
 					"Show Settings?" )
 			if resp:
-				print "Opening Settings!"
 				self.settings.openSettings()
 			else:
-				print "Not Opening Settings!"
 				self.quit()
 				return
 
-		print scriptPath
 		self.player = PandaPlayer( panda = self )
-		print "Player Initialized!"
 		scriptSkinPath = os.path.join(scriptPath,"resources")
-		print scriptSkinPath
 		self.gui = PandaGUI( "script-pandora.xml", scriptPath, \
 							 "Default", "NTSC", panda = self )
-		print "Gui Initialized!"
 
 	def auth( self ):
 		user = self.settings.getSetting( "username" )
@@ -83,12 +79,10 @@ class Panda:
 		return self.pandora.getStations()
 	
 	def getMoreSongs( self ):
-		print "Getting More Songs"
 		if self.curStation == "":
 			raise PandaException()
 		items = []
 		fragment = self.pandora.getFragment( self.curStation )
-		print "Parsing Fragments"
 		for s in fragment:
 			item = xbmcgui.ListItem( s["songTitle"] )
 			item.setIconImage( s["artRadio"] )
@@ -108,9 +102,7 @@ class Panda:
 			raise PandaException()
 		try:
 			next = self.playlist.pop( 0 )
-			print "Playing Next Song"
 			self.player.playSong( next )
-			print "Next Song Playing"
 			art = next[1].getProperty( "Cover" )
 			self.gui.setProperty( "AlbumArt", art )
 		except IndexError:
@@ -126,9 +118,7 @@ class Panda:
 	def main( self ):
 		if self.die:
 			return
-		print "Doing Modal"
 		self.gui.doModal()
-		print "Modal Done"
 		self.cleanup()
 		xbmc.sleep( 500 ) #Wait to make sure everything finishes
 
@@ -151,6 +141,8 @@ if __name__ == '__main__':
 	if not ( os.path.exists( os.path.join( scriptPath, "crypt_key_input.h" ) ) \
 			and os.path.exists( os.path.join( scriptPath, "crypt_key_output.h" ) ) ):
 		xbmcgui.Dialog().ok( "Pandora", "Missing encription key files." )
+		dlg.close()
 	else:
 		panda = Panda()
 		panda.main()
+		dlg.close()

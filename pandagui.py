@@ -25,26 +25,20 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Fetching Stations" )
 		dlg.update( 0 )
-		print "Getting Stations"
 		for s in self.panda.getStations():
 			tmp = xbmcgui.ListItem(s["stationName"])
 			tmp.setProperty( "stationId", s["stationId"] )
 			self.list.addItem(tmp)
-		print "Stations Received!"
 		dlg.close()
-		print "Dialog Closed"
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if (actionID == ACTION_PREVIOUS_MENU ):
-			#if xbmc.getCondVisibility( "StringCompare(Window.Property(HidePlayer),False" ):
 			if xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' ):
-				print "SHOW PLAYER"
 				xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
 				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
 			else:
-				print "QUIT PANDORA"
 				self.panda.quit()
 
 
