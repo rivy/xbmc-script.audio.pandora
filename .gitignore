@@ -2,3 +2,4 @@ crypt_key_*.h
 *.pyc
 *.pyo
 *~
+.*project
