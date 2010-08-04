@@ -1,11 +1,7 @@
 <settings>
-	
-  <setting id="username" type="text" label="Username (email)"/>
-
-  <setting id="password" type="text" label="Password" option="hidden"/>
-
-  <setting type="sep"/>
-
-  <setting id="format" type="enum" label="Audio Format"
-	values="aacplus|mp3|mp3-hifi" default="mp3"/>
+	<setting id="username" type="text" label="Username (email)"/>
+	<setting id="password" type="text" label="Password" option="hidden"/>
+	<setting type="sep"/>
+	<setting id="format" type="enum" label="Audio Format"
+		values="aacplus|mp3|mp3-hifi" default="mp3"/>
 </settings>

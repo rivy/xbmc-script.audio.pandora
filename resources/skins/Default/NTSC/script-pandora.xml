@@ -3,19 +3,15 @@
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>
 	
-<coordinates>
-		
-<system>1</system>
+	<coordinates>
+		<system>1</system>
 		<posx>-10</posx>
-
-	
-	<posy>-20</posy>
+		<posy>-20</posy>
 	</coordinates>
+
 	<controls>
 		<control type="image">
-			
-
-<description>Black background to hide menu flashes between songs</description>
+			<description>Black background to hide menu flashes between songs</description>
 			<visible>!Window.IsVisible(Visualisation)</visible>
 			<posx>10</posx>
 			<posy>20</posy>
@@ -87,7 +83,6 @@
 							<scrolltime>200</scrolltime>
 							<itemlayout height="22">
 								<control type="image">
-
 									<width>210</width>
 									<height>20</height>
 									<posx>0</posx>

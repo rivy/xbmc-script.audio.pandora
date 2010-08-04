@@ -7,9 +7,11 @@ This script is released freely without restrictions, but also without
 warrenty as described in the file "COPYING.txt"
 
 Usage:
-	Place in xbmc scripts directory.
+	Place in xbmc addons directory and rename to "script.xbmc.pandora".
+	If using a skin which does not support the new addons format (ie. showmix)
+		copy the files from PUT IN SKIN FOLDER to the skins folder.
 	Get key files (crypt_key_input.h, crypt_key_output.h) from pianobar 
-		project (libpiano) and place in Pandora directory.
+		project (libpiano) and place in the script.xbmc.pandora directory.
 	Set login information in script properties (prompts on run if not set)
 	Pick a station and enjoy the music :)
 
@@ -22,3 +24,6 @@ Credits:
 	Copyright (c) 2008-2010 Lars-Dominik Braun <PromyLOPh@lavabit.com>
 	http://github.com/PromyLOPh/pianobar | http://6xq.net/html/00/17.html
 		Uses as early reference for parts of the pandora protocol.
+
+ - jurmb84
+	Modified existing script to work with new xbmc addon framework.
