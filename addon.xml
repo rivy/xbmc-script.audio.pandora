@@ -2,13 +2,14 @@
 <addon id="script.xbmc.pandora"
        name="Pandora"
        version="1.0.0"
-       provider-name="spbogie (thanks jurmb84)">
+       provider-name="spbogie">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
   </requires>
   <extension point="xbmc.python.script"
-             library="default.py" />
+             library="default.py">
     <provides>audio</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Pandora Radio</summary>
     <description lang="en">Pandora Internet Radio for XBMC.</description>
