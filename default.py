@@ -17,18 +17,6 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
-def GetGuiSetting( type, name ):
-	resp = xbmc.executehttpapi( "GetGuiSetting( %d, %s )" %( type, name ) )
-	resp = resp.replace( "<li>", "" )
-
-	if type == 0:
-		resp = int( resp )
-	elif type == 1:
-		resp = ( resp == "True" )
-	elif type == 2:
-		resp = float( resp )
-
-	return resp
 
 class PandaException( Exception ):
 	pass
