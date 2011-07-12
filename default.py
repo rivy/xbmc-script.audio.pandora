@@ -5,7 +5,7 @@ dlg.update( 0 )
 import xbmc, os
 import xbmcaddon
 
-from libpandora.pandora import Pandora
+from libpandora.pandora import Pandora, PandoraError
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
@@ -40,7 +40,12 @@ class Panda:
 		
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
-		self.pandora = Pandora( dataDir, fmt )
+		try:
+			self.pandora = Pandora( dataDir, fmt )
+		except PandoraError, e:
+			xbmcgui.Dialog().ok( "Pandora", "Error: %s" %e )
+			self.die = True
+			return
 
 		#Proxy settings
 		if self.settings.getSetting( "proxy_enable" ) == "true":

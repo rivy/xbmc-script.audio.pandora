@@ -2,6 +2,7 @@ import urllib2
 import pickle
 import pianoparser
 import os
+import sys
 
 BASE_KEY_URL = "https://raw.github.com/PromyLOPh/pianobar/master/src/libpiano/"
 
@@ -40,6 +41,7 @@ class Keys:
 			if key_in:
 				key_in = Key( self._proto, key_in )
 			else:
+				print "PANDORA: No valid Input key"
 				return False
 
 		key_out = self._loadKeyFromFile( os.path.join( self._dataDir,\
@@ -52,6 +54,7 @@ class Keys:
 			if key_out:
 				key_out = Key( self._proto, key_out )
 			else:
+				print "PANDORA: No valid Output key"
 				return False
 
 		self._keys['in'] = key_in
@@ -92,8 +95,14 @@ class Keys:
 			try:
 				f = open( keyFile, "rb" )
 				key = pickle.load( f )
-			except:
+			except IOError, e:
+				print "PANDORA: IOError %d:%s" %( e.errno, e.stderror )
 				return False
+			except pickle.UnpiclkingError, e:
+				print "PANDORA: UnpicklingError: %s" %e
+			except:
+				print "PANDORA: Unexpected error:%s:%s" %sys.exc_info()[0:1]
+				raise
 		finally:
 			f.close()
 
@@ -103,7 +112,8 @@ class Keys:
 		print "PANDORA: Downloading key from url \"%s\"" %keyUrl
 		try:
 			f = urllib2.urlopen( keyUrl )
-		except urllib2.URLError, w:
+		except urllib2.URLError, e:
+			print "PANDORA: URLError: %s" %e.reason
 			return False
 		key = pianoparser.parse_file( f )
 		f.close()

@@ -13,6 +13,12 @@ BASE_URL_LID = BASE_URL + "rid=%sP&lid=%s&method=%s"
 def _inttime():
 	return int( time.time() )
 
+class PandoraError(Exception):
+	def __init__( self, value ):
+		self.value = value
+	def __str__( self ):
+		return repr( self.value )
+
 class Pandora:
 	rid = ""
 	lid = ""
@@ -24,7 +30,8 @@ class Pandora:
 		self.dataDir = dataDir
 		self.rid = "%07i" %( time.time() % 10000000 )
 		self.keys = keys.Keys( self.dataDir, PROTOCOL_VERSION )
-		self.keys.loadKeys()
+		if not self.keys.loadKeys():
+			raise PandoraError("Unable to load keys")
 		self.curFormat = fmt
 
 	def setProxy( self, proxy_info ):
