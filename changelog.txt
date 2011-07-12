@@ -5,3 +5,4 @@
 1.1.2 Added 'htpc guy's Android-like skin; create setting for same (htpc guy, smorloc)
       Increased font size in staton list
 1.2.0 Integrate smoreloc & htpc_guy's changes. Fix? missing XML issues. Auto-fetch keys. 
+1.2.1 Open settings screen on first run. More debug info for key fetching.
