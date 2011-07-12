@@ -52,12 +52,12 @@ class Panda:
 		self.pandora = Pandora( fmt )
 
 		#Proxy settings
-		if GetGuiSetting( 1, "network.usehttpproxy" ):
+		if self.settings.getSetting( "proxy_enable" ):
 			proxy_info = {
-				"host" : GetGuiSetting( 3, "network.httpproxyserver" ),
-				"port" : GetGuiSetting( 3, "network.httpproxyport" ),
-				"user" : GetGuiSetting( 3, "network.httpproxyusername" ),
-				"pass" : GetGuiSetting( 3, "network.httpproxypassword" )
+				"host" : self.settings.getSetting( "proxy_server" ),
+				"port" : self.settings.getSetting( "proxy_port" ),
+				"user" : self.settings.getSetting( "proxy_user" ),
+				"pass" : self.settings.getsetting( "proxy_pass" )
 			}
 			self.pandora.setProxy( proxy_info )
 
