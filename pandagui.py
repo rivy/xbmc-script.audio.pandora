@@ -15,8 +15,9 @@ BTN_INFO = 334
 BTN_HIDE = 335
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
-	def __init__(self,strXMLname, strFallbackPath,strDefaultName,strRes,bforeFallback=0,panda=None):
-		xbmcgui.WindowXMLDialog.__init__( self, strXMLname, strFallbackPath, strDefaultName, strRes)
+	def __init__(self, scriptPath, panda):
+		xbmcgui.WindowXMLDialog.__init__( self, "script-pandora.xml", \
+				scriptPath, defaultSkin = "Default", defaultRes = "NTSC" )
 		self.panda = panda
 
 	def onInit(self):

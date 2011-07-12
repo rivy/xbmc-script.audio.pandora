@@ -5,20 +5,17 @@ dlg.update( 0 )
 import xbmc, os
 import xbmcaddon
 
-try:
-	from libpandora.pandora import Pandora
-except AttributeError, e:
-	xbmcgui.Dialog().ok( "PANDORA", \
-						 "ERROR: Something is wrong with your encryption keys." )
-	raise e
+from libpandora.pandora import Pandora
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 __title__ = "Pandora"
-__settings__ = xbmcaddon.Addon(id='script.xbmc.pandora')
+__script_id__ = "script.xbmc.pandora"
+__settings__ = xbmcaddon.Addon(id=__script_id__)
 
-scriptPath = os.getcwd().replace(';','')
+scriptPath = __settings__.getAddonInfo('path')
+dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
 class PandaException( Exception ):
 	pass
@@ -35,8 +32,9 @@ class Panda:
 		self.die = False
 		self.settings = __settings__
 		
-		fmt = self.settings.getSetting( "format" )
-		self.pandora = Pandora( fmt )
+		fmt = int(self.settings.getSetting( "format" ))
+		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
+		self.pandora = Pandora( dataDir, fmt )
 		
 		self.pandora.sync()
 		
@@ -52,9 +50,7 @@ class Panda:
 				return
 
 		self.player = PandaPlayer( panda = self )
-		scriptSkinPath = os.path.join(scriptPath,"resources")
-		self.gui = PandaGUI( "script-pandora.xml", scriptPath, \
-							 "Default", "NTSC", panda = self )
+		self.gui = PandaGUI( scriptPath, self )
 
 	def auth( self ):
 		user = self.settings.getSetting( "username" )
@@ -136,13 +132,9 @@ class Panda:
 	def quit( self ):
 		if self.gui != None:
 			self.gui.close()
+		self.die = True
 
 if __name__ == '__main__':
-	if not ( os.path.exists( os.path.join( scriptPath, "crypt_key_input.h" ) ) \
-			and os.path.exists( os.path.join( scriptPath, "crypt_key_output.h" ) ) ):
-		xbmcgui.Dialog().ok( "Pandora", "Missing encription key files." )
-		dlg.close()
-	else:
-		panda = Panda()
-		panda.main()
-		dlg.close()
+	panda = Panda()
+	dlg.close()
+	panda.main()

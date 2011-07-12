@@ -3,3 +3,4 @@ crypt_key_*.h
 *.pyo
 *~
 .*project
+*.swp

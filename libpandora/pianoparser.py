@@ -1,9 +1,7 @@
 import re
-import os
 
-def parse_file( fname ):
+def parse_file( f ):
 	
-	f = open( os.path.join( os.getcwd(), fname ), 'r' )
 	lines = f.readlines()
 	f.close()
 	lines = cleanup( lines )

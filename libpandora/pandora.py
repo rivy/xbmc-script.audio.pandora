@@ -3,6 +3,7 @@ from urllib2 import urlopen
 import time
 
 import crypt
+import keys
 
 PROTOCOL_VERSION=30
 BASE_URL = "http://www.pandora.com/radio/xmlrpc/v%d?" %PROTOCOL_VERSION
@@ -17,20 +18,20 @@ class Pandora:
 	lid = ""
 	authToken = ""
 	curStation = ""
-	curFormat = "mp3" #Default to mp3 if not specified
+	curFormat = ""
 
-	def __init__( self ):
+	def __init__( self, dataDir, fmt = "mp3" ):
+		self.dataDir = dataDir
 		self.rid = "%07i" %( time.time() % 10000000 )
-
-	def __init__( self, format ):
-		self.rid = "%07i" %( time.time() % 10000000 )
-		self.curFormat = format
+		self.keys = keys.Keys( self.dataDir, PROTOCOL_VERSION )
+		self.keys.loadKeys()
+		self.curFormat = fmt
 
 	def sync( self ):
 		reqUrl = BASE_URL_RID %( self.rid, "sync" )
 
 		req = xmlrpclib.dumps( (), "misc.sync" ).replace( "\n", "" )
-		enc = crypt.encryptString( req )
+		enc = crypt.encryptString( req, self.keys['out'] )
 
 		u = urlopen( reqUrl, enc )
 		resp = u.read()
@@ -42,7 +43,7 @@ class Pandora:
 		req = xmlrpclib.dumps( ( _inttime(), user, pwd ), \
 								"listener.authenticateListener" )
 		req = req.replace( "\n", "" )
-		enc = crypt.encryptString( req )
+		enc = crypt.encryptString( req, self.keys['out'] )
 
 		u = urlopen( reqUrl, enc )
 		resp = u.read()
@@ -66,7 +67,7 @@ class Pandora:
 		req = xmlrpclib.dumps( ( _inttime(), self.authToken ), \
 								"station.getStations" )
 		req = req.replace( "\n", "" )
-		enc = crypt.encryptString( req )
+		enc = crypt.encryptString( req, self.keys['out'] )
 
 		u = urlopen( reqUrl, enc )
 		resp = u.read()
@@ -87,7 +88,7 @@ class Pandora:
 					format, "0", "0" )
 		req = xmlrpclib.dumps( args, "playlist.getFragment" )
 		req = req.replace( "\n", "" )
-		enc = crypt.encryptString( req )
+		enc = crypt.encryptString( req, self.keys['out'] )
 
 		u = urlopen( reqUrl, enc )
 		resp = u.read()
@@ -98,7 +99,8 @@ class Pandora:
 		#last 48 chars of URL encrypted, padded w/ 8 * '\x08'
 		for i in range( len( parsed ) ):
 			url = parsed[i]["audioURL"]
-			url = url[:-48] + crypt.decryptString( url[-48:] )[:-8]
+			url = url[:-48] + crypt.decryptString( url[-48:],\
+											 self.keys['in'] )[:-8]
 			parsed[i]["audioURL"] = url
 
 		self.curStation = stationId
