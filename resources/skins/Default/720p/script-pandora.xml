@@ -1,22 +1,24 @@
 <window>
+	<resolution>720p</resolution>
+	<useincludes>false</useincludes>
 	<defaultcontrol>20000</defaultcontrol>
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>
 	
 	<coordinates>
 		<system>1</system>
-		<posx>-10</posx>
-		<posy>-20</posy>
+		<posx>0</posx>
+		<posy>0</posy>
 	</coordinates>
 
 	<controls>
 		<control type="image">
 			<description>Black background to hide menu flashes between songs</description>
 			<visible>!Window.IsVisible(Visualisation)</visible>
-			<posx>10</posx>
-			<posy>20</posy>
-			<width>720</width>
-			<height>480</height>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1280</width>
+			<height>720</height>
 			<texture>pandora-1px-black.png</texture>
 		</control>
 		<control type="button" id="20000">
@@ -42,7 +44,7 @@
 					<width>25</width>
 					<height>25</height>
 					<aspectratio>keep</aspectratio>
-					<texture>Pandora-App-Icon-220x220.png</texture>
+					<texture>pandora-p.png</texture>
 				</control>
 			</control>
 			<control type="group">
@@ -52,48 +54,48 @@
 					<description>panel</description>
 					<posx>50</posx>
 					<posy>50</posy>
-					<width>630</width>
-					<height>445</height>
+					<width>1160</width>
+					<height>630</height>
 					<texture border="20,10,10,30">pandora-panel.png</texture>
 					<aspectratio>stretch</aspectratio>
 				</control>
 				<control type="image">
 					<description>logo</description>
 					<posx>75</posx>
-					<posy>60</posy>
-					<width>590</width>
-					<height>73</height>
+					<posy>65</posy>
+					<width>1080</width>
+					<height>110</height>
 					<texture>pandora-logo.png</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="group" id="3000">
 					<posx>75</posx>
-					<posy>150</posy>
+					<posy>190</posy>
 					<!--Station List-->
 					<control type="group">
 						<animation effect="fade" reversible="true" time="300">VisibleChange</animation>
 						<control type="list" id="200">
-							<width>220</width>
-							<height>300</height>
+							<width>390</width>
+							<height>470</height>
 							<onleft>200</onleft>
 							<onright>330</onright>
 							<onup>200</onup>
 							<ondown>200</ondown>
 							<viewtype label="535">list</viewtype>
 							<scrolltime>200</scrolltime>
-							<itemlayout height="22">
+							<itemlayout height="35">
 								<control type="image">
-									<width>210</width>
-									<height>20</height>
+									<width>375</width>
+									<height>30</height>
 									<posx>0</posx>
 									<posy>0</posy>
 									<texture border="3">twc-input-nofocus.png</texture>
 								</control>
 								<control type="label">
-									<posx>5</posx>
+									<posx>10</posx>
 									<posy>0</posy>
-									<width>200</width>
-									<height>20</height>
+									<width>355</width>
+									<height>30</height>
 									<font>font12</font>
 									<aligny>center</aligny>
 									<textcolor>DDFFFFFF</textcolor>
@@ -102,28 +104,28 @@
 									<info>ListItem.Label</info>
 								</control>
 							</itemlayout>
-							<focusedlayout height="22">
+							<focusedlayout height="35">
 								<control type="image">
-									<width>210</width>
-									<height>20</height>
+									<width>375</width>
+									<height>30</height>
 									<posx>0</posx>
 									<posy>0</posy>
 									<visible>Control.HasFocus(200)</visible>
 									<texture border="3">twc-input-focus.png</texture>
 								</control>
 								<control type="image">
-									<width>210</width>
-									<height>20</height>
+									<width>375</width>
+									<height>30</height>
 									<posx>0</posx>
 									<posy>0</posy>
 									<visible>!Control.HasFocus(200)</visible>
 									<texture border="3">twc-input-nofocus.png</texture>
 								</control>
 								<control type="label">
-									<posx>5</posx>
+									<posx>10</posx>
 									<posy>0</posy>
-									<width>200</width>
-									<height>20</height>
+									<width>335</width>
+									<height>30</height>
 									<font>font12</font>
 									<aligny>center</aligny>
 									<textcolor>DDFFFFFF</textcolor>
@@ -137,23 +139,23 @@
 
 					<!--Now Playing-->
 					<control type="group">
-						<posx>230</posx>
+						<posx>410</posx>
 						<posy>0</posy>
 						<control type="image" id="310">
 							<description>album art</description>
 							<posx>0</posx>
 							<posy>0</posy>
-							<width>145</width>
-							<height>145</height>
+							<width>217</width>
+							<height>217</height>
 							<aspectratio>keep</aspectratio>
 							<texture background="true">$INFO[MusicPlayer.cover]</texture>
 						</control>
 						<control type="label" id="320">
 							<description>song title</description>
-							<posx>150</posx>
-							<posy>10</posy>
-							<width>220</width>
-							<height>30</height>
+							<posx>265</posx>
+							<posy>15</posy>
+							<width>390</width>
+							<height>45</height>
 							<font>font13</font>
 							<textcolor>ffffffff</textcolor>
 							<align>left</align>
@@ -161,10 +163,10 @@
 						</control>
 						<control type="label" id="321">
 							<description>artist</description>
-							<posx>150</posx>
-							<posy>40</posy>
-							<width>220</width>
-							<height>30</height>
+							<posx>265</posx>
+							<posy>60</posy>
+							<width>390</width>
+							<height>45</height>
 							<font>font13</font>
 							<textcolor>ffffffff</textcolor>
 							<align>left</align>
@@ -172,10 +174,10 @@
 						</control>
 						<control type="label" id="322">
 							<description>album</description>
-							<posx>150</posx>
-							<posy>70</posy>
-							<width>220</width>
-							<height>30</height>
+							<posx>265</posx>
+							<posy>105</posy>
+							<width>390</width>
+							<height>45</height>
 							<font>font13</font>
 							<textcolor>ffffffff</textcolor>
 							<align>left</align>
@@ -183,30 +185,30 @@
 						</control>
 						<control type="label" id="324">
 							<description>rating</description>
-							<posx>150</posx>
-							<posy>100</posy>
-							<width>220</width>
-							<height>30</height>
+							<posx>265</posx>
+							<posy>150</posy>
+							<width>390</width>
+							<height>45</height>
 							<font>font13</font>
 							<textcolor>ffffffff</textcolor>
 							<align>left</align>
 							<info>MusicPlayer.Rating</info>
 						</control>
 						<control type="progress">
-							<posx>30</posx>
-							<posy>165</posy>
-							<width>300</width>
-							<height>15</height>
+							<posx>55</posx>
+							<posy>250</posy>
+							<width>533</width>
+							<height>20</height>
 							<info>Player.Progress</info>
 						</control>
 						<!--Control Buttons-->
 						<control type="button" id="330">
 							<description>thumbs down</description>
 							<visible>True</visible>
-							<posx>30</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>53</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>200</onleft>
 							<onright>337</onright>
 							<ondown>335</ondown>
@@ -217,10 +219,10 @@
 						<control type="button" id="337">
 							<description>thumbs down</description>
 							<visible>True</visible>
-							<posx>30</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>53</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>330</onleft>
 							<onright>331</onright>
 							<ondown>335</ondown>
@@ -231,10 +233,10 @@
 						<control type="button" id="331">
 							<description>thumbs up</description>
 							<visible>True</visible>
-							<posx>92</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>163</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>337</onleft>
 							<onright>338</onright>
 							<ondown>335</ondown>
@@ -245,10 +247,10 @@
 						<control type="button" id="338">
 							<description>thumbs up</description>
 							<visible>True</visible>
-							<posx>92</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>163</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>331</onleft>
 							<onright>332</onright>
 							<ondown>335</ondown>
@@ -258,10 +260,10 @@
 						</control>
 						<control type="togglebutton" id="332">
 							<description>play</description>
-							<posx>154</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>274</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<label>-</label>
 							<onleft>338</onleft>
 							<onright>333</onright>
@@ -276,10 +278,10 @@
 						</control>
 						<control type="button" id="333">
 							<description>skip</description>
-							<posx>216</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>384</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>332</onleft>
 							<onright>336</onright>
 							<ondown>335</ondown>
@@ -289,10 +291,10 @@
 						</control>
 						<control type="button" id="336">
 							<description>Tired</description>
-							<posx>278</posx>
-							<posy>200</posy>
-							<height>50</height>
-							<width>50</width>
+							<posx>494</posx>
+							<posy>300</posy>
+							<height>75</height>
+							<width>75</width>
 							<onleft>333</onleft>
 							<ondown>335</ondown>
 							<aspectratio>keep</aspectratio>
@@ -301,10 +303,10 @@
 						</control>
 						<control type="button" id="335">
 							<description>hide</description>
-							<posx>154</posx>
-							<posy>270</posy>
-							<height>25</height>
-							<width>50</width>
+							<posx>273</posx>
+							<posy>405</posy>
+							<height>37</height>
+							<width>75</width>
 							<onleft>330</onleft>
 							<onright>334</onright>
 							<onup>332</onup>

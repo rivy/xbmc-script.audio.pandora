@@ -1,4 +1,5 @@
 <window>
+	<useincludes>false</useincludes>
 	<defaultcontrol>20000</defaultcontrol>
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>

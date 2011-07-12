@@ -43,12 +43,12 @@ class Panda:
 		self.pandora = Pandora( dataDir, fmt )
 
 		#Proxy settings
-		if self.settings.getSetting( "proxy_enable" ):
+		if self.settings.getSetting( "proxy_enable" ) == "true":
 			proxy_info = {
 				"host" : self.settings.getSetting( "proxy_server" ),
 				"port" : self.settings.getSetting( "proxy_port" ),
 				"user" : self.settings.getSetting( "proxy_user" ),
-				"pass" : self.settings.getsetting( "proxy_pass" )
+				"pass" : self.settings.getSetting( "proxy_pass" )
 			}
 			self.pandora.setProxy( proxy_info )
 
@@ -65,13 +65,10 @@ class Panda:
 				self.quit()
 				return
 
-		skin = "Default"
-		skinSettings = self.settings.getSetting( "skin" )
-		if skinSettings == "1":			# htpc guy's Android-line skin
-			skin = "Android"
 		
 		self.player = PandaPlayer( panda = self )
-		self.gui = PandaGUI( scriptPath, skin, self )
+		self.gui = PandaGUI( "script-pandora.xml", scriptPath, "Default" )
+		self.gui.setPanda( self )
 
 	def auth( self ):
 		user = self.settings.getSetting( "username" )

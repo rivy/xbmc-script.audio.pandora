@@ -19,9 +19,8 @@ BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
-	def __init__(self, scriptPath, skin, panda):
-		xbmcgui.WindowXMLDialog.__init__( self, "script-pandora.xml", \
-				scriptPath, defaultSkin = skin, defaultRes = "NTSC" )
+
+	def setPanda( self, panda ):
 		self.panda = panda
 
 	def onInit(self):
@@ -39,16 +38,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.getControl(BTN_THUMBED_UP).setVisible(False)
 
 		logo = self.getControl(100)
-		logoSize = self.panda.settings.getSetting( "logoSize" )
-		print ">> logoSize:", logoSize
-		if logoSize == "0":			# None
+		if self.panda.settings.getSetting( "logoSize" ) == "false":
 			logo.setPosition(-100, -100)
-		if logoSize == "1":			# Small
-			logo.setWidth(25)
-			logo.setHeight(25)
-		if logoSize == "2":			# Large
-			logo.setWidth(50)
-			logo.setHeight(50)
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()

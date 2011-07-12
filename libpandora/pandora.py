@@ -138,7 +138,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -157,7 +157,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 

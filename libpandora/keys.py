@@ -62,17 +62,18 @@ class Keys:
 
 	def saveKeys( self ):
 		print "PANDORA: Saving keys"
+		f = None
 		try:
 			f = open( os.path.join( self._dataDir, "key_in" ), "w" )
 			pickle.dump( self._keys['in'], f )
 		finally:
-			f.close()
+			if f: f.close()
 
 		try:
 			f = open( os.path.join( self._dataDir, "key_out" ), "w" )
 			pickle.dump( self._keys['out'], f )
 		finally:
-			f.close()
+			if f: f.close()
 
 	def forceReDownload( self ):
 		print "PANDORA: Forcing key ReDownload"
