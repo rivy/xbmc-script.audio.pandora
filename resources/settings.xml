@@ -5,7 +5,7 @@
 	<setting id="format" type="enum" label="Audio Format"
 		values="aacplus|mp3|mp3-hifi" default="2"/>
 	<setting id="thumbnailArtwork" type="enum" label="Thumbnail Artwork"
-		values="Album (lo-res)|Artist (hi-res)" default="0"/>
+		values="Album|Artist" default="0"/>
 	<setting id="logo" type="bool" label="Pandora Logo (in hidden mode)"
 		default="true"/>
 	<setting id="redownload" type="action" label="Force Re-Fetch Keys" 
