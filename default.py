@@ -17,6 +17,19 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
+def GetGuiSetting( type, name ):
+	resp = xbmc.executehttpapi( "GetGuiSetting( %d, %s )" %( type, name ) )
+	resp = resp.replace( "<li>", "" )
+
+	if type == 0:
+		resp = int( resp )
+	elif type == 1:
+		resp = ( resp == "True" )
+	elif type == 2:
+		resp = float( resp )
+
+	return resp
+
 class PandaException( Exception ):
 	pass
 
@@ -35,7 +48,17 @@ class Panda:
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
 		self.pandora = Pandora( dataDir, fmt )
-		
+
+		#Proxy settings
+		if self.settings.getSetting( "proxy_enable" ):
+			proxy_info = {
+				"host" : self.settings.getSetting( "proxy_server" ),
+				"port" : self.settings.getSetting( "proxy_port" ),
+				"user" : self.settings.getSetting( "proxy_user" ),
+				"pass" : self.settings.getsetting( "proxy_pass" )
+			}
+			self.pandora.setProxy( proxy_info )
+
 		self.pandora.sync()
 		
 		while not self.auth():

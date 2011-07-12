@@ -1,5 +1,5 @@
 import xmlrpclib
-from urllib2 import urlopen
+import urllib2
 import time
 
 import crypt
@@ -27,13 +27,25 @@ class Pandora:
 		self.keys.loadKeys()
 		self.curFormat = fmt
 
+	def setProxy( self, proxy_info ):
+		if proxy_info["user"] == "" and proxy_info["pass"] == "":
+			proxy_h = urllib2.ProxyHandler( { "http" : \
+				"http://%(host)s:%(port)s" %proxy_info } )
+		else:
+			proxy_h = urllib2.ProxyHandler( { "http" : \
+				"http://%(user)s:%(pass)s@%(host)s:%(port)s" %proxy_info } )
+
+		proxy_o = urllib2.build_opener( proxy_h, urllib2.HTTPHandler )
+
+		urllib2.install_opener( proxy_o )
+
 	def sync( self ):
 		reqUrl = BASE_URL_RID %( self.rid, "sync" )
 
 		req = xmlrpclib.dumps( (), "misc.sync" ).replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -45,7 +57,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -69,7 +81,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
@@ -90,7 +102,7 @@ class Pandora:
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urlopen( reqUrl, enc )
+		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
 
