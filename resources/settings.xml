@@ -8,6 +8,8 @@
 		values="Album (lo-res)|Artist (hi-res)" default="0"/>
 	<setting id="logo" type="bool" label="Pandora Logo (in hidden mode)"
 		default="true"/>
+	<setting id="redownload" type="action" label="Force Re-Fetch Keys" 
+		action="RunScript( $CWD/refetch.py )"/>
 	<setting type="sep"/>
 	<setting id="proxy_enable" type="bool" label="Use Proxy"
 		default="false"/>

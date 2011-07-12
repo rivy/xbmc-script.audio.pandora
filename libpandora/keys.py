@@ -75,7 +75,7 @@ class Keys:
 		finally:
 			if f: f.close()
 
-	def forceReDownload( self ):
+	def forceReFetch( self ):
 		print "PANDORA: Forcing key ReDownload"
 		if os.path.exists( os.path.join( self._dataDir, "key_in" ) ):
 			os.remove( os.path.join( self._dataDir, "key_in" ) )
