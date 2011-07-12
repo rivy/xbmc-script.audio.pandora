@@ -17,6 +17,10 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
+BTN_THUMB_DN = 330
+BTN_THUMB_UP = 331
+BTN_THUMBED_DN = 337
+BTN_THUMBED_UP = 338
 
 class PandaException( Exception ):
 	pass
@@ -28,6 +32,7 @@ class Panda:
 		self.pandora = None
 		self.playlist = []
 		self.curStation = ""
+		self.curSong = None
 		self.playing = False
 		self.skip = False
 		self.die = False
@@ -60,8 +65,13 @@ class Panda:
 				self.quit()
 				return
 
+		skin = "Default"
+		skinSettings = self.settings.getSetting( "skin" )
+		if skinSettings == "1":			# htpc guy's Android-line skin
+			skin = "Android"
+		
 		self.player = PandaPlayer( panda = self )
-		self.gui = PandaGUI( scriptPath, self )
+		self.gui = PandaGUI( scriptPath, skin, self )
 
 	def auth( self ):
 		user = self.settings.getSetting( "username" )
@@ -77,6 +87,7 @@ class Panda:
 
 	def playStation( self, stationId ):
 		self.curStation = stationId
+		self.curSong = None
 		self.playlist = []
 		self.getMoreSongs()
 		self.playing = True
@@ -91,10 +102,22 @@ class Panda:
 		items = []
 		fragment = self.pandora.getFragment( self.curStation )
 		for s in fragment:
+
+			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
+			print ">> thumbnailArtwork:", thumbnailArtwork
+			thumbnail = s["artRadio"]
+			#if thumbnailArtwork == "0":			# Album (lo-res)
+				# default
+			if thumbnailArtwork == "1":			# Artist (hi-res)
+				thumbnail = s["artistArtUrl"]
+
 			item = xbmcgui.ListItem( s["songTitle"] )
-			item.setIconImage( s["artRadio"] )
-			item.setThumbnailImage( s["artRadio"] )
-			item.setProperty( "Cover", s["artRadio"] )
+			item.setIconImage( thumbnail )
+			item.setThumbnailImage( thumbnail )
+			item.setProperty( "Cover", thumbnail )
+			item.setProperty( "Rating", str(s["rating"] ))
+			item.setProperty( "MusicId", s["musicId"] )
+
 			info = { "title"	:	s["songTitle"], \
 					 "artist"	:	s["artistSummary"], \
 					 "album"	:	s["albumTitle"], \
@@ -102,6 +125,13 @@ class Panda:
 					}
 			item.setInfo( "music", info )
 			items.append( ( s["audioURL"], item ) )
+
+			for k,v in s.items():
+				try:
+					xbmc.log("k: '%s' v: '%s'" % (k, v,), xbmc.LOGNOTICE)
+				except:
+					xbmc.log("!!! Error k: '%s'" % (k,), xbmc.LOGNOTICE)
+
 		self.playlist.extend( items )
 
 	def playNextSong( self ):
@@ -112,8 +142,33 @@ class Panda:
 			self.player.playSong( next )
 			art = next[1].getProperty( "Cover" )
 			self.gui.setProperty( "AlbumArt", art )
+			self.curSong = next
+
+			# FIXIT - This should move elsewhere:
+			rating = int(next[1].getProperty( "Rating" ))
+			print "******* playNextSong - rating: %s" % rating
+			if rating == 0:			# No rating
+				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
+			elif rating == -1:		# Hate
+				self.gui.getControl(BTN_THUMB_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
+			elif rating == 1:			# Love
+				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
+			else:
+				print "!!!! Unrecognised rating"
+
 		except IndexError:
+			self.curSong = None
 			self.getMoreSongs()
+
 		if len( self.playlist ) == 0:
 			#Out of songs, grab some more while playing
 			self.getMoreSongs()
@@ -121,6 +176,18 @@ class Panda:
 	def skipSong( self ):
 		self.skip = True
 		self.player.stop()
+
+	def addFeedback( self, likeFlag ):
+		if not self.playing:
+			raise PandaException()
+		musicId = self.curSong[1].getProperty( "MusicId" )
+		self.pandora.addFeedback( self.curStation, musicId, likeFlag )
+
+	def addTiredSong( self ):
+		if not self.playing:
+			raise PandaException()
+		musicId = self.curSong[1].getProperty( "MusicId" )
+		self.pandora.addTiredSong( musicId )
 
 	def main( self ):
 		if self.die:

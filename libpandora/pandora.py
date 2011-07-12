@@ -120,3 +120,46 @@ class Pandora:
 
 		return parsed
 
+	def addFeedback( self, stationId, musicId, likeFlag ):
+
+		print "addFeedback - stationId: ", stationId
+		print "addFeedback - musicId: ", musicId
+		print "addFeedback - likeFlag: ", likeFlag
+		reqUrl = BASE_URL_LID %( self.rid, self.lid, "addFeedback" )
+
+		matchingSeed = ""
+		userSeed = ""
+		focusTraitId = ""
+
+		args = ( _inttime(), self.authToken, stationId, musicId, matchingSeed, userSeed, focusTraitId, "", likeFlag, False )
+
+		req = xmlrpclib.dumps( args, "station.addFeedback" )
+		print "addFeedback - req: ", req
+		req = req.replace( "\n", "" )
+		enc = crypt.encryptString( req, self.keys['out'] )
+
+		u = urlopen( reqUrl, enc )
+		resp = u.read()
+		u.close()
+
+		print "addFeedback resp:", resp
+
+		#parsed = xmlrpclib.loads( resp )[0][0]
+		#print "addFeedback return:", parsed
+
+		#return parsed
+
+	def addTiredSong( self, musicId ):
+		reqUrl = BASE_URL_LID %( self.rid, self.lid, "addTiredSong" )
+
+		req = xmlrpclib.dumps( ( _inttime(), self.authToken, musicId ), \
+								"listener.addTiredSong" )
+		req = req.replace( "\n", "" )
+		enc = crypt.encryptString( req, self.keys['out'] )
+
+		u = urlopen( reqUrl, enc )
+		resp = u.read()
+		u.close()
+
+		print "addTiredSong resp:", resp
+

@@ -1,0 +1,8 @@
+1.0.0 Original script (spbogie)
+1.0.1 Modified to work with new xbmc addon framework (jurmb84)
+1.1.0 Added like/dislike/tired functionality (smorloc)
+1.1.1 Layout changes; additional settings (smorloc)
+1.1.2 Added 'htpc guy's Android-like skin; create setting for same (htpc guy, smorloc)
+      Increased font size in staton list
+	  
+

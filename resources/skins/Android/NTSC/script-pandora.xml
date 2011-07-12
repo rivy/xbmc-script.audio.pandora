@@ -42,7 +42,7 @@
 					<width>25</width>
 					<height>25</height>
 					<aspectratio>keep</aspectratio>
-					<texture>pandora-p.png</texture>
+					<texture>Pandora-App-Icon-220x220.png</texture>
 				</control>
 			</control>
 			<control type="group">

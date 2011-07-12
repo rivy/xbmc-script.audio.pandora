@@ -14,10 +14,14 @@ BTN_SKIP = 333
 BTN_INFO = 334
 BTN_HIDE = 335
 
+BTN_TIRED = 336
+BTN_THUMBED_DN = 337
+BTN_THUMBED_UP = 338
+
 class PandaGUI(xbmcgui.WindowXMLDialog):
-	def __init__(self, scriptPath, panda):
+	def __init__(self, scriptPath, skin, panda):
 		xbmcgui.WindowXMLDialog.__init__( self, "script-pandora.xml", \
-				scriptPath, defaultSkin = "Default", defaultRes = "NTSC" )
+				scriptPath, defaultSkin = skin, defaultRes = "NTSC" )
 		self.panda = panda
 
 	def onInit(self):
@@ -31,6 +35,20 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			tmp.setProperty( "stationId", s["stationId"] )
 			self.list.addItem(tmp)
 		dlg.close()
+		self.getControl(BTN_THUMBED_DN).setVisible(False)
+		self.getControl(BTN_THUMBED_UP).setVisible(False)
+
+		logo = self.getControl(100)
+		logoSize = self.panda.settings.getSetting( "logoSize" )
+		print ">> logoSize:", logoSize
+		if logoSize == "0":			# None
+			logo.setPosition(-100, -100)
+		if logoSize == "1":			# Small
+			logo.setWidth(25)
+			logo.setHeight(25)
+		if logoSize == "2":			# Large
+			logo.setWidth(50)
+			logo.setHeight(50)
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
@@ -52,15 +70,30 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			self.panda.playStation( selItem.getProperty("stationId") )
 		elif self.panda.playing:
 			if controlID == BTN_THUMB_DN:
-				pass #TODO
+				self.getControl(BTN_THUMB_DN).setVisible(False)
+				self.getControl(BTN_THUMBED_DN).setVisible(True)
+				self.getControl(BTN_THUMB_UP).setVisible(True)
+				self.getControl(BTN_THUMBED_UP).setVisible(False)
+				self.panda.addFeedback( False )
+				self.panda.playNextSong()
 			elif controlID == BTN_THUMB_UP:
-				pass #TODO
+				self.getControl(BTN_THUMB_DN).setVisible(True)
+				self.getControl(BTN_THUMBED_DN).setVisible(False)
+				self.getControl(BTN_THUMB_UP).setVisible(False)
+				self.getControl(BTN_THUMBED_UP).setVisible(True)
+				self.panda.addFeedback( True )
 			elif controlID == BTN_PLAY_PAUSE:
 				pass #Handled by skin currently, further functionality TBD
 			elif controlID == BTN_SKIP:
 				self.panda.playNextSong()
 			elif controlID == BTN_INFO:
 				pass #TODO
+			elif controlID == BTN_TIRED:
+				#obj = self.getControl(BTN_TIRED)
+				#for attr in dir(obj):
+				#	print ">>> obj.%s = %s" % (attr, getattr(obj, attr))
+				self.panda.addTiredSong()
+				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:
 				pass #Handled by skin
 

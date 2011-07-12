@@ -27,3 +27,7 @@ Credits:
 
  - jurmb84
 	Modified existing script to work with new xbmc addon framework.
+
+ - smorloc
+	Modified script to include like/dislike/tired functionality; additional
+	addon settings;layout changes
