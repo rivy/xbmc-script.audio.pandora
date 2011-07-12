@@ -21,4 +21,6 @@
 		visible="eq(-3,true)"/>
 	<setting id="proxy_pass" type="text" label="Proxy Password"
 		option="hidden" visible="eq(-4,true)"/>
+	<setting id="firstrun" type="bool" label="" visible="false"
+		default="true"/>
 </settings>

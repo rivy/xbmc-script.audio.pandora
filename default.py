@@ -17,6 +17,10 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
+if __settings__.getSetting( "firstrun" ) == "true":
+	__settings__.openSettings()
+	__settings__.setSetting( "firstrun", "false" )
+
 BTN_THUMB_DN = 330
 BTN_THUMB_UP = 331
 BTN_THUMBED_DN = 337
