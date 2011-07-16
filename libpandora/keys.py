@@ -66,6 +66,8 @@ class Keys:
 	def saveKeys( self ):
 		print "PANDORA: Saving keys"
 		f = None
+		print "PANDORA: dataDir = \"%s\"" %self._dataDir
+		print "PANDORA: dataDir.isDir? %s" %os.path.isdir( self._dataDir )
 		try:
 			f = open( os.path.join( self._dataDir, "key_in" ), "w" )
 			pickle.dump( self._keys['in'], f )

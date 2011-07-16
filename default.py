@@ -4,6 +4,7 @@ dlg.create( "PANDORA", "Loading Script..." )
 dlg.update( 0 )
 import xbmc, os
 import xbmcaddon
+import sys
 
 from libpandora.pandora import Pandora, PandoraError
 
@@ -16,6 +17,10 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
+if sys.platform == "darwin":
+	#open() doesn't translate special:// properly on OSX/ATV
+	dataDir = xbmc.translatePath( dataDir )
+
 
 if __settings__.getSetting( "firstrun" ) == "true":
 	__settings__.openSettings()
