@@ -1,19 +1,24 @@
 import xbmcgui
+import xbmc
+import xbmcaddon
+import os, sys
+
+__title__ = "Pandora"
+__script_id__ = "script.xbmc.pandora"
+__settings__ = xbmcaddon.Addon(id=__script_id__)
+__version__ = "1.2.2"
+
+print "PANDORA: Initializing v%s" %__version__
+
 dlg = xbmcgui.DialogProgress()
 dlg.create( "PANDORA", "Loading Script..." )
 dlg.update( 0 )
-import xbmc, os
-import xbmcaddon
-import sys
 
 from libpandora.pandora import Pandora, PandoraError
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
-__title__ = "Pandora"
-__script_id__ = "script.xbmc.pandora"
-__settings__ = xbmcaddon.Addon(id=__script_id__)
 
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
