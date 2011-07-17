@@ -6,3 +6,5 @@
       Increased font size in staton list
 1.2.0 Integrate smoreloc & htpc_guy's changes. Fix? missing XML issues. Auto-fetch keys. 
 1.2.1 Open settings screen on first run. More debug info for key fetching.
+1.2.2 Pre-translate path on "darwin" systems (Fixes saveKey IOError on ATV2/OSX)
+1.2.3 Pre-translate path on ALL systems.
