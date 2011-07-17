@@ -211,6 +211,9 @@ class Panda:
 
 	def stop( self ):
 		self.playing = False
+		if self.player and self.player.timer\
+				and self.player.timer.isAlive():
+			self.player.timer.stop()
 
 	def cleanup( self ):
 		self.skip = False
@@ -221,6 +224,9 @@ class Panda:
 		del self.player
 
 	def quit( self ):
+		if self.player and self.player.timer\
+				and self.player.timer.isAlive():
+			self.player.timer.stop()
 		if self.gui != None:
 			self.gui.close()
 		self.die = True
