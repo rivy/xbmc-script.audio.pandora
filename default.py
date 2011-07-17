@@ -9,6 +9,7 @@ __settings__ = xbmcaddon.Addon(id=__script_id__)
 __version__ = "1.2.2"
 
 print "PANDORA: Initializing v%s" %__version__
+print "PANDORA: sys.platform = %s" %sys.platform
 
 dlg = xbmcgui.DialogProgress()
 dlg.create( "PANDORA", "Loading Script..." )
@@ -22,12 +23,13 @@ from pandaplayer import PandaPlayer
 
 scriptPath = __settings__.getAddonInfo('path')
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
-if sys.platform == "darwin":
-	#open() doesn't translate special:// properly on OSX/ATV
-	dataDir = xbmc.translatePath( dataDir )
+
+#Workaround: open() doesn't translate path correctly on some versions
+dataDir = xbmc.translatePath( dataDir )
 
 
 if __settings__.getSetting( "firstrun" ) == "true":
+	print  "PANDORA: First run, showing settings dialog"
 	__settings__.openSettings()
 	__settings__.setSetting( "firstrun", "false" )
 
@@ -63,6 +65,7 @@ class Panda:
 
 		#Proxy settings
 		if self.settings.getSetting( "proxy_enable" ) == "true":
+			print "PANDORA: Proxy Enabled"
 			proxy_info = {
 				"host" : self.settings.getSetting( "proxy_server" ),
 				"port" : self.settings.getSetting( "proxy_port" ),
