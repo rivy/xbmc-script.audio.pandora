@@ -145,12 +145,6 @@ class Panda:
 			item.setInfo( "music", info )
 			items.append( ( s["audioURL"], item ) )
 
-			for k,v in s.items():
-				try:
-					xbmc.log("k: '%s' v: '%s'" % (k, v,), xbmc.LOGNOTICE)
-				except:
-					xbmc.log("!!! Error k: '%s'" % (k,), xbmc.LOGNOTICE)
-
 		self.playlist.extend( items )
 
 	def playNextSong( self ):
