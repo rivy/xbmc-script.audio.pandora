@@ -100,7 +100,7 @@ class Keys:
 			except IOError, e:
 				print "PANDORA: IOError %d:%s" %( e.errno, e.stderror )
 				return False
-			except pickle.UnpiclkingError, e:
+			except pickle.UnpicklingError, e:
 				print "PANDORA: UnpicklingError: %s" %e
 			except:
 				print "PANDORA: Unexpected error:%s:%s" %sys.exc_info()[0:1]
