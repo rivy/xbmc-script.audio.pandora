@@ -6,6 +6,7 @@ KEY_KEYBOARD_ESC = 61467
 
 ACTION_PREVIOUS_MENU = 10
 ACTION_NEXT_ITEM = 14
+ACTION_NAV_BACK = 92
 
 BTN_THUMB_DN = 330
 BTN_THUMB_UP = 331
@@ -44,7 +45,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
-		if (actionID == ACTION_PREVIOUS_MENU ):
+		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK ) ):
 			if xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' ):
 				xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
 				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
