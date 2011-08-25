@@ -104,7 +104,7 @@ class Keys:
 				print "PANDORA: UnpicklingError: %s" %e
 				return False
 			except:
-				print "PANDORA: Unexpected error:%s:%s" %sys.exc_info()[0:1]
+				print "PANDORA: Unexpected error:%s:%s" %sys.exc_info()[0:2]
 				raise
 		finally:
 			f.close()
