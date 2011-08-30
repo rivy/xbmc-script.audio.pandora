@@ -4,6 +4,7 @@ from libpandora.pandora import Pandora
 KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467
 
+ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
 ACTION_NEXT_ITEM = 14
 ACTION_NAV_BACK = 92
@@ -45,7 +46,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
-		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK ) ):
+		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK, \
+                           ACTION_PARENT_DIR ) ):
 			if xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' ):
 				xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
 				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
