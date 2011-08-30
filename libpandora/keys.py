@@ -18,6 +18,10 @@ class Key:
 	def __getitem__( self, key ):
 		return self._key[key]
 
+	def _toDict( self ):
+		return { 'proto' : self._proto,
+				 'key' : (self._key['n'],self._key['p'],self._key['s']) }
+
 class Keys:
 	_keys = None
 
@@ -70,13 +74,13 @@ class Keys:
 		print "PANDORA: dataDir.isDir? %s" %os.path.isdir( self._dataDir )
 		try:
 			f = open( os.path.join( self._dataDir, "key_in" ), "w" )
-			pickle.dump( self._keys['in'], f )
+			pickle.dump( self._keys['in']._toDict(), f )
 		finally:
 			if f: f.close()
 
 		try:
 			f = open( os.path.join( self._dataDir, "key_out" ), "w" )
-			pickle.dump( self._keys['out'], f )
+			pickle.dump( self._keys['out']._toDict(), f )
 		finally:
 			if f: f.close()
 
@@ -96,7 +100,8 @@ class Keys:
 		try:
 			try:
 				f = open( keyFile, "rb" )
-				key = pickle.load( f )
+				tmp = pickle.load( f )
+				key = Key( tmp['proto'], tmp['key'] )
 			except IOError, e:
 				print "PANDORA: IOError %d:%s" %( e.errno, e.stderror )
 				return False
