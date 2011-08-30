@@ -9,3 +9,4 @@
 1.2.2 Pre-translate path on "darwin" systems (Fixes saveKey IOError on ATV2/OSX)
 1.2.3 Pre-translate path on ALL systems.
 1.2.4 Cleanup/bugfixes
+1.2.5 bugfixes
