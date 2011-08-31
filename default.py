@@ -232,6 +232,12 @@ class Panda:
 		self.die = True
 
 if __name__ == '__main__':
-	panda = Panda()
-	dlg.close()
-	panda.main()
+	if __settings__.getSetting( "username" ) == "" or \
+		__settings__.getSetting( "password" ) == "":
+		xbmcgui.Dialog().ok( "Pandora", \
+			"Username and/or password not specified" )
+		__settings__.setSetting( "firstrun", "true" )
+	else:
+		panda = Panda()
+		dlg.close()
+		panda.main()
