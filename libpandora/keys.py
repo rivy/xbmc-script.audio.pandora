@@ -73,13 +73,13 @@ class Keys:
 		print "PANDORA: dataDir = \"%s\"" %self._dataDir
 		print "PANDORA: dataDir.isDir? %s" %os.path.isdir( self._dataDir )
 		try:
-			f = open( os.path.join( self._dataDir, "key_in" ), "w" )
+			f = open( os.path.join( self._dataDir, "key_in" ), "wb" )
 			pickle.dump( self._keys['in']._toDict(), f, -1 )
 		finally:
 			if f: f.close()
 
 		try:
-			f = open( os.path.join( self._dataDir, "key_out" ), "w" )
+			f = open( os.path.join( self._dataDir, "key_out" ), "wb" )
 			pickle.dump( self._keys['out']._toDict(), f, -1 )
 		finally:
 			if f: f.close()
