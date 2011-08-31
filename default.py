@@ -53,6 +53,7 @@ class Panda:
 		self.skip = False
 		self.die = False
 		self.settings = __settings__
+		self.player = None
 		
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
