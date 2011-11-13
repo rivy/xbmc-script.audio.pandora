@@ -129,9 +129,6 @@ class Pandora:
 
 	def addFeedback( self, stationId, musicId, likeFlag ):
 
-		print "addFeedback - stationId: ", stationId
-		print "addFeedback - musicId: ", musicId
-		print "addFeedback - likeFlag: ", likeFlag
 		reqUrl = BASE_URL_LID %( self.rid, self.lid, "addFeedback" )
 
 		matchingSeed = ""
@@ -141,20 +138,12 @@ class Pandora:
 		args = ( _inttime(), self.authToken, stationId, musicId, matchingSeed, userSeed, focusTraitId, "", likeFlag, False )
 
 		req = xmlrpclib.dumps( args, "station.addFeedback" )
-		print "addFeedback - req: ", req
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
 		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
-
-		print "addFeedback resp:", resp
-
-		#parsed = xmlrpclib.loads( resp )[0][0]
-		#print "addFeedback return:", parsed
-
-		#return parsed
 
 	def addTiredSong( self, musicId ):
 		reqUrl = BASE_URL_LID %( self.rid, self.lid, "addTiredSong" )
@@ -167,6 +156,4 @@ class Pandora:
 		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
-
-		print "addTiredSong resp:", resp
 

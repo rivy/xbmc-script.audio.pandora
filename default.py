@@ -132,7 +132,6 @@ class Panda:
 		for s in fragment:
 
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
-			print ">> thumbnailArtwork:", thumbnailArtwork
 			thumbnail = s["artRadio"]
 			#if thumbnailArtwork == "0":			# Album (lo-res)
 				# default
@@ -168,7 +167,6 @@ class Panda:
 
 			# FIXIT - This should move elsewhere:
 			rating = int(next[1].getProperty( "Rating" ))
-			print "******* playNextSong - rating: %s" % rating
 			if rating == 0:			# No rating
 				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
 				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
@@ -185,7 +183,7 @@ class Panda:
 				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
 				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
 			else:
-				print "!!!! Unrecognised rating"
+				print "PANDORA: !!!! Unrecognised rating"
 
 		except IndexError:
 			self.curSong = None
