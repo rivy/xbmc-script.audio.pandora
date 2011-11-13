@@ -5,8 +5,8 @@ import time
 import crypt
 import keys
 
-PROTOCOL_VERSION=32
-BASE_URL = "http://www.pandora.com/radio/xmlrpc/v%d?" %PROTOCOL_VERSION
+PROTOCOL_VERSION=33
+BASE_URL = "https://www.pandora.com/radio/xmlrpc/v%d?" %PROTOCOL_VERSION
 BASE_URL_RID = BASE_URL + "rid=%sP&method=%s"
 BASE_URL_LID = BASE_URL + "rid=%sP&lid=%s&method=%s"
 

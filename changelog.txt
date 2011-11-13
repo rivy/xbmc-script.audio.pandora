@@ -10,3 +10,5 @@
 1.2.3 Pre-translate path on ALL systems.
 1.2.4 Cleanup/bugfixes
 1.2.5 bugfixes
+1.2.6 bugfixes
+1.2.7 Protocol version bump, use https

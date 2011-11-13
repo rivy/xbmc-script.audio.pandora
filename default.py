@@ -6,7 +6,7 @@ import os, sys
 __title__ = "Pandora"
 __script_id__ = "script.xbmc.pandora"
 __settings__ = xbmcaddon.Addon(id=__script_id__)
-__version__ = "1.2.5-git"
+__version__ = "1.2.7"
 
 print "PANDORA: Initializing v%s" %__version__
 print "PANDORA: sys.platform = %s" %sys.platform
