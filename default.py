@@ -22,6 +22,7 @@ from pandaplayer import PandaPlayer
 
 
 scriptPath = __settings__.getAddonInfo('path')
+
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
 #Workaround: open() doesn't translate path correctly on some versions
@@ -54,6 +55,8 @@ class Panda:
 		self.die = False
 		self.settings = __settings__
 		self.player = None
+		# Added variable name to make it easier to keep track of.
+		self.skinName = "Default"
 		
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
@@ -87,10 +90,17 @@ class Panda:
 			else:
 				self.quit()
 				return
-
+		# Get skin from settings.
+		# Check if a value is set in the settings. If not then use Default.
+                if self.settings.getSetting ( "skin" ) != "":
+                        self.skinName = self.settings.getSetting( "skin" )
 		
 		self.player = PandaPlayer( panda = self )
-		self.gui = PandaGUI( "script-pandora.xml", scriptPath, "Default" )
+
+                #change this line so that it uses the variable instead of the string "Default"
+                #self.gui = PandaGUI( "script-pandora.xml", scriptPath, "Default")
+		self.gui = PandaGUI( "script-pandora.xml", scriptPath, self.skinName)
+		
 		self.gui.setPanda( self )
 
 	def auth( self ):
