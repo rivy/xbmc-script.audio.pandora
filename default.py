@@ -55,7 +55,6 @@ class Panda:
 		self.die = False
 		self.settings = __settings__
 		self.player = None
-		# Added variable name to make it easier to keep track of.
 		self.skinName = "Default"
 		
 		fmt = int(self.settings.getSetting( "format" ))
@@ -90,15 +89,14 @@ class Panda:
 			else:
 				self.quit()
 				return
+
 		# Get skin from settings.
 		# Check if a value is set in the settings. If not then use Default.
-                if self.settings.getSetting ( "skin" ) != "":
-                        self.skinName = self.settings.getSetting( "skin" )
+		if self.settings.getSetting ( "skin" ) != "":
+			self.skinName = self.settings.getSetting( "skin" )
 		
 		self.player = PandaPlayer( panda = self )
 
-                #change this line so that it uses the variable instead of the string "Default"
-                #self.gui = PandaGUI( "script-pandora.xml", scriptPath, "Default")
 		self.gui = PandaGUI( "script-pandora.xml", scriptPath, self.skinName)
 		
 		self.gui.setPanda( self )
