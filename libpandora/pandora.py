@@ -59,7 +59,7 @@ class Pandora:
 	def authListener( self, user, pwd ):
 		reqUrl = BASE_URL_RID %( self.rid, "authenticateListener" )
 
-		req = xmlrpclib.dumps( ( _inttime(), user, pwd ), \
+		req = xmlrpclib.dumps( ( _inttime(), user, pwd, "html5tuner", "", "", "HTML5", True ), \
 								"listener.authenticateListener" )
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
