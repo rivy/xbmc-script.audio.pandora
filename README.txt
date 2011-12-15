@@ -28,4 +28,4 @@ Credits:
 	addon settings;layout changes
 
  - htpc_guy
-	Android-like skin
+	Skins
