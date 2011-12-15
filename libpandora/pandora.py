@@ -25,6 +25,7 @@ class Pandora:
 	authToken = ""
 	curStation = ""
 	curFormat = ""
+	offset = 0
 
 	def __init__( self, dataDir, fmt = "mp3" ):
 		self.dataDir = dataDir
@@ -33,6 +34,9 @@ class Pandora:
 		if not self.keys.loadKeys():
 			raise PandoraError("Unable to load keys")
 		self.curFormat = fmt
+
+	def _timestamp( self ):
+		return _inttime() - self.offset
 
 	def setProxy( self, proxy_info ):
 		if proxy_info["user"] == "" and proxy_info["pass"] == "":
@@ -56,10 +60,14 @@ class Pandora:
 		resp = u.read()
 		u.close()
 
+		parsed = xmlrpclib.loads( resp )[0][0]
+		t = crypt.decryptString( parsed, self.keys['in'] )
+		self.offset = _inttime() - int(t[4:-2])
+
 	def authListener( self, user, pwd ):
 		reqUrl = BASE_URL_RID %( self.rid, "authenticateListener" )
 
-		req = xmlrpclib.dumps( ( _inttime(), user, pwd, "html5tuner", "", "", "HTML5", True ), \
+		req = xmlrpclib.dumps( ( self._timestamp(), user, pwd, "html5tuner", "", "", "HTML5", True ), \
 								"listener.authenticateListener" )
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
@@ -83,7 +91,7 @@ class Pandora:
 	def getStations( self ):
 		reqUrl = BASE_URL_LID %( self.rid, self.lid, "getStations" )
 
-		req = xmlrpclib.dumps( ( _inttime(), self.authToken ), \
+		req = xmlrpclib.dumps( ( self._timestamp(), self.authToken ), \
 								"station.getStations" )
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
@@ -103,7 +111,7 @@ class Pandora:
 			format = self.curFormat
 		reqUrl = BASE_URL_LID %( self.rid, self.lid, "getFragment" )
 
-		args = ( _inttime(), self.authToken, stationId, "0", "", "", \
+		args = ( self._timestamp(), self.authToken, stationId, "0", "", "", \
 					format, "0", "0" )
 		req = xmlrpclib.dumps( args, "playlist.getFragment" )
 		req = req.replace( "\n", "" )
@@ -135,7 +143,7 @@ class Pandora:
 		userSeed = ""
 		focusTraitId = ""
 
-		args = ( _inttime(), self.authToken, stationId, musicId, matchingSeed, userSeed, focusTraitId, "", likeFlag, False )
+		args = ( self._timestamp(), self.authToken, stationId, musicId, matchingSeed, userSeed, focusTraitId, "", likeFlag, False )
 
 		req = xmlrpclib.dumps( args, "station.addFeedback" )
 		req = req.replace( "\n", "" )
@@ -148,7 +156,7 @@ class Pandora:
 	def addTiredSong( self, musicId ):
 		reqUrl = BASE_URL_LID %( self.rid, self.lid, "addTiredSong" )
 
-		req = xmlrpclib.dumps( ( _inttime(), self.authToken, musicId ), \
+		req = xmlrpclib.dumps( ( self._timestamp(), self.authToken, musicId ), \
 								"listener.addTiredSong" )
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
