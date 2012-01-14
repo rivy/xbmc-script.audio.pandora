@@ -109,7 +109,8 @@ class Pandora:
 			stationId = self.curStation
 		if format == None:
 			format = self.curFormat
-		reqUrl = BASE_URL_LID %( self.rid, self.lid, "getFragment" )
+
+		reqUrl = BASE_URL_LID.replace( "https:", "http:" ) %( self.rid, self.lid, "getFragment" )
 
 		args = ( self._timestamp(), self.authToken, stationId, "0", "", "", \
 					format, "0", "0" )
