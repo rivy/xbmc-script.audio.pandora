@@ -14,3 +14,4 @@
 1.2.7 Protocol version bump, use https
 1.2.8 New skins from htpc_guy :-)
 1.2.9 bugfixes
+1.2.10 bugfixes
