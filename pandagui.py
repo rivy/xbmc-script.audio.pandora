@@ -40,7 +40,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.getControl(BTN_THUMBED_UP).setVisible(False)
 
 		logo = self.getControl(100)
-		if self.panda.settings.getSetting( "logoSize" ) == "false":
+		if self.panda.settings.getSetting( "logo" ) == "false":
 			logo.setPosition(-100, -100)
 
 	def onAction(self, action):
