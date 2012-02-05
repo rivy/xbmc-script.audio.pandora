@@ -149,7 +149,9 @@ class Panda:
 					 "artist"	:	s["artistSummary"], \
 					 "album"	:	s["albumTitle"], \
 					 "genre"	:	"".join(s["genre"]), \
+					 "duration"	:	s["trackLength"], \
 					}
+			print "PANDORA: item info = %s" % info
 			item.setInfo( "music", info )
 			items.append( ( s["audioURL"], item ) )
 
