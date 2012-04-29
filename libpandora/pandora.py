@@ -5,7 +5,7 @@ import time
 import crypt
 import keys
 
-PROTOCOL_VERSION=33
+PROTOCOL_VERSION=34
 BASE_URL = "https://www.pandora.com/radio/xmlrpc/v%d?" %PROTOCOL_VERSION
 BASE_URL_RID = BASE_URL + "rid=%sP&method=%s"
 BASE_URL_LID = BASE_URL + "rid=%sP&lid=%s&method=%s"
@@ -51,24 +51,31 @@ class Pandora:
 		urllib2.install_opener( proxy_o )
 
 	def sync( self ):
-		reqUrl = BASE_URL_RID %( self.rid, "sync" )
+		#reqUrl = BASE_URL_RID %( self.rid, "sync" )
+		reqUrl = 'http://ridetheclown.com/s2/synctime.php'
 
-		req = xmlrpclib.dumps( (), "misc.sync" ).replace( "\n", "" )
-		enc = crypt.encryptString( req, self.keys['out'] )
+		#req = xmlrpclib.dumps( (), "misc.sync" ).replace( "\n", "" )
+		#enc = crypt.encryptString( req, self.keys['out'] )
 
-		u = urllib2.urlopen( reqUrl, enc )
+		#u = urllib2.urlopen( reqUrl, enc )
+		u = urllib2.urlopen(reqUrl)
 		resp = u.read()
 		u.close()
 
-		parsed = xmlrpclib.loads( resp )[0][0]
-		t = crypt.decryptString( parsed, self.keys['in'] )
-		self.offset = _inttime() - int(t[4:-2])
+		#parsed = xmlrpclib.loads( resp )[0][0]
+		#t = crypt.decryptString( parsed, self.keys['in'] )
+		#print 'Debugging pandora: ' + str(_inttime())
+		#print 'From Hack: ' + resp
+		#self.offset = _inttime() - int(t[4:-2])
+		self.offset = _inttime() - int(resp)
 
 	def authListener( self, user, pwd ):
 		reqUrl = BASE_URL_RID %( self.rid, "authenticateListener" )
 
-		req = xmlrpclib.dumps( ( self._timestamp(), user, pwd, "html5tuner", "", "", "HTML5", True ), \
+		req = xmlrpclib.dumps( ( self._timestamp(), "00000000000000000000000000000000", user, pwd, "html5tuner", "", "", "HTML5", True ), \
 								"listener.authenticateListener" )
+		#req = '<?xml version=\"1.0\"?><methodCall><methodName>listener.authenticateListener</methodName><params><param><value><int>%lu</int></value></param><param><value><string>%s</string></value></param><param><value><string>%s</string></value></param><param><value><string>html5tuner</string></value></param><param><value><string/></value></param><param><value><string/></value></param><param><value><string>HTML5</string></value></param><param><value><boolean>1</boolean></value></param></params></methodCall>' % (self._timestamp(), user, pwd)
+		
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
@@ -109,8 +116,8 @@ class Pandora:
 			stationId = self.curStation
 		if format == None:
 			format = self.curFormat
-
-		reqUrl = BASE_URL_LID.replace( "https:", "http:" ) %( self.rid, self.lid, "getFragment" )
+		reqUrl = BASE_URL_LID.replace('https', 'http') %( 
+self.rid, self.lid, "getFragment" )
 
 		args = ( self._timestamp(), self.authToken, stationId, "0", "", "", \
 					format, "0", "0" )
@@ -165,4 +172,3 @@ class Pandora:
 		u = urllib2.urlopen( reqUrl, enc )
 		resp = u.read()
 		u.close()
-
