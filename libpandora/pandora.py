@@ -75,7 +75,7 @@ class Pandora:
 		req = xmlrpclib.dumps( ( self._timestamp(), "00000000000000000000000000000000", user, pwd, "html5tuner", "", "", "HTML5", True ), \
 								"listener.authenticateListener" )
 		#req = '<?xml version=\"1.0\"?><methodCall><methodName>listener.authenticateListener</methodName><params><param><value><int>%lu</int></value></param><param><value><string>%s</string></value></param><param><value><string>%s</string></value></param><param><value><string>html5tuner</string></value></param><param><value><string/></value></param><param><value><string/></value></param><param><value><string>HTML5</string></value></param><param><value><boolean>1</boolean></value></param></params></methodCall>' % (self._timestamp(), user, pwd)
-		
+
 		req = req.replace( "\n", "" )
 		enc = crypt.encryptString( req, self.keys['out'] )
 
@@ -92,7 +92,7 @@ class Pandora:
 
 		self.authToken = parsed["authToken"]
 		self.lid = parsed["listenerId"]
-		
+
 		return True
 
 	def getStations( self ):
@@ -116,8 +116,7 @@ class Pandora:
 			stationId = self.curStation
 		if format == None:
 			format = self.curFormat
-		reqUrl = BASE_URL_LID.replace('https', 'http') %( 
-self.rid, self.lid, "getFragment" )
+		reqUrl = BASE_URL_LID.replace('https', 'http') %( self.rid, self.lid, "getFragment" )
 
 		args = ( self._timestamp(), self.authToken, stationId, "0", "", "", \
 					format, "0", "0" )
