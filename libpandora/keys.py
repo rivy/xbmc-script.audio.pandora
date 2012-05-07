@@ -4,7 +4,7 @@ import pianoparser
 import os
 import sys
 
-BASE_KEY_URL = "https://raw.github.com/PromyLOPh/pianobar/master/src/libpiano/"
+BASE_KEY_URL = "https://raw.github.com/PromyLOPh/pianobar/json/src/libpiano/"
 
 class Key:
 	def __init__( self, proto, key ):
