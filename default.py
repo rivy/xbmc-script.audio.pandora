@@ -70,15 +70,15 @@ class Panda:
 			return
 
 		#Proxy settings
-		#if self.settings.getSetting( "proxy_enable" ) == "true":
-		#	print "PANDORA: Proxy Enabled"
-		#	proxy_info = {
-		#		"host" : self.settings.getSetting( "proxy_server" ),
-		#		"port" : self.settings.getSetting( "proxy_port" ),
-		#		"user" : self.settings.getSetting( "proxy_user" ),
-		#		"pass" : self.settings.getSetting( "proxy_pass" )
-		#	}
-		#	self.pandora.setProxy( proxy_info )
+		if self.settings.getSetting( "proxy_enable" ) == "true":
+			print "PANDORA: Proxy Enabled"
+			proxy_info = {
+				"host" : self.settings.getSetting( "proxy_server" ),
+				"port" : self.settings.getSetting( "proxy_port" ),
+				"user" : self.settings.getSetting( "proxy_user" ),
+				"pass" : self.settings.getSetting( "proxy_pass" )
+			}
+			self.pandora.set_proxy( "http://%(user)s:%(pass)s@%(host)s:%(port)s" % proxy_info )
 
 		#self.pandora.sync()
 		
@@ -149,7 +149,10 @@ class Panda:
 			item.setIconImage( thumbnail )
 			item.setThumbnailImage( thumbnail )
 			item.setProperty( "Cover", thumbnail )
-			#item.setProperty( "Rating", str(song.rating ))
+			if song.rating_str != None:
+				item.setProperty( "Rating", song.rating_str )
+			else:
+				item.setProperty( "Rating", "" )
 			#item.setProperty( "MusicId", s["musicId"] )
 			info = { "title"	:	song.title, \
 				 "artist"	:	song.artist, \
@@ -171,25 +174,24 @@ class Panda:
 			self.gui.setProperty( "AlbumArt", art )
 			self.curSong = next
 			# FIXIT - This should move elsewhere:
-			#rating = int(next[1].getProperty( "Rating" ))
-#			if rating == 0:			# No rating
-#				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
-#				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
-#				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
-#				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
-#			elif rating == -1:		# Hate
-#				self.gui.getControl(BTN_THUMB_DN).setVisible(False)
-#				self.gui.getControl(BTN_THUMBED_DN).setVisible(True)
-#				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
-#				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
-#			elif rating == 1:			# Love
-#				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
-#				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
-#				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
-#				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
-#			else:
-#				print "PANDORA: !!!! Unrecognised rating"
-
+			rating = next[1].getProperty( "Rating" )
+			if rating == "":			# No rating
+				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
+			elif rating == 'ban':		# Hate
+				self.gui.getControl(BTN_THUMB_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(False)
+			elif rating == 'love':			# Love
+				self.gui.getControl(BTN_THUMB_DN).setVisible(True)
+				self.gui.getControl(BTN_THUMBED_DN).setVisible(False)
+				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
+				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
+			else:
+				print "PANDORA: !!!! Unrecognised rating"
 		except IndexError:
 			self.curSong = None
 			self.getMoreSongs()
