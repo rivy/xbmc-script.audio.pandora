@@ -1,5 +1,4 @@
 import xbmc, xbmcgui
-from libpandora.pandora import Pandora
 
 KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467

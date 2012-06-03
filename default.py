@@ -15,7 +15,6 @@ dlg = xbmcgui.DialogProgress()
 dlg.create( "PANDORA", "Loading Script..." )
 dlg.update( 0 )
 
-#from libpandora.pandora import Pandora, PandoraError
 from pandora.pandora import Pandora, PandoraError
 
 from pandagui import PandaGUI
@@ -61,7 +60,6 @@ class Panda:
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
 		try:
-			#self.pandora = Pandora( dataDir, fmt )
 			self.pandora = Pandora()
 			self.pandora.set_audio_format(fmt)
 		except PandoraError, e:
@@ -79,8 +77,6 @@ class Panda:
 				"pass" : self.settings.getSetting( "proxy_pass" )
 			}
 			self.pandora.set_proxy( "http://%(user)s:%(pass)s@%(host)s:%(port)s" % proxy_info )
-
-		#self.pandora.sync()
 		
 		while not self.auth():
 			resp = xbmcgui.Dialog().yesno( "Pandora", \
@@ -112,7 +108,6 @@ class Panda:
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Logging In..." )
 		dlg.update( 0 )
-		#ret = self.pandora.authListener( user, pwd )
 		try:
 			self.pandora.connect(user, pwd)
 		except PandoraError, e:
@@ -137,7 +132,6 @@ class Panda:
 		if self.curStation == "":
 			raise PandaException()
 		items = []
-		#fragment = self.pandora.getFragment( self.curStation )
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
@@ -153,7 +147,6 @@ class Panda:
 				item.setProperty( "Rating", song.rating_str )
 			else:
 				item.setProperty( "Rating", "" )
-			#item.setProperty( "MusicId", s["musicId"] )
 			info = { "title"	:	song.title, \
 				 "artist"	:	song.artist, \
 				 "album"	:	song.album, \
