@@ -15,7 +15,8 @@ dlg = xbmcgui.DialogProgress()
 dlg.create( "PANDORA", "Loading Script..." )
 dlg.update( 0 )
 
-from libpandora.pandora import Pandora, PandoraError
+#from libpandora.pandora import Pandora, PandoraError
+from pandora.pandora import Pandora
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
@@ -60,24 +61,26 @@ class Panda:
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
 		try:
-			self.pandora = Pandora( dataDir, fmt )
+			#self.pandora = Pandora( dataDir, fmt )
+			self.pandora = Pandora()
+			self.pandora.set_audio_format(fmt)
 		except PandoraError, e:
 			xbmcgui.Dialog().ok( "Pandora", "Error: %s" %e )
 			self.die = True
 			return
 
 		#Proxy settings
-		if self.settings.getSetting( "proxy_enable" ) == "true":
-			print "PANDORA: Proxy Enabled"
-			proxy_info = {
-				"host" : self.settings.getSetting( "proxy_server" ),
-				"port" : self.settings.getSetting( "proxy_port" ),
-				"user" : self.settings.getSetting( "proxy_user" ),
-				"pass" : self.settings.getSetting( "proxy_pass" )
-			}
-			self.pandora.setProxy( proxy_info )
+		#if self.settings.getSetting( "proxy_enable" ) == "true":
+		#	print "PANDORA: Proxy Enabled"
+		#	proxy_info = {
+		#		"host" : self.settings.getSetting( "proxy_server" ),
+		#		"port" : self.settings.getSetting( "proxy_port" ),
+		#		"user" : self.settings.getSetting( "proxy_user" ),
+		#		"pass" : self.settings.getSetting( "proxy_pass" )
+		#	}
+		#	self.pandora.setProxy( proxy_info )
 
-		self.pandora.sync()
+		#self.pandora.sync()
 		
 		while not self.auth():
 			resp = xbmcgui.Dialog().yesno( "Pandora", \
@@ -109,9 +112,10 @@ class Panda:
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Logging In..." )
 		dlg.update( 0 )
-		ret = self.pandora.authListener( user, pwd )
+		#ret = self.pandora.authListener( user, pwd )
+		self.pandora.connect(user, pwd)
 		dlg.close()
-		return ret
+		return 1
 
 	def playStation( self, stationId ):
 		self.curStation = stationId
@@ -122,40 +126,35 @@ class Panda:
 		self.playNextSong()
 
 	def getStations( self ):
-		return self.pandora.getStations()
+		self.pandora.get_stations()
+		return self.pandora.stations
 	
 	def getMoreSongs( self ):
 		if self.curStation == "":
 			raise PandaException()
 		items = []
-		fragment = self.pandora.getFragment( self.curStation )
-		for s in fragment:
-
+		#fragment = self.pandora.getFragment( self.curStation )
+		station = self.pandora.get_station_by_id(self.curStation);
+		songs = station.get_playlist()
+		for song in songs:
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
-			thumbnail = s["artRadio"]
-			#if thumbnailArtwork == "0":			# Album (lo-res)
-				# default
-			if thumbnailArtwork == "1":			# Artist (hi-res)
-				thumbnail = s["artistArtUrl"]
-
-			item = xbmcgui.ListItem( s["songTitle"] )
+			thumbnail = song.artRadio
+	
+			item = xbmcgui.ListItem( song.title )
 			item.setIconImage( thumbnail )
 			item.setThumbnailImage( thumbnail )
 			item.setProperty( "Cover", thumbnail )
-			item.setProperty( "Rating", str(s["rating"] ))
-			item.setProperty( "MusicId", s["musicId"] )
-
-			info = { "title"	:	s["songTitle"], \
-					 "artist"	:	s["artistSummary"], \
-					 "album"	:	s["albumTitle"], \
-					 "genre"	:	"".join(s["genre"]), \
-					 "duration"	:	s["trackLength"], \
-					}
+			item.setProperty( "Rating", str(song.rating ))
+			#item.setProperty( "MusicId", s["musicId"] )
+			info = { "title"	:	song.title, \
+				 "artist"	:	song.artist, \
+				 "album"	:	song.album, \
+				}
 			print "PANDORA: item info = %s" % info
 			item.setInfo( "music", info )
-			items.append( ( s["audioURL"], item ) )
-
-		self.playlist.extend( items )
+			items.append( ( song.audioUrl, item ) )
+	
+			self.playlist.extend( items )
 
 	def playNextSong( self ):
 		if not self.playing:

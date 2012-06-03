@@ -32,8 +32,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		dlg.create( "PANDORA", "Fetching Stations" )
 		dlg.update( 0 )
 		for s in self.panda.getStations():
-			tmp = xbmcgui.ListItem(s["stationName"])
-			tmp.setProperty( "stationId", s["stationId"] )
+			tmp = xbmcgui.ListItem(s.name)
+			tmp.setProperty( "stationId", s.id )
 			self.list.addItem(tmp)
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
