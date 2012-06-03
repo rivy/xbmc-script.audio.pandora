@@ -16,7 +16,7 @@ dlg.create( "PANDORA", "Loading Script..." )
 dlg.update( 0 )
 
 #from libpandora.pandora import Pandora, PandoraError
-from pandora.pandora import Pandora
+from pandora.pandora import Pandora, PandoraError
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
@@ -113,7 +113,10 @@ class Panda:
 		dlg.create( "PANDORA", "Logging In..." )
 		dlg.update( 0 )
 		#ret = self.pandora.authListener( user, pwd )
-		self.pandora.connect(user, pwd)
+		try:
+			self.pandora.connect(user, pwd)
+		except PandoraError, e:
+			return 0;
 		dlg.close()
 		return 1
 
