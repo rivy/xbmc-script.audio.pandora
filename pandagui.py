@@ -68,14 +68,14 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.getControl(BTN_THUMBED_DN).setVisible(True)
 				self.getControl(BTN_THUMB_UP).setVisible(True)
 				self.getControl(BTN_THUMBED_UP).setVisible(False)
-				self.panda.addFeedback( False )
+				self.panda.addFeedback( 'ban' )
 				self.panda.playNextSong()
 			elif controlID == BTN_THUMB_UP:
 				self.getControl(BTN_THUMB_DN).setVisible(True)
 				self.getControl(BTN_THUMBED_DN).setVisible(False)
 				self.getControl(BTN_THUMB_UP).setVisible(False)
 				self.getControl(BTN_THUMBED_UP).setVisible(True)
-				self.panda.addFeedback( True )
+				self.panda.addFeedback( 'love' )
 			elif controlID == BTN_PLAY_PAUSE:
 				pass #Handled by skin currently, further functionality TBD
 			elif controlID == BTN_SKIP:
