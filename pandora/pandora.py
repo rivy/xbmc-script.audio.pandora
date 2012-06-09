@@ -272,11 +272,8 @@ class Station(object):
 class Song(object):
     def __init__(self, pandora, d):
         self.pandora = pandora
-
-        print d
         self.album = d['albumName']
         self.artist = d['artistName']
-        print self.pandora.audio_format
         self.audioUrl = d['audioUrlMap'][self.pandora.audio_format]['audioUrl']
         self.fileGain = d['trackGain']
         self.trackToken = d['trackToken']
