@@ -6,13 +6,11 @@
 		values="Default|Alaska|Smoke" default="Default"/>
 	<setting type="sep"/>
 	<setting id="format" type="enum" label="Audio Format"
-		values="aacplus|mp3|mp3-hifi" default="2"/>
+		values="lowQuality|mediumQuality|highQuality" default="2"/>
 	<setting id="thumbnailArtwork" type="enum" label="Thumbnail Artwork"
 		values="Album|Artist" default="0"/>
 	<setting id="logo" type="bool" label="Pandora Logo (in hidden mode)"
 		default="true"/>
-	<setting id="redownload" type="action" label="Force Re-Fetch Keys" 
-		action="RunScript( $CWD/refetch.py )"/>
 	<setting type="sep"/>
 	<setting id="proxy_enable" type="bool" label="Use Proxy"
 		default="false"/>

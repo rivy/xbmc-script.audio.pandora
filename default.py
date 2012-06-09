@@ -58,7 +58,7 @@ class Panda:
 		self.skinName = "Default"
 		
 		fmt = int(self.settings.getSetting( "format" ))
-		fmt = ( "aacplus", "mp3", "mp3-hifi" )[fmt]
+		fmt = ( "lowQuality", "mediumQuality", "highQuality" )[fmt]
 		try:
 			self.pandora = Pandora()
 			self.pandora.set_audio_format(fmt)

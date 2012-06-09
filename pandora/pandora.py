@@ -34,7 +34,7 @@ PARTNER_USERNAME = 'android'
 PARTNER_PASSWORD = 'AC7IBG09A3DTSYM4R41UJWL07VLN8JI7'
 
 HTTP_TIMEOUT = 30
-AUDIO_FORMAT = 'aacplus'
+AUDIO_FORMAT = 'highQuality'
 USER_AGENT = 'pithos'
 
 RATE_BAN = 'ban'
@@ -151,7 +151,7 @@ class Pandora(object):
             return tree['result']
 
     def set_audio_format(self, fmt):
-        self.audio_format = ['aacplus', 'mp3', 'mp3-hifi'].index(fmt)
+        self.audio_format = fmt
 
     def set_proxy(self, proxy):
         if proxy:
@@ -273,9 +273,11 @@ class Song(object):
     def __init__(self, pandora, d):
         self.pandora = pandora
 
+        print d
         self.album = d['albumName']
         self.artist = d['artistName']
-        self.audioUrl = d['additionalAudioUrl'][self.pandora.audio_format]
+        print self.pandora.audio_format
+        self.audioUrl = d['audioUrlMap'][self.pandora.audio_format]['audioUrl']
         self.fileGain = d['trackGain']
         self.trackToken = d['trackToken']
         self.rating = RATE_LOVE if d['songRating'] == 1 else RATE_NONE # banned songs won't play, so we don't care about them
