@@ -72,8 +72,8 @@ class Pandora:
 	def authListener( self, user, pwd ):
 		reqUrl = BASE_URL_RID %( self.rid, "authenticateListener" )
 
-		req = xmlrpclib.dumps( ( self._timestamp(), "00000000000000000000000000000000", user, pwd, "html5tuner", "", "", "HTML5", True ), \
-								"listener.authenticateListener" )
+		req = xmlrpclib.dumps( ( self._timestamp(), "", user, pwd, "html5tuner", "", "", "HTML5", True ), \
+                                "listener.authenticateListener" )
 		#req = '<?xml version=\"1.0\"?><methodCall><methodName>listener.authenticateListener</methodName><params><param><value><int>%lu</int></value></param><param><value><string>%s</string></value></param><param><value><string>%s</string></value></param><param><value><string>html5tuner</string></value></param><param><value><string/></value></param><param><value><string/></value></param><param><value><string>HTML5</string></value></param><param><value><boolean>1</boolean></value></param></params></methodCall>' % (self._timestamp(), user, pwd)
 		
 		req = req.replace( "\n", "" )
