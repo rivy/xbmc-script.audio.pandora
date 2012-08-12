@@ -9,6 +9,8 @@ class PandaPlayer( xbmc.Player ):
 		self.timer = None
 
 	def playSong( self, item ):
+		print "PANDORA: Item 0 %s" % item[0]
+		print "PANDORA: Item 1 %s" % item[1]
 		self.play( item[0], item[1] )
 
 	def play( self, url, item ):
