@@ -1,18 +1,9 @@
-import sys
-import keys
-
 mod = long(2) ** 32
 
-def decryptString( strIn, key=keys.key_in ):
+def decryptString( strIn, key ):
 
 	dec = strIn.decode( "hex" )
 	ret = []
-
-#	print "Decoded:"
-#	for s in dec:
-#		sys.stdout.write( "%02x" %ord(s) )
-#	sys.stdout.flush()
-#	print
 
 	for i in range( 0, len( dec ), 8 ):
 		l = ord( dec[ i ]     ) << 24 | \
@@ -60,7 +51,7 @@ def decryptString( strIn, key=keys.key_in ):
 
 	return "".join( ret )
 
-def encryptString( inStr, key=keys.key_out ):
+def encryptString( inStr, key ):
 	blocks = ( len( inStr ) / 8 ) + 1
 
 	#Pad with \0  
@@ -117,11 +108,3 @@ def encryptString( inStr, key=keys.key_out ):
 		ret.append( chr( r & 0xff ) )
 
 	return "".join( ret ).encode( "hex" )
-
-
-
-if __name__ == "__main__":
-	print "In:",
-	strIn = raw_input()
-
-	print encryptString( strIn )

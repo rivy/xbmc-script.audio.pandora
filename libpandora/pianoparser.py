@@ -1,9 +1,7 @@
 import re
-import os
 
-def parse_file( fname ):
+def parse_file( f ):
 	
-	f = open( os.path.join( os.getcwd(), fname ), 'r' )
 	lines = f.readlines()
 	f.close()
 	lines = cleanup( lines )
@@ -25,7 +23,7 @@ def parse_file( fname ):
 				p = [ long( x, 0 ) for x in p ]
 			elif m.group(1) == 's':
 				a = re.search( "\{\{(.*)\}\}", i ).group(1)
-				b = a.split( "}, {" )
+				b = re.split( r"},\s*{", a )
 				for c in b:
 					d = c.split( "," )
 					if d[-1] == "": d = d[:-1]
