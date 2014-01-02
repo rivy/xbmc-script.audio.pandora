@@ -14,7 +14,11 @@
 #with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-from pandora import *
+from pithos.pandora.pandora import *
 
 def make_pandora(testing=False):
-    return Pandora()
+    if testing:
+        from pithos.pandora.fake import FakePandora
+        return FakePandora()
+    else:
+        return Pandora()
