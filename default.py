@@ -57,7 +57,7 @@ class Panda:
 		self.settings = __settings__
 		self.player = None
 		self.skinName = "Default"
-		
+
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "lowQuality", "mediumQuality", "highQuality" )[fmt]
 		try:
@@ -79,7 +79,7 @@ class Panda:
 				"pass" : self.settings.getSetting( "proxy_pass" )
 			}
 			self.pandora.set_proxy( "http://%(user)s:%(pass)s@%(host)s:%(port)s" % proxy_info )
-		
+
 		while not self.auth():
 			resp = xbmcgui.Dialog().yesno( "Pandora", \
 					"Failed to authenticate listener.", \
@@ -95,11 +95,11 @@ class Panda:
 		# Check if a value is set in the settings. If not then use Default.
 		if self.settings.getSetting ( "skin" ) != "":
 			self.skinName = self.settings.getSetting( "skin" )
-		
+
 		self.player = PandaPlayer( panda = self )
 
 		self.gui = PandaGUI( "script-pandora.xml", scriptPath, self.skinName)
-		
+
 		self.gui.setPanda( self )
 
 	def auth( self ):
@@ -107,11 +107,15 @@ class Panda:
 		pwd = self.settings.getSetting( "password" )
 		if user == "" or pwd == "":
 			return False
+		client_id = pithos.pandora.data.default_client_id
+		pandoraone = self.settings.getSetting( "pandoraone" )
+		if pandoraone == "true":
+			client_id = pithos.pandora.data.default_one_client_id
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Logging In..." )
 		dlg.update( 0 )
 		try:
-			self.pandora.connect(pithos.pandora.data.client_keys[pithos.pandora.data.default_client_id], user, pwd)
+			self.pandora.connect(pithos.pandora.data.client_keys[client_id], user, pwd)
 		except PandoraError, e:
 			return 0;
 		dlg.close()
@@ -128,7 +132,7 @@ class Panda:
 	def getStations( self ):
 		self.pandora.get_stations()
 		return self.pandora.stations
-	
+
 	def getMoreSongs( self ):
 		print "PANDORA: getting more songs"
 		if self.curStation == "":
@@ -140,7 +144,7 @@ class Panda:
 			print "PANDORA: Adding song %s" % song.title
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
-	
+
 			item = xbmcgui.ListItem( song.title )
 			item.setIconImage( thumbnail )
 			item.setThumbnailImage( thumbnail )

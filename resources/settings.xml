@@ -1,6 +1,8 @@
 <settings>
 	<setting id="username" type="text" label="Username (email)"/>
 	<setting id="password" type="text" label="Password" option="hidden"/>
+	<setting id="pandoraone" type="bool" label="Pandora One (only enable if you're a subscriber)"
+		default="false"/>
 	<setting type="sep"/>
 	<setting id="skin" type="labelenum" label="Skin"
 		values="Default|Alaska|Smoke" default="Default"/>
