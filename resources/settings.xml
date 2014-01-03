@@ -24,6 +24,11 @@
 		visible="eq(-3,true)"/>
 	<setting id="proxy_pass" type="text" label="Proxy Password"
 		option="hidden" visible="eq(-4,true)"/>
+	<setting type="sep"/>
+	<setting id="scrobble_hack" type="bool" label="Use duration HACK to enable scrobbling"
+		default="false"/>
+	<setting id="scrobble_hack_time" type="enum" label="(For HACK) Time within song to scrobble"
+		visible="eq(-1,true)" values="30s|60s|90s|120s" default="1"/>
 	<setting id="firstrun" type="bool" label="" visible="false"
 		default="true"/>
 </settings>

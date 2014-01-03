@@ -157,6 +157,10 @@ class Panda:
 				 "artist"	:	song.artist, \
 				 "album"	:	song.album, \
 				}
+			## HACK: set fictional duration to enable scrobbling
+			if self.settings.getSetting( "scrobble_hack" ) == "true":
+				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
+				info["duration"] = duration
 			print "PANDORA: item info = %s" % info
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
