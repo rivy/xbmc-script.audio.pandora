@@ -11,6 +11,8 @@
 		values="Default|Alaska|Smoke" default="Default"/>
 	<setting id="thumbnailArtwork" type="enum" label="Thumbnail Artwork"
 		values="Album|Artist" default="0"/>
+	<setting id="sort_stations" type="bool" label="Sort stations"
+		default="false"/>
 	<setting type="sep"/>
 	<setting id="logo" type="bool" label="Display Pandora logo (in full-screen mode)"
 		default="true"/>

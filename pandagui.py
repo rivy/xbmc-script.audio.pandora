@@ -30,10 +30,22 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Fetching Stations" )
 		dlg.update( 0 )
+		stations = {}
+		station_names = []
 		for s in self.panda.getStations():
+			#print "station[%s] = %s, %s" % (s.name.encode('utf-8'), s.id.encode('utf-8'), s.isQuickMix)
+			if s.isQuickMix:
+				s.name = "* [ "+s.name+" ]"
 			tmp = xbmcgui.ListItem(s.name)
 			tmp.setProperty( "stationId", s.id )
-			self.list.addItem(tmp)
+			stations[s.name] = tmp
+			station_names.append( s.name )
+		if self.panda.settings.getSetting( "sort_stations" ) == "true":
+			station_names = sorted( station_names )
+		station_list = []
+		for name in station_names:
+			station_list.append( stations[name] )
+		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
 		self.getControl(BTN_THUMBED_UP).setVisible(False)
