@@ -3,10 +3,10 @@ import xbmc
 import xbmcaddon
 import os, sys
 
-__title__ = "Pandora"
-__script_id__ = "script.xbmc.pandora"
-__settings__ = xbmcaddon.Addon(id=__script_id__)
-__version__ = "2.1.0"
+__settings__  = xbmcaddon.Addon()
+__script_id__ = __settings__.getAddonInfo('id')
+__title__     = __settings__.getAddonInfo('name')
+__version__   = __settings__.getAddonInfo('version')
 
 print "PANDORA: Initializing v%s" %__version__
 print "PANDORA: sys.platform = %s" %sys.platform
@@ -21,14 +21,12 @@ import pithos.pandora.data
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
-
 scriptPath = __settings__.getAddonInfo('path')
 
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
 #Workaround: open() doesn't translate path correctly on some versions
 dataDir = xbmc.translatePath( dataDir )
-
 
 if __settings__.getSetting( "firstrun" ) == "true":
 	print  "PANDORA: First run, showing settings dialog"
@@ -62,7 +60,6 @@ class Panda:
 		fmt = ( "lowQuality", "mediumQuality", "highQuality" )[fmt]
 		try:
 			self.pandora = Pandora()
-			#self.pandora.set_audio_format(fmt)
 			self.pandora.set_audio_quality(fmt)
 		except PandoraError, e:
 			xbmcgui.Dialog().ok( "Pandora", "Error: %s" %e )
