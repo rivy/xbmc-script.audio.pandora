@@ -46,8 +46,11 @@ class PandaPlayer( xbmc.Player ):
 		print "PANDORA: playing = %s" %self.panda.playing
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
-		if self.panda.playing:
-			if self.panda.skip:
-				self.panda.skip = False
+		if self.panda.playing and self.panda.skip:
+			self.panda.skip = False
 			self.timer = Timer( self.playNextSong_delay, self.panda.playNextSong )
 			self.timer.start()
+		else:
+			if xbmc.getCondVisibility('Skin.HasSetting(PandoraVis)'):
+				xbmc.executebuiltin('Skin.Reset(PandoraVis)')
+			self.panda.stop()
