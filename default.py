@@ -8,11 +8,13 @@ __script_id__ = __settings__.getAddonInfo('id')
 __title__     = __settings__.getAddonInfo('name')
 __version__   = __settings__.getAddonInfo('version')
 
-print "PANDORA: Initializing v%s" %__version__
-print "PANDORA: sys.platform = %s" %sys.platform
+TITLE = __title__.upper()
+
+print TITLE+": Initializing v%s" % __version__
+print TITLE+": sys.platform = %s" % sys.platform
 
 dlg = xbmcgui.DialogProgress()
-dlg.create( "PANDORA", "Loading Script..." )
+dlg.create( TITLE, "Loading Script..." )
 dlg.update( 0 )
 
 from pithos.pandora.pandora import Pandora, PandoraError
@@ -29,7 +31,7 @@ dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 dataDir = xbmc.translatePath( dataDir )
 
 if __settings__.getSetting( "firstrun" ) == "true":
-	print  "PANDORA: First run, showing settings dialog"
+	print  TITLE+": First run, showing settings dialog"
 	__settings__.openSettings()
 	__settings__.setSetting( "firstrun", "false" )
 
@@ -62,13 +64,13 @@ class Panda:
 			self.pandora = Pandora()
 			self.pandora.set_audio_quality(fmt)
 		except PandoraError, e:
-			xbmcgui.Dialog().ok( "Pandora", "Error: %s" %e )
+			xbmcgui.Dialog().ok( __title__, "Error: %s" %e )
 			self.die = True
 			return
 
 		#Proxy settings
 		if self.settings.getSetting( "proxy_enable" ) == "true":
-			print "PANDORA: Proxy Enabled"
+			print TITLE+": Proxy Enabled"
 			proxy_info = {
 				"host" : self.settings.getSetting( "proxy_server" ),
 				"port" : self.settings.getSetting( "proxy_port" ),
@@ -78,7 +80,7 @@ class Panda:
 			self.pandora.set_proxy( "http://%(user)s:%(pass)s@%(host)s:%(port)s" % proxy_info )
 
 		while not self.auth():
-			resp = xbmcgui.Dialog().yesno( "Pandora", \
+			resp = xbmcgui.Dialog().yesno( __title__, \
 					"Failed to authenticate listener.", \
 					"Check username/password and try again.", \
 					"Show Settings?" )
@@ -109,7 +111,7 @@ class Panda:
 		if pandoraone == "true":
 			client_id = pithos.pandora.data.default_one_client_id
 		dlg = xbmcgui.DialogProgress()
-		dlg.create( "PANDORA", "Logging In..." )
+		dlg.create( TITLE, "Logging In..." )
 		dlg.update( 0 )
 		try:
 			self.pandora.connect(pithos.pandora.data.client_keys[client_id], user, pwd)
@@ -120,26 +122,31 @@ class Panda:
 
 	def playStation( self, stationId ):
 		self.curStation = stationId
+		station = self.pandora.get_station_by_id(self.curStation);
+		dlg = xbmcgui.DialogProgress()
+		dlg.create( TITLE, "Opening Pandora station: " + station.name )
+		dlg.update( 0 )
 		self.settings.setSetting( 'last_station_id', stationId )
 		self.curSong = None
 		self.playlist = []
 		self.getMoreSongs()
 		self.playing = True
 		self.playNextSong()
+		dlg.close()
 
 	def getStations( self ):
 		self.pandora.get_stations()
 		return self.pandora.stations
 
 	def getMoreSongs( self ):
-		print "PANDORA: getting more songs"
+		print TITLE+": getting more songs"
 		if self.curStation == "":
 			raise PandaException()
 		items = []
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
-			print "PANDORA: Adding song %s" % song.title
+			print TITLE+": Adding song %s" % song.title
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
@@ -159,7 +166,7 @@ class Panda:
 			if self.settings.getSetting( "scrobble_hack" ) == "true":
 				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
 				info["duration"] = duration
-			print "PANDORA: item info = %s" % info
+			print TITLE+": item info = %s" % info
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
 
@@ -192,7 +199,7 @@ class Panda:
 				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
 				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
 			else:
-				print "PANDORA: !!!! Unrecognised rating"
+				print TITLE+": !!!! Unrecognised rating"
 		except IndexError:
 			self.curSong = None
 			self.getMoreSongs()
@@ -247,7 +254,7 @@ class Panda:
 if __name__ == '__main__':
 	if __settings__.getSetting( "username" ) == "" or \
 		__settings__.getSetting( "password" ) == "":
-		xbmcgui.Dialog().ok( "Pandora", \
+		xbmcgui.Dialog().ok( __title__, \
 			"Username and/or password not specified" )
 		__settings__.setSetting( "firstrun", "true" )
 	else:
