@@ -19,6 +19,8 @@ BTN_TIRED = 336
 BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
+STATION_LIST_ID = 200
+
 class PandaGUI(xbmcgui.WindowXMLDialog):
 
 	def setPanda( self, panda ):
@@ -26,7 +28,10 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 
 	def onInit(self):
 		print "PANDORA: Window Initalized!!!"
-		self.list = self.getControl(200)
+		play_station_n = -1
+		last_station_id = self.panda.settings.getSetting('last_station_id')
+		auto_start = self.panda.settings.getSetting('auto_start')
+		self.list = self.getControl( STATION_LIST_ID )
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( "PANDORA", "Fetching Stations" )
 		dlg.update( 0 )
@@ -45,6 +50,9 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		station_list = []
 		for name in station_names:
 			station_list.append( stations[name] )
+			if stations[name].getProperty('stationId') == last_station_id:
+				play_station_n = len(station_list) - 1
+			print "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
 		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
@@ -53,6 +61,18 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		logo = self.getControl(100)
 		if self.panda.settings.getSetting( "logo" ) == "false":
 			logo.setPosition(-100, -100)
+
+		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
+			dlg.create( "PANDORA", "Now starting station: "+station_list[play_station_n].getLabel().encode('utf-8') )
+			dlg.update( 0 )
+			self.list.selectItem( play_station_n )
+			self.setFocusId( STATION_LIST_ID )
+			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel(), station_list[play_station_n].getProperty('stationId'))
+			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel(), self.list.getSelectedItem().getProperty('stationId'))
+			print "START: station_id = %s" % last_station_id
+			self.panda.playStation( last_station_id )
+			dlg.close
+
 
 	def onAction(self, action):
 		buttonCode =  action.getButtonCode()
@@ -70,7 +90,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			self.panda.skipSong()
 
 	def onClick(self, controlID):
-		if (controlID == 200): #List Item
+		if (controlID == STATION_LIST_ID): # station list control
 			selItem = self.list.getSelectedItem()
 			self.panda.playStation( selItem.getProperty("stationId") )
 		elif self.panda.playing:

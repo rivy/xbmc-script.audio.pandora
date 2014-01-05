@@ -120,6 +120,7 @@ class Panda:
 
 	def playStation( self, stationId ):
 		self.curStation = stationId
+		self.settings.setSetting( 'last_station_id', stationId )
 		self.curSong = None
 		self.playlist = []
 		self.getMoreSongs()

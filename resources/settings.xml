@@ -14,6 +14,9 @@
 	<setting id="sort_stations" type="bool" label="Sort stations"
 		default="false"/>
 	<setting type="sep"/>
+	<setting id="auto_start" type="bool" label="Automatically start playing previously selected station"
+		default="false"/>
+	<setting type="sep"/>
 	<setting id="logo" type="bool" label="Display Pandora logo (in full-screen mode)"
 		default="true"/>
 	<setting type="sep"/>
@@ -34,4 +37,6 @@
 		visible="eq(-1,true)" values="30s|60s|90s|120s" default="1"/>
 	<setting id="firstrun" type="bool" label="" visible="false"
 		default="true"/>
+	<setting id="last_station_id" type="text" label="" visible="false"
+		default=""/>
 </settings>
