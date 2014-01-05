@@ -11,6 +11,8 @@ Usage:
 	Set login information in script properties (prompts on run if not set)
 	Pick a station and enjoy the music :)
 
+Further Information:
+
 XBMC Listing @ http://wiki.xbmc.org/index.php?title=Add-on:Pandora
 Forum Discussion @ http://forum.xbmc.org/showthread.php?tid=70471
 Repository @ https://github.com/rivy/xbmc-pandora
@@ -32,7 +34,7 @@ Credits: (as of 2014-01-01)
 	Borrowed a few images for initial testing release.
 
  - Pithos Project @ http://pithos.github.io
-	A Pandora Radio Client; Copyright (c) Kevin Mehall, Creative Commons - Attribution-ShareAlike
+	A Pandora Radio Client; Copyright (c) Kevin Mehall [CC:BY-SA]
 	Using the implementation of the JSON Pandora API for access to Pandora
 	repo: https://github.com/pithos/pithos
 
@@ -52,8 +54,10 @@ Credits: (as of 2014-01-01)
 	Skins
 
  - k3oni
-	Several suggestions and code examples from his repo @ https://github.com/k3oni/script.xbmc.pandora.git
+	Several suggestions and code examples from his repo
+	repo: https://github.com/k3oni/script.xbmc.pandora.git
 
  - robweber
-	Several suggestions and code examples from his repo @ https://github.com/robweber/script.xbmc.pandorajson.git
+	Several suggestions and code examples from his repo
+	repo: https://github.com/robweber/script.xbmc.pandorajson.git
 	
