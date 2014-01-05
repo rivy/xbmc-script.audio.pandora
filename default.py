@@ -27,7 +27,7 @@ scriptPath = __settings__.getAddonInfo('path')
 
 dataDir = os.path.join( "special://profile/addon_data/%s/" %__script_id__ )
 
-#Workaround: open() doesn't translate path correctly on some versions
+# Workaround: open() doesn't translate path correctly on some versions
 dataDir = xbmc.translatePath( dataDir )
 
 if __settings__.getSetting( "firstrun" ) == "true":
@@ -40,8 +40,9 @@ BTN_THUMB_UP = 331
 BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
+# class wrapper around Pandora()
+# * adds proxy support back into the class
 import urllib2
-
 class My_Pandora( Pandora ):
 	def __init__( self ):
 		Pandora.__init__( self )
@@ -51,8 +52,12 @@ class My_Pandora( Pandora ):
 		if proxy:
 			proxy_handler = urllib2.ProxyHandler({'http': proxy})
 			self.opener = urllib2.build_opener(proxy_handler)
+			## _or_ set_url_opener()
+			#self.set_url_opener( urllib2.build_opener(proxy_handler) )
 		else:
 			self.opener = urllib2.build_opener()
+			## _or_ set_url_opener()
+			#self.set_url_opener( urllib2.build_opener() )
 
 
 class PandaException( Exception ):
