@@ -1,7 +1,9 @@
-Pandora Radio Script for XBMC
+Pandora Radio for XBMC
+
+* uses the Pandora JSON API from the Pithos Project
 
 This script is released freely without restrictions, but also without
-warrenty as described in the file "COPYING.txt"
+warrenty, as described in the file "COPYING.txt"
 
 Usage:
 
@@ -9,16 +11,37 @@ Usage:
 	Set login information in script properties (prompts on run if not set)
 	Pick a station and enjoy the music :)
 
-Credits:
+Further Information:
+
+XBMC Listing @ http://wiki.xbmc.org/index.php?title=Add-on:Pandora
+Forum Discussion @ http://forum.xbmc.org/showthread.php?tid=70471
+Repository @ https://github.com/rivy/xbmc-pandora
+Issues @ https://github.com/rivy/xbmc-pandora/issues
+
+Credits: (as of 2014-01-01)
+
+ - rivy
+	Updates / improvements, scrobbling enhancements, and current maintainence
+
+ - spbogie
+	Original script implementation and maintainence
+
+ - VTWoods
+	Replaced libpandora with the pandora implementation from pithos.
 
  - TWC Supplemental by Nuka1195
 	Used extensively as a reference for building the GUI.
 	Borrowed a few images for initial testing release.
 
+ - Pithos Project @ http://pithos.github.io
+	A Pandora Radio Client; Copyright (c) Kevin Mehall [CC:BY-SA]
+	Using the implementation of the JSON Pandora API for access to Pandora
+	repo: https://github.com/pithos/pithos
+
  - pianobar
 	Copyright (c) 2008-2010 Lars-Dominik Braun <PromyLOPh@lavabit.com>
 	http://github.com/PromyLOPh/pianobar | http://6xq.net/html/00/17.html
-		Uses as early reference for parts of the pandora protocol.
+		Used as early reference for parts of the pandora protocol.
 
  - jurmb84
 	Modified existing script to work with new xbmc addon framework.
@@ -30,5 +53,11 @@ Credits:
  - htpc_guy
 	Skins
 
-- VTWoods
-	Replaced libpandora with the pandora implementation from pithos.
+ - k3oni
+	Several suggestions and code examples from his repo
+	repo: https://github.com/k3oni/script.xbmc.pandora.git
+
+ - robweber
+	Several suggestions and code examples from his repo
+	repo: https://github.com/robweber/script.xbmc.pandorajson.git
+	
