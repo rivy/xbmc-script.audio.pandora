@@ -4,7 +4,7 @@ from threading import Timer
 class PandaPlayer( xbmc.Player ):
 
 	def __init__( self, core=None, panda=None ):
-		xbmc.Player.__init__( self )
+		xbmc.Player.__init__( self, xbmc.PLAYER_CORE_MPLAYER )
 		self.panda = panda
 		self.timer = None
 		self.playNextSong_delay = 0.5
@@ -15,7 +15,7 @@ class PandaPlayer( xbmc.Player ):
 		self.play( item[0], item[1] )
 
 	def play( self, url, item ):
-		xbmc.Player().play( url, item )
+		xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( url, item )
 
 	def onPlayBackStarted( self ):
 		print "PANDORA: onPlayBackStarted: %s" %self.getPlayingFile()
