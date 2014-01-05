@@ -40,8 +40,24 @@ BTN_THUMB_UP = 331
 BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
+import urllib2
+
+class My_Pandora( Pandora ):
+	def __init__( self ):
+		Pandora.__init__( self )
+		self.set_proxy(None)
+
+	def set_proxy(self, proxy):
+		if proxy:
+			proxy_handler = urllib2.ProxyHandler({'http': proxy})
+			self.opener = urllib2.build_opener(proxy_handler)
+		else:
+			self.opener = urllib2.build_opener()
+
+
 class PandaException( Exception ):
 	pass
+
 
 class Panda:
 
@@ -61,7 +77,7 @@ class Panda:
 		fmt = int(self.settings.getSetting( "format" ))
 		fmt = ( "lowQuality", "mediumQuality", "highQuality" )[fmt]
 		try:
-			self.pandora = Pandora()
+			self.pandora = My_Pandora()
 			self.pandora.set_audio_quality(fmt)
 		except PandoraError, e:
 			xbmcgui.Dialog().ok( __title__, "Error: %s" %e )
