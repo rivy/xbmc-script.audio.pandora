@@ -1,6 +1,6 @@
 Pandora Radio for XBMC
 
-* JSON API via the Pithos Project
+* uses the Pandora JSON API from the Pithos Project
 
 This script is released freely without restrictions, but also without
 warrenty, as described in the file "COPYING.txt"
