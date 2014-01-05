@@ -15,3 +15,6 @@
 1.2.8 New skins from htpc_guy :-)
 1.2.9 bugfixes
 1.2.10 bugfixes
+2.1.0 full transition to Pandora JSON API via Pithos
+2.1.2 upstream Pithos update, bugfix for URL matching to new Pandora CDN source
+2.2.0 proxy bugfixes; re-enable scrobbling; optional auto-playback & station sorting
