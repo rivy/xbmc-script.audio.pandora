@@ -84,8 +84,6 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
 			else:
 				self.panda.quit()
-
-
 		elif (actionID == ACTION_NEXT_ITEM ):
 			self.panda.skipSong()
 

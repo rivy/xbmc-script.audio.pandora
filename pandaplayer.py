@@ -20,6 +20,7 @@ class PandaPlayer( xbmc.Player ):
 	def onPlayBackStarted( self ):
 		print "PANDORA: onPlayBackStarted: %s" %self.getPlayingFile()
 		if self.panda.playing:
+			# ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			if not "pandora.com" in self.getPlayingFile():
 				if not "p-cdn.com" in self.getPlayingFile():
 					self.panda.playing = False
@@ -52,5 +53,6 @@ class PandaPlayer( xbmc.Player ):
 			self.timer.start()
 		else:
 			if xbmc.getCondVisibility('Skin.HasSetting(PandoraVis)'):
+				# turn off visualization
 				xbmc.executebuiltin('Skin.Reset(PandoraVis)')
 			self.panda.stop()
