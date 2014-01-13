@@ -5,7 +5,7 @@
        provider-name="spbogie, vtwoods, rivy">
   <requires>
     <!-- Eden: xbmc.python 1.0; Frodo: xbmc.python 2.1.0; Gotham: ? -->
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="2.1.0"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py">
     <provides>audio</provides>
