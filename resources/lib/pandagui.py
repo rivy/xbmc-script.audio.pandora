@@ -62,7 +62,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			station_list.append( stations[name] )
 			if stations[name].getProperty('stationId') == last_station_id:
 				play_station_n = len(station_list) - 1
-			print "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel().encode('utf-8'), station_list[len(station_list)-1].getProperty('stationId'))
+			print "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
 		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
@@ -73,7 +73,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			logo.setPosition(-100, -100)
 
 		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
-			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel().encode('utf-8') )
+			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel() )
 			dlg.update( 0 )
 			self.list.selectItem( play_station_n )
 			self.setFocusId( STATION_LIST_ID )
