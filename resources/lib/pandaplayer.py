@@ -1,6 +1,13 @@
 import xbmc
 from threading import Timer
 
+import xbmcaddon
+
+_settings   = xbmcaddon.Addon()
+_name       = _settings.getAddonInfo('name')
+
+_NAME = _name.upper()
+
 class PandaPlayer( xbmc.Player ):
 
 	def __init__( self, core=None, panda=None ):
@@ -10,15 +17,15 @@ class PandaPlayer( xbmc.Player ):
 		self.playNextSong_delay = 0.5
 
 	def playSong( self, item ):
-		print "PANDORA: Item 0 %s" % item[0]
-		print "PANDORA: Item 1 %s" % item[1]
+		print _NAME+": Item 0 %s" % item[0]
+		print _NAME+": Item 1 %s" % item[1]
 		self.play( item[0], item[1] )
 
 	def play( self, url, item ):
 		xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( url, item )
 
 	def onPlayBackStarted( self ):
-		print "PANDORA: onPlayBackStarted: %s" %self.getPlayingFile()
+		print _NAME+": onPlayBackStarted: %s" %self.getPlayingFile()
 		if self.panda.playing:
 			# ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			if not "pandora.com" in self.getPlayingFile():
@@ -30,9 +37,9 @@ class PandaPlayer( xbmc.Player ):
 				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
 
 	def onPlayBackEnded( self ):
-		print "PANDORA: onPlayBackEnded"
+		print _NAME+": onPlayBackEnded"
 		self.stop()
-		print "PANDORA: playing = %s" %self.panda.playing
+		print _NAME+": playing = %s" %self.panda.playing
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.skip:
@@ -42,9 +49,9 @@ class PandaPlayer( xbmc.Player ):
 			self.timer.start()
 
 	def onPlayBackStopped( self ):
-		print "PANDORA: onPlayBackStopped"
+		print _NAME+": onPlayBackStopped"
 		self.stop()
-		print "PANDORA: playing = %s" %self.panda.playing
+		print _NAME+": playing = %s" %self.panda.playing
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.playing and self.panda.skip:
