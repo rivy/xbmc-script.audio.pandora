@@ -173,11 +173,11 @@ class Panda:
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
-			print __NAME__+": Adding song %s" % song.__NAME__
+			print __name+": Adding song %s" % song.title
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
-			item = xbmcgui.ListItem( song.__NAME__ )
+			item = xbmcgui.ListItem( song.title )
 			item.setIconImage( thumbnail )
 			item.setThumbnailImage( thumbnail )
 			item.setProperty( "Cover", thumbnail )
@@ -185,7 +185,8 @@ class Panda:
 				item.setProperty( "Rating", song.rating_str )
 			else:
 				item.setProperty( "Rating", "" )
-			info = { "__NAME__"	:	song.__NAME__, \
+			info = {
+				 "title"	:	song.title, \
 				 "artist"	:	song.artist, \
 				 "album"	:	song.album, \
 				}
