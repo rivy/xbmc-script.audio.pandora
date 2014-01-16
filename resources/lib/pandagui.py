@@ -48,7 +48,9 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		stations = {}
 		station_names = []
 		for s in self.panda.getStations():
-			#print "station[%s] = %s, %s" % (s.name.encode('utf-8'), s.id.encode('utf-8'), s.isQuickMix)
+			s.name = s.name.encode('utf-8')
+			s.id = s.id.encode('utf-8')
+			#print "station[%s] = %s, %s" % ( s.name, s.id, s.isQuickMix )
 			if s.isQuickMix:
 				s.name = "* [ "+s.name+" ]"
 			tmp = xbmcgui.ListItem(s.name)
