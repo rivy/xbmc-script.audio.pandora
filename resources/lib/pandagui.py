@@ -2,10 +2,10 @@ import xbmc, xbmcgui
 
 import xbmcaddon
 
-__settings   = xbmcaddon.Addon()
-__name       = __settings.getAddonInfo('name')
+_settings   = xbmcaddon.Addon()
+_name       = _settings.getAddonInfo('name')
 
-__NAME = __name.upper()
+_NAME = _name.upper()
 
 # ToDO: DRY these IDs
 ##
@@ -37,13 +37,13 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.panda = panda
 
 	def onInit(self):
-		print __name+": Window Initalized!!!"
+		print _name+": Window Initalized!!!"
 		play_station_n = -1
 		last_station_id = self.panda.settings.getSetting('last_station_id')
 		auto_start = self.panda.settings.getSetting('auto_start')
 		self.list = self.getControl( STATION_LIST_ID )
 		dlg = xbmcgui.DialogProgress()
-		dlg.create( __NAME, "Fetching Stations" )
+		dlg.create( _NAME, "Fetching Stations" )
 		dlg.update( 0 )
 		stations = {}
 		station_names = []
@@ -73,7 +73,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			logo.setPosition(-100, -100)
 
 		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
-			dlg.create( __NAME, "Now starting station: "+station_list[play_station_n].getLabel().encode('utf-8') )
+			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel().encode('utf-8') )
 			dlg.update( 0 )
 			self.list.selectItem( play_station_n )
 			self.setFocusId( STATION_LIST_ID )
