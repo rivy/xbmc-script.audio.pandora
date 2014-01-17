@@ -5,10 +5,16 @@
 	- structure notes: http://wiki.xbmc.org/index.php?title=Add-on_structure
 	- addon rules: http://wiki.xbmc.org/index.php?title=Add-on_Rules
 	- addon standards: http://wiki.xbmc.org/index.php?title=Add-on_Standards
-	
-* v12/Frodo coding notes:
-	...	
 
-* v13/Gotham coding notes:
+* v11/Eden API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Eden_API_changes
+	...
+
+* v12/Frodo API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Frodo_API_changes
+	...
+
+* v13/Gotham API/coding notes:
+	URLref: http://wiki.xbmc.org/index.php?title=Gotham_API_changes
 	URLref: http://xbmc.org/xbmc-13-gotham-note-to-add-on-developers
 	"Due to these changes we have set the minimum python API version to 2.1.0 which has to be set in addon.xml. Since this version was already available in Frodo it won’t affect your Add-on in any way. Any Add-on that still has a lower API version set will still work in Frodo but will be marked broken in Gotham."
