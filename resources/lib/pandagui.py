@@ -9,14 +9,17 @@ _NAME = _name.upper()
 
 # ToDO: DRY these IDs
 ##
+# URLref: https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
 KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467
 
+# URLref: https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
 ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
 ACTION_NEXT_ITEM = 14
 ACTION_NAV_BACK = 92
 
+# skin control IDs
 BTN_THUMB_DN = 330
 BTN_THUMB_UP = 331
 BTN_PLAY_PAUSE = 332
