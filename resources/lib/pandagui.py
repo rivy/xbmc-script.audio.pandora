@@ -53,7 +53,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		for s in self.panda.getStations():
 			s.name = s.name.encode('utf-8')
 			s.id = s.id.encode('utf-8')
-			#print "station[%s] = %s, %s" % ( s.name, s.id, s.isQuickMix )
+			#print _name+": station[%s] = %s, %s" % ( s.name, s.id, s.isQuickMix )
 			if s.isQuickMix:
 				s.name = "* [ "+s.name+" ]"
 			tmp = xbmcgui.ListItem(s.name)
@@ -67,7 +67,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			station_list.append( stations[name] )
 			if stations[name].getProperty('stationId') == last_station_id:
 				play_station_n = len(station_list) - 1
-			print "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
+			#print _name+": station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
 		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
@@ -82,9 +82,9 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			dlg.update( 0 )
 			self.list.selectItem( play_station_n )
 			self.setFocusId( STATION_LIST_ID )
-			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel().encode('utf-8'), station_list[play_station_n].getProperty('stationId'))
-			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId'))
-			print "START: station_id = %s" % last_station_id
+			##print _name+": START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel().encode('utf-8'), station_list[play_station_n].getProperty('stationId'))
+			##print _name+": START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId'))
+			print _name+": START: station_id = %s" % last_station_id
 			self.panda.playStation( last_station_id )
 			dlg.close
 
@@ -129,7 +129,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			elif controlID == BTN_TIRED:
 				#obj = self.getControl(BTN_TIRED)
 				#for attr in dir(obj):
-				#	print ">>> obj.%s = %s" % (attr, getattr(obj, attr))
+				#	print _name+": >>> obj.%s = %s" % (attr, getattr(obj, attr))
 				self.panda.addTiredSong()
 				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:

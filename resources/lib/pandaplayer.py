@@ -17,8 +17,8 @@ class PandaPlayer( xbmc.Player ):
 		self.playNextSong_delay = 0.5
 
 	def playSong( self, item ):
-		print _NAME+": Item 0 %s" % item[0]
-		print _NAME+": Item 1 %s" % item[1]
+		print _name+": playSong: item[url] %s" % item[0]
+		print _name+": playSong: item[item] %s" % item[1]
 		self.play( item[0], item[1] )
 
 	def play( self, url, item ):
@@ -31,7 +31,7 @@ class PandaPlayer( xbmc.Player ):
 		# ToDO: discuss with the XBMC Team what the solution to this problem would be
 
 	def onPlayBackStarted( self ):
-		print _NAME+": onPlayBackStarted: %s" %self.getPlayingFile()
+		print _name+": onPlayBackStarted: %s" %self.getPlayingFile()
 		if self.panda.playing:
 			# ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			if not "pandora.com" in self.getPlayingFile():
@@ -43,9 +43,9 @@ class PandaPlayer( xbmc.Player ):
 				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
 
 	def onPlayBackEnded( self ):
-		print _NAME+": onPlayBackEnded"
+		print _name+": onPlayBackEnded"
 		self.stop()
-		print _NAME+": playing = %s" %self.panda.playing
+		print _name+": playing = %s" %self.panda.playing
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.skip:
@@ -55,9 +55,9 @@ class PandaPlayer( xbmc.Player ):
 			self.timer.start()
 
 	def onPlayBackStopped( self ):
-		print _NAME+": onPlayBackStopped"
+		print _name+": onPlayBackStopped"
 		self.stop()
-		print _NAME+": playing = %s" %self.panda.playing
+		print _name+": playing = %s" %self.panda.playing
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.playing and self.panda.skip:
