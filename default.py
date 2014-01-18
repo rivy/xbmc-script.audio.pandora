@@ -6,13 +6,13 @@ import os, sys
 _settings   = xbmcaddon.Addon()
 _name       = _settings.getAddonInfo('name')
 _version    = _settings.getAddonInfo('version')
-_path       = _settings.getAddonInfo('path')
+_path       = xbmc.translatePath( _settings.getAddonInfo('path') ).decode('utf-8')
 _lib        = xbmc.translatePath( os.path.join( _path, 'resources', 'lib' ) )
 ## not used
 _id         = _settings.getAddonInfo('id')
+_profile    = xbmc.translatePath( _settings.getAddonInfo('profile').decode('utf-8') )
+_data       = xbmc.translatePath( os.path.join( "special://profile/addon_data/%s/" % _id.decode('utf-8') ) )
 _language   = _settings.getLocalizedString
-_profile    = xbmc.translatePath( _settings.getAddonInfo('profile') )
-_data       = xbmc.translatePath( os.path.join( "special://profile/addon_data/%s/" %_id ) )
 ##
 
 sys.path.append (_lib)
