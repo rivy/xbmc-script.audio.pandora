@@ -2,7 +2,7 @@
 <addon id="plugin.audio.pandora"
        name="Pandora"
        version="2.3.0"
-       provider-name="spbogie, vtwoods, rivy">
+       provider-name="rivy">
   <requires>
     <!-- Eden: xbmc.python 1.0; Frodo: xbmc.python 2.1.0; Gotham: ? -->
     <import addon="xbmc.python" version="2.1.0"/>
@@ -12,13 +12,12 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Pandora Radio</summary>
-    <description lang="en">Pandora Internet Radio for XBMC</description>
-        <license>GPL-3.0</license>
-        <!-- see LICENSE.txt or <http://opensource.org/licenses/GPL-3.0> -->
+    <description lang="en">Pandora Radio for XBMC.</description>
+    <license>GPL-3.0</license><!-- see LICENSE.txt or [http://opensource.org/licenses/GPL-3.0] -->
     <platform>all</platform>
     <website></website>
     <email></email>
     <forum>http://forum.xbmc.org/showthread.php?tid=70471</forum>
-    <source>https://github.com/rivy/xbmc-pandora</source>
+    <source>https://github.com/rivy/xbmc-plugin.audio.pandora</source>
   </extension>
 </addon>

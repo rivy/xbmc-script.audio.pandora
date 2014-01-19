@@ -1,9 +1,12 @@
+
 Pandora Radio for XBMC
 
-* uses the Pandora JSON API from the Pithos Project
+* uses the Pandora JSON API via the client from the Pithos Project
 
-This script is released under the GPL-3.0 license, without
-warranty, as further described in the file "COPYING.txt"
+This software is released under the GNU General Public License,
+version 3 (aka, GPL-3.0), WITHOUT ANY WARRANTY, as further
+described in the file "LICENSE.txt" (and also published at
+<http://opensource.org/licenses/GPL-3.0>).
 
 Usage:
 
@@ -21,34 +24,36 @@ Issues @ https://github.com/rivy/xbmc-pandora/issues
 Credits: (as of 2014-01-01)
 
  - rivy
-	Updates / improvements, scrobbling enhancements, and current maintainence
+	Updates / improvements, scrobbling enhancements, and current maintenance
 
  - spbogie
-	Original script implementation and maintainence
+	Original script implementation and maintenance
 
  - VTWoods
-	Replaced libpandora with the pandora implementation from pithos.
+	Replaced libpandora with the pandora implementation from pithos
 
  - TWC Supplemental by Nuka1195
-	Used extensively as a reference for building the GUI.
-	Borrowed a few images for initial testing release.
+	Used extensively as a reference for building the GUI
+	Borrowed a few images for initial testing release
 
  - Pithos Project @ http://pithos.github.io
-	A Pandora Radio Client; Copyright (c) Kevin Mehall [CC:BY-SA]
-	Using the implementation of the JSON Pandora API for access to Pandora
+	A Pandora Radio Client; Copyright (c) Kevin Mehall
+	License: Creative Commons Attribution-ShareAlike 3.0 United States
+	- [CC BY-SA 3.0 US] @ http://creativecommons.org/licenses/by-sa/3.0/us/legalcode
+	Contains the Pandora JSON API client implementation for access to Pandora
 	repo: https://github.com/pithos/pithos
 
  - pianobar
 	Copyright (c) 2008-2010 Lars-Dominik Braun <PromyLOPh@lavabit.com>
 	http://github.com/PromyLOPh/pianobar | http://6xq.net/html/00/17.html
-		Used as early reference for parts of the pandora protocol.
+	- Used as early reference for parts of the pandora protocol
 
  - jurmb84
-	Modified existing script to work with new xbmc addon framework.
+	Modified existing script to work with new xbmc addon framework
 
  - smorloc
 	Modified script to include like/dislike/tired functionality; additional
-	addon settings;layout changes
+	addon settings; layout changes
 
  - htpc_guy
 	Skins
@@ -60,4 +65,8 @@ Credits: (as of 2014-01-01)
  - robweber
 	Several suggestions and code examples from his repo
 	repo: https://github.com/robweber/script.xbmc.pandorajson.git
-	
+
+ - Moka Project @ http://mokaproject.com
+	License: Creative Commons Attribution-ShareAlike 4.0 International
+	- [CC BY-SA 4.0] @ http://creativecommons.org/licenses/by-sa/4.0/legalcode
+	icon.png
