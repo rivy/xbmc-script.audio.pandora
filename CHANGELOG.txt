@@ -18,3 +18,4 @@
 2.1.2 upstream Pithos update, bugfix for URL matching to new Pandora CDN source
 2.2.0 Pandora ONE support; proxy bugfixes; added optional auto-playback & station sorting; re-enable scrobbling via HACK
 2.3.0 refactor into more official XBMC form; added GPL-3.0 license declaration and LICENSE.txt file
+2.3.1 Gotham compatibility update; updated credits/provider; minor UI updates; code refactoring/improvments; Default-NTSC skin bugfixes
