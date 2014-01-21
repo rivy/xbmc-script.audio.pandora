@@ -20,4 +20,13 @@
     <forum>http://forum.xbmc.org/showthread.php?tid=70471</forum>
     <source>https://github.com/rivy/xbmc-plugin.audio.pandora</source>
   </extension>
+  <!-- make plugin auto-updating without additional repository addon -->
+  <!-- URLref: http://wiki.xbmc.org/index.php?title=HOW-TO:Create_a_repository_for_add-ons#How_to_make_an_add-on_self-updating_without_distributing_a_repository_file -->
+  <!-- DISABLED: places the addon name into the repository list for addons; so, a repository addon is preferred (better UI & scaling)
+    <extension point="xbmc.addon.repository" name="RIVY XBMC Repository">
+      <info compressed="false">https://raw.github.com/rivy/xbmc-repository/master/addons.xml</info>
+      <checksum>https://raw.github.com/rivy/xbmc-repository/master/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.github.com/rivy/xbmc-repository/master/</datadir>
+    </extension>
+  -->
 </addon>
