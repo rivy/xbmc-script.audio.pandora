@@ -2,8 +2,7 @@
 1.0.1 Modified to work with new xbmc addon framework (jurmb84)
 1.1.0 Added like/dislike/tired functionality (smorloc)
 1.1.1 Layout changes; additional settings (smorloc)
-1.1.2 Added 'htpc guy's Android-like skin; create setting for same (htpc guy, smorloc)
-      Increased font size in staton list
+1.1.2 Added 'htpc guy's Android-like skin; create setting for same (htpc guy, smorloc); increased font size in staton list
 1.2.0 Integrate smoreloc & htpc_guy's changes. Fix? missing XML issues. Auto-fetch keys. 
 1.2.1 Open settings screen on first run. More debug info for key fetching.
 1.2.2 Pre-translate path on "darwin" systems (Fixes saveKey IOError on ATV2/OSX)
@@ -17,4 +16,6 @@
 1.2.10 bugfixes
 2.1.0 full transition to Pandora JSON API via Pithos
 2.1.2 upstream Pithos update, bugfix for URL matching to new Pandora CDN source
-2.2.0 proxy bugfixes; re-enable scrobbling; optional auto-playback & station sorting
+2.2.0 Pandora ONE support; proxy bugfixes; added optional auto-playback & station sorting; re-enable scrobbling via HACK
+2.3.0 refactor into more official XBMC form; added GPL-3.0 license declaration and LICENSE.txt file
+2.3.1 Gotham compatibility update; updated credits/provider; minor UI updates; code refactoring/improvments; Default-NTSC skin bugfixes

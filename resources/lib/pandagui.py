@@ -1,13 +1,25 @@
 import xbmc, xbmcgui
 
+import xbmcaddon
+
+_settings   = xbmcaddon.Addon()
+_name       = _settings.getAddonInfo('name')
+
+_NAME = _name.upper()
+
+# ToDO: DRY these IDs
+##
+# URLref: https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
 KEY_BUTTON_BACK = 275
 KEY_KEYBOARD_ESC = 61467
 
+# URLref: https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
 ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
 ACTION_NEXT_ITEM = 14
 ACTION_NAV_BACK = 92
 
+# skin control IDs
 BTN_THUMB_DN = 330
 BTN_THUMB_UP = 331
 BTN_PLAY_PAUSE = 332
@@ -20,6 +32,7 @@ BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
 STATION_LIST_ID = 200
+##
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
 
@@ -27,18 +40,20 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.panda = panda
 
 	def onInit(self):
-		print "PANDORA: Window Initalized!!!"
+		print _name+": Window Initalized!!!"
 		play_station_n = -1
 		last_station_id = self.panda.settings.getSetting('last_station_id')
 		auto_start = self.panda.settings.getSetting('auto_start')
 		self.list = self.getControl( STATION_LIST_ID )
 		dlg = xbmcgui.DialogProgress()
-		dlg.create( "PANDORA", "Fetching Stations" )
+		dlg.create( _NAME, "Fetching Stations" )
 		dlg.update( 0 )
 		stations = {}
 		station_names = []
 		for s in self.panda.getStations():
-			#print "station[%s] = %s, %s" % (s.name.encode('utf-8'), s.id.encode('utf-8'), s.isQuickMix)
+			s.name = s.name.encode('utf-8')
+			s.id = s.id.encode('utf-8')
+			#print _name+": station[%s] = %s, %s" % ( s.name, s.id, s.isQuickMix )
 			if s.isQuickMix:
 				s.name = "* [ "+s.name+" ]"
 			tmp = xbmcgui.ListItem(s.name)
@@ -52,7 +67,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			station_list.append( stations[name] )
 			if stations[name].getProperty('stationId') == last_station_id:
 				play_station_n = len(station_list) - 1
-			print "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
+			#print _name+": station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId'))
 		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
@@ -63,13 +78,13 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			logo.setPosition(-100, -100)
 
 		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
-			dlg.create( "PANDORA", "Now starting station: "+station_list[play_station_n].getLabel().encode('utf-8') )
+			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel() )
 			dlg.update( 0 )
 			self.list.selectItem( play_station_n )
 			self.setFocusId( STATION_LIST_ID )
-			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel(), station_list[play_station_n].getProperty('stationId'))
-			##print "START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel(), self.list.getSelectedItem().getProperty('stationId'))
-			print "START: station_id = %s" % last_station_id
+			##print _name+": START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel().encode('utf-8'), station_list[play_station_n].getProperty('stationId'))
+			##print _name+": START: station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId'))
+			print _name+": START: station_id = %s" % last_station_id
 			self.panda.playStation( last_station_id )
 			dlg.close
 
@@ -114,7 +129,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			elif controlID == BTN_TIRED:
 				#obj = self.getControl(BTN_TIRED)
 				#for attr in dir(obj):
-				#	print ">>> obj.%s = %s" % (attr, getattr(obj, attr))
+				#	print _name+": >>> obj.%s = %s" % (attr, getattr(obj, attr))
 				self.panda.addTiredSong()
 				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:

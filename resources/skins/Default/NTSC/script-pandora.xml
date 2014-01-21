@@ -1,8 +1,9 @@
 <window>
+	<useincludes>false</useincludes>
 	<defaultcontrol>20000</defaultcontrol>
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>
-	
+
 	<coordinates>
 		<system>1</system>
 		<posx>-10</posx>
@@ -35,8 +36,8 @@
 		<control type="group" id="2000">
 			<control type="group">
 				<visible>Skin.HasSetting(PandoraVis)</visible>
-				<animation effect="fade" pulse="true" time="3000" start="0" end="75" tween="sine" condition="true">Conditional</animation>
-				<control type="image">
+				<animation effect="fade" pulse="true" time="5000" start="0" end="75" tween="sine" condition="true">Conditional</animation>
+				<control type="image" id="100">
 					<posx>20</posx>
 					<posy>50</posy>
 					<width>50</width>
@@ -66,6 +67,18 @@
 					<texture>pandora-logo.png</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
+			<!--HTPC GUY Modifications-->
+					<!--Added Stations List Border-->
+				<control type="image">
+					<description>StationsListBorder</description>
+					<posx>70</posx>
+					<posy>128</posy>
+					<width>220</width>
+					<height>344</height>
+					<texture>pandora-stations-list.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+			<!--END HTPC GUY Modifications-->
 				<control type="group" id="3000">
 					<posx>75</posx>
 					<posy>150</posy>
@@ -87,7 +100,7 @@
 									<height>20</height>
 									<posx>0</posx>
 									<posy>0</posy>
-									<texture border="3">twc-input-nofocus.png</texture>
+									<!--texture border="3">twc-input-nofocus.png</texture-->
 								</control>
 								<control type="label">
 									<posx>5</posx>
@@ -96,8 +109,8 @@
 									<height>20</height>
 									<font>font10</font>
 									<aligny>center</aligny>
-									<textcolor>ff959494</textcolor><!-- main text color -->
-									<selectedcolor>ffffffff</selectedcolor>
+									<textcolor>DDFFFFFF</textcolor><!-- main text color -->
+									<selectedcolor>FFe2ff43</selectedcolor>
 									<align>left</align>
 									<info>ListItem.Label</info>
 								</control>
@@ -109,7 +122,7 @@
 									<posx>0</posx>
 									<posy>0</posy>
 									<visible>Control.HasFocus(200)</visible>
-									<texture border="3">twc-input-focus.png</texture>
+									<texture border="0">twc-input-focus.png</texture>
 								</control>
 								<control type="image">
 									<width>210</width>
@@ -117,7 +130,7 @@
 									<posx>0</posx>
 									<posy>0</posy>
 									<visible>!Control.HasFocus(200)</visible>
-									<texture border="3">twc-input-nofocus.png</texture>
+									<texture border="0">twc-input-nofocus.png</texture>
 								</control>
 								<control type="label">
 									<posx>5</posx>
@@ -126,8 +139,8 @@
 									<height>20</height>
 									<font>font10</font>
 									<aligny>center</aligny>
-									<textcolor>ffffffff</textcolor>
-									<selectedcolor>7fffffff</selectedcolor>
+									<textcolor>EEffffFF</textcolor>
+									<selectedcolor>FFe2ff43</selectedcolor>
 									<align>left</align>
 									<info>ListItem.Label</info>
 								</control>
@@ -148,6 +161,17 @@
 							<aspectratio>keep</aspectratio>
 							<texture background="true">$INFO[MusicPlayer.cover]</texture>
 						</control>
+						<!--Added Button Background Border-->
+						<control type="image">
+							<description>ButtonBackground</description>
+							<posx>0</posx>
+							<posy>115</posy>
+							<width>360</width>
+							<height>250</height>
+							<texture>pandora-buttons-bg.png</texture>
+							<aspectratio>keep</aspectratio>
+						</control>
+						<!--END Button Background Border-->
 						<control type="label" id="320">
 							<description>song title</description>
 							<posx>150</posx>
@@ -155,7 +179,7 @@
 							<width>220</width>
 							<height>30</height>
 							<font>font13</font>
-							<textcolor>ff959494</textcolor>
+							<textcolor>ffffffff</textcolor>
 							<align>left</align>
 							<info>MusicPlayer.Title</info>
 						</control>
@@ -166,7 +190,7 @@
 							<width>220</width>
 							<height>30</height>
 							<font>font13</font>
-							<textcolor>ff959494</textcolor>
+							<textcolor>ffffffff</textcolor>
 							<align>left</align>
 							<info>MusicPlayer.Artist</info>
 						</control>
@@ -177,9 +201,20 @@
 							<width>220</width>
 							<height>30</height>
 							<font>font13</font>
-							<textcolor>ff959494</textcolor>
+							<textcolor>ffffffff</textcolor>
 							<align>left</align>
 							<info>MusicPlayer.Album</info>
+						</control>
+						<control type="label" id="324">
+							<description>rating</description>
+							<posx>150</posx>
+							<posy>100</posy>
+							<width>220</width>
+							<height>30</height>
+							<font>font13</font>
+							<textcolor>ffffffff</textcolor>
+							<align>left</align>
+							<info>MusicPlayer.Rating</info>
 						</control>
 						<control type="progress">
 							<posx>30</posx>
@@ -191,6 +226,7 @@
 						<!--Control Buttons-->
 						<control type="button" id="330">
 							<description>thumbs down</description>
+							<visible>True</visible>
 							<posx>30</posx>
 							<posy>200</posy>
 							<height>50</height>
@@ -202,8 +238,23 @@
 							<texturefocus>pandora-thumb-down.png</texturefocus>
 							<texturenofocus>pandora-thumb-down-nofocus.png</texturenofocus>
 						</control>
+						<control type="button" id="337">
+							<description>thumbs down</description>
+							<visible>True</visible>
+							<posx>30</posx>
+							<posy>200</posy>
+							<height>50</height>
+							<width>50</width>
+							<onleft>330</onleft>
+							<onright>331</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-down-dislike.png</texturefocus>
+							<texturenofocus>pandora-thumb-down-nofocus-dislike.png</texturenofocus>
+						</control>
 						<control type="button" id="331">
 							<description>thumbs up</description>
+							<visible>True</visible>
 							<posx>92</posx>
 							<posy>200</posy>
 							<height>50</height>
@@ -215,6 +266,20 @@
 							<texturefocus>pandora-thumb-up.png</texturefocus>
 							<texturenofocus>pandora-thumb-up-nofocus.png</texturenofocus>
 						</control>
+						<control type="button" id="338">
+							<description>thumbs up</description>
+							<visible>True</visible>
+							<posx>92</posx>
+							<posy>200</posy>
+							<height>50</height>
+							<width>50</width>
+							<onleft>331</onleft>
+							<onright>332</onright>
+							<ondown>335</ondown>
+							<aspectratio>keep</aspectratio>
+							<texturefocus>pandora-thumb-up-like.png</texturefocus>
+							<texturenofocus>pandora-thumb-up-nofocus-like.png</texturenofocus>
+						</control>
 						<control type="togglebutton" id="332">
 							<description>play</description>
 							<posx>154</posx>
@@ -222,7 +287,7 @@
 							<height>50</height>
 							<width>50</width>
 							<label>-</label>
-							<onleft>331</onleft>
+							<onleft>338</onleft>
 							<onright>333</onright>
 							<ondown>335</ondown>
 							<aspectratio>keep</aspectratio>
@@ -240,14 +305,14 @@
 							<height>50</height>
 							<width>50</width>
 							<onleft>332</onleft>
-							<onright>334</onright>
+							<onright>336</onright>
 							<ondown>335</ondown>
 							<aspectratio>keep</aspectratio>
 							<texturefocus>pandora-skip.png</texturefocus>
 							<texturenofocus>pandora-skip-nofocus.png</texturenofocus>
 						</control>
-						<control type="button" id="334">
-							<description>info</description>
+						<control type="button" id="336">
+							<description>Tired</description>
 							<posx>278</posx>
 							<posy>200</posy>
 							<height>50</height>
@@ -255,8 +320,8 @@
 							<onleft>333</onleft>
 							<ondown>335</ondown>
 							<aspectratio>keep</aspectratio>
-							<texturefocus>pandora-info.png</texturefocus>
-							<texturenofocus>pandora-info-nofocus.png</texturenofocus>
+							<texturefocus>pandora-tired.png</texturefocus>
+							<texturenofocus>pandora-tired-nofocus.png</texturenofocus>
 						</control>
 						<control type="button" id="335">
 							<description>hide</description>
