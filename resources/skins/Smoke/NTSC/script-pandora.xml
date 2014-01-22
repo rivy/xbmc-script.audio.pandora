@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
 	<defaultcontrol>20000</defaultcontrol>
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>
-	
+
 	<coordinates>
 		<system>1</system>
 		<posx>-10</posx>
