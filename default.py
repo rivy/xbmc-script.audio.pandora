@@ -175,7 +175,7 @@ class Panda:
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
-			log( "Adding song %s" % song.title )
+			log( "Adding song '%s'" % song.title )
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
@@ -196,7 +196,7 @@ class Panda:
 			if self.settings.getSetting( "scrobble_hack" ) == "true":
 				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
 				info["duration"] = duration
-			log( "item info = %s" % info )
+			log( "item info = %s" % info, xbmc.LOGDEBUG )
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
 

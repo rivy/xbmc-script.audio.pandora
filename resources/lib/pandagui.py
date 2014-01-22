@@ -62,7 +62,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		for s in self.panda.getStations():
 			s.name = s.name.encode('utf-8')
 			s.id = s.id.encode('utf-8')
-			#log( "station[%s] = %s, %s" % ( s.name, s.id, s.isQuickMix ), xbmc.LOGDEBUG )
+			log( "station[%s]( id, isQuickMix ) = ( %s, %s )" % ( s.name, s.id, s.isQuickMix ), xbmc.LOGDEBUG )
 			if s.isQuickMix:
 				s.name = "* [ "+s.name+" ]"
 			tmp = xbmcgui.ListItem(s.name)
@@ -76,7 +76,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			station_list.append( stations[name] )
 			if stations[name].getProperty('stationId') == last_station_id:
 				play_station_n = len(station_list) - 1
-			#log( "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId')), xbmc.LOGDEBUG )
+			log( "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId')), xbmc.LOGDEBUG )
 		self.list.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
