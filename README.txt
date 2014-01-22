@@ -20,8 +20,8 @@ Further Information:
 
 XBMC Listing @ http://wiki.xbmc.org/index.php?title=Add-on:Pandora
 Forum Discussion @ http://forum.xbmc.org/showthread.php?tid=70471
-Repository @ https://github.com/rivy/xbmc-pandora
-Issues @ https://github.com/rivy/xbmc-pandora/issues
+Repository @ https://github.com/rivy/xbmc-script.audio.pandora
+Issues @ https://github.com/rivy/xbmc-script.audio.pandora/issues
 
 Credits: (as of 2014-01-01)
 

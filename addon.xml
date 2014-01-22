@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.audio.pandora"
+<addon id="script.audio.pandora"
        name="Pandora"
        version="2.3.2"
        provider-name="rivy">
@@ -19,7 +19,7 @@
     <website></website>
     <email></email>
     <forum>http://forum.xbmc.org/showthread.php?tid=70471</forum>
-    <source>https://github.com/rivy/xbmc-plugin.audio.pandora</source>
+    <source>https://github.com/rivy/xbmc-script.audio.pandora</source>
     <disclaimer></disclaimer>
   </extension>
   <!-- make plugin auto-updating without additional repository addon -->
