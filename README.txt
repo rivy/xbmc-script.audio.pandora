@@ -41,7 +41,8 @@ Credits: (as of 2014-01-01)
  - Pithos Project @ http://pithos.github.io
 	A Pandora Radio Client; Copyright (c) Kevin Mehall
 	License: Creative Commons Attribution-ShareAlike 3.0 United States
-	- [CC BY-SA 3.0 US] @ http://creativecommons.org/licenses/by-sa/3.0/us/legalcode
+	- [CC:BY-SA 3.0 US]
+	- @ http://creativecommons.org/licenses/by-sa/3.0/us/legalcode
 	Contains the Pandora JSON API client implementation for access to Pandora
 	repo: https://github.com/pithos/pithos
 
@@ -70,7 +71,6 @@ Credits: (as of 2014-01-01)
 
  - Moka Project @ http://mokaproject.com
 	License: Creative Commons Attribution-ShareAlike 4.0 International
-	- [CC BY-SA 4.0] @ http://creativecommons.org/licenses/by-sa/4.0/legalcode
-	icon.png
-	License: Creative Commons Attribution-ShareAlike 4.0 International [CC BY-SA 4.0] @ http://creativecommons.org/licenses/by-sa/4.0/legalcode
+	- [CC:BY-SA 4.0]
+	- @ http://creativecommons.org/licenses/by-sa/4.0/legalcode
 	icon.png
