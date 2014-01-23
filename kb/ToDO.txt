@@ -13,3 +13,7 @@
 	- ! Pandora ONE == mediumQuality+ only -- missing 'lowQuality' in u'audioUrlMap'
 	- injected debug code into pithos/pandora/pandora.py @ Song.__init__()
 		log( "pithos.pandora: song = %s" % d )
+
+* ? create a new plugin to supply audio to the default player
+	- rename this script "Pandora Player"?, then plugin == "Pandora"
+	- deal with two part ID issue for _name
