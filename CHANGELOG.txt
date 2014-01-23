@@ -1,3 +1,4 @@
+2.3.3
 2.3.2 incorporate XBMC recommendations; RC for XBMC Official Add-on Repository
 2.3.1 Gotham compatibility update; updated credits/provider; minor UI updates; code refactoring/improvments; Default-NTSC skin bugfixes
 2.3.0 refactor into more official XBMC form; added GPL-3.0 license declaration and LICENSE.txt file
