@@ -1,10 +1,17 @@
-import xbmc
 from threading import Timer
-
+import xbmc
 import xbmcaddon
+import os, sys
 
 _settings   = xbmcaddon.Addon()
 _name       = _settings.getAddonInfo('name')
+_version    = _settings.getAddonInfo('version')
+_path       = xbmc.translatePath( _settings.getAddonInfo('path') ).decode('utf-8')
+_lib        = xbmc.translatePath( os.path.join( _path, 'resources', 'lib' ) )
+
+sys.path.append (_lib)
+
+from utils import *
 
 _NAME = _name.upper()
 
@@ -17,8 +24,8 @@ class PandaPlayer( xbmc.Player ):
 		self.playNextSong_delay = 0.5
 
 	def playSong( self, item ):
-		print _name+": playSong: item[url] %s" % item[0]
-		print _name+": playSong: item[item] %s" % item[1]
+		log( "playSong: item[url] %s" % item[0], xbmc.LOGDEBUG )
+		log( "playSong: item[item] %s" % item[1], xbmc.LOGDEBUG )
 		self.play( item[0], item[1] )
 
 	def play( self, url, item ):
@@ -31,7 +38,7 @@ class PandaPlayer( xbmc.Player ):
 		# ToDO: discuss with the XBMC Team what the solution to this problem would be
 
 	def onPlayBackStarted( self ):
-		print _name+": onPlayBackStarted: %s" %self.getPlayingFile()
+		log( "onPlayBackStarted: %s" %self.getPlayingFile(), xbmc.LOGDEBUG )
 		if self.panda.playing:
 			# ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			if not "pandora.com" in self.getPlayingFile():
@@ -43,9 +50,9 @@ class PandaPlayer( xbmc.Player ):
 				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
 
 	def onPlayBackEnded( self ):
-		print _name+": onPlayBackEnded"
+		log( "onPlayBackEnded", xbmc.LOGDEBUG )
 		self.stop()
-		print _name+": playing = %s" %self.panda.playing
+		log( "playing = %s" %self.panda.playing, xbmc.LOGDEBUG )
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.skip:
@@ -55,9 +62,9 @@ class PandaPlayer( xbmc.Player ):
 			self.timer.start()
 
 	def onPlayBackStopped( self ):
-		print _name+": onPlayBackStopped"
+		log( "onPlayBackStopped", xbmc.LOGDEBUG )
 		self.stop()
-		print _name+": playing = %s" %self.panda.playing
+		log( "playing = %s" %self.panda.playing, xbmc.LOGDEBUG )
 		if self.timer and self.timer.isAlive():
 			self.timer.cancel()
 		if self.panda.playing and self.panda.skip:

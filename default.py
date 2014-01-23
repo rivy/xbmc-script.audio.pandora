@@ -19,8 +19,10 @@ sys.path.append (_lib)
 
 _NAME = _name.upper()
 
-print _name+": Initializing v%s" % _version
-print _name+": sys.platform = %s" % sys.platform
+from utils import *
+
+log( "Initializing v%s" % _version )
+log( "sys.platform = %s" % sys.platform )
 
 dlg = xbmcgui.DialogProgress()
 dlg.create( _NAME, "Loading Script..." )
@@ -33,7 +35,7 @@ from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 if _settings.getSetting( "firstrun" ) != "false":
-	print _name+": First run... showing settings dialog"
+	log( "First run... showing settings dialog" )
 	_settings.openSettings()
 	_settings.setSetting( "firstrun", "false" )
 
@@ -96,7 +98,7 @@ class Panda:
 
 		#Proxy settings
 		if self.settings.getSetting( "proxy_enable" ) == "true":
-			print _name+": Proxy Enabled"
+			log( "Proxy Enabled" )
 			proxy_info = {
 				"host" : self.settings.getSetting( "proxy_server" ),
 				"port" : self.settings.getSetting( "proxy_port" ),
@@ -166,14 +168,14 @@ class Panda:
 		return self.pandora.stations
 
 	def getMoreSongs( self ):
-		print _name+": getting more songs"
+		log( "getting more songs" )
 		if self.curStation == "":
 			raise PandaException()
 		items = []
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
-			print _name+": Adding song %s" % song.title
+			log( "Adding song '%s'" % song.title )
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
@@ -194,7 +196,7 @@ class Panda:
 			if self.settings.getSetting( "scrobble_hack" ) == "true":
 				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
 				info["duration"] = duration
-			print _name+": item info = %s" % info
+			log( "item info = %s" % info, xbmc.LOGDEBUG )
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
 
@@ -227,7 +229,7 @@ class Panda:
 				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
 				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
 			else:
-				print _name+": !!!! Unrecognised rating"
+				log( "!!!! Unrecognised rating", xbmc.LOGWARNING )
 		except IndexError:
 			self.curSong = None
 			self.getMoreSongs()

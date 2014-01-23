@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
 	<resolution>720p</resolution>
 	<useincludes>false</useincludes>
 	<defaultcontrol>20000</defaultcontrol>
 	<allowoverlay>false</allowoverlay>
 	<type>dialog</type>
-	
+
 	<coordinates>
 		<system>1</system>
 		<posx>0</posx>
@@ -78,7 +79,7 @@
 					<height>535</height>
 					<texture>pandora-stations-list.png</texture>
 					<aspectratio>keep</aspectratio>
-				</control>					
+				</control>
 			<!--END HTPC GUY Modifications-->
 				<control type="group" id="3000">
 					<posx>75</posx>
