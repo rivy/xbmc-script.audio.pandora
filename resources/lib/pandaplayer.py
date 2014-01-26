@@ -40,13 +40,13 @@ class PandaPlayer( xbmc.Player ):
 	def onPlayBackStarted( self ):
 		log( "onPlayBackStarted: %s" %self.getPlayingFile(), xbmc.LOGDEBUG )
 		if self.panda.playing:
-			# ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
-			if not "pandora.com" in self.getPlayingFile():
-				if not "p-cdn.com" in self.getPlayingFile():
-					self.panda.playing = False
-					self.panda.quit()
-			else:
-				# show visualization (disappears after each song...)
+			### ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
+			##if not "pandora.com" in self.getPlayingFile():
+			##	if not "p-cdn.com" in self.getPlayingFile():
+			##		self.panda.playing = False
+			##		self.panda.quit()
+			##else:
+				# show visualization (o/w disappears when song is started...)
 				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
 
 	def onPlayBackEnded( self ):
