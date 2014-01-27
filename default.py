@@ -45,8 +45,10 @@ from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 if _settings.getSetting( "firstrun" ) != "false":
-	log.notice( "First run... showing settings dialog" )
-	_settings.openSettings()
+	if _settings.getSetting( "username" ) == "" \
+		or _settings.getSetting( "password" ) == "":
+		log.notice( "First run... showing settings dialog" )
+		_settings.openSettings()
 	_settings.setSetting( "firstrun", "false" )
 
 ## ToDO: DRY these IDs
@@ -294,8 +296,8 @@ class Panda:
 if __name__ == '__main__':
 	if _settings.getSetting( "username" ) == "" or \
 		_settings.getSetting( "password" ) == "":
-		xbmcgui.Dialog().ok( __name__, \
-			"Username and/or password not specified" )
+		xbmcgui.Dialog().ok( _NAME, \
+			"Required username and/or password not specified" )
 		_settings.setSetting( "firstrun", "true" )
 	else:
 		panda = Panda()
