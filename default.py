@@ -21,8 +21,18 @@ _NAME = _name.upper()
 
 from utils import *
 
-log( "Initializing v%s" % _version )
-log( "sys.platform = %s" % sys.platform )
+log.notice( "Initializing (v%s)" % _version )
+log.info( "sys.platform = %s" % sys.platform )
+log.info( "python / sys.version = %s.%s.%s" % sys.version_info[:3] )
+
+# override logging for pithos submodules
+# URLref: [Good logging practice in Python] http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python @@http://archive.is/OzHMF @@ http://webcitation.org/6Mvjh4WEz
+# URLref: [Deleting python loggers] http://grokbase.com/t/python/python-list/11bw1zxwnd/proper-way-to-delete-kill-a-logger @@ http://archive.is/4Zkmv @@ http://webcitation.org/6Mvj3fDUS
+logging.root.handlers = [] 	# PORT: not documented in 'logging' module, ? future portability issue
+handler = XBMCLogHandler()
+handler.setFormatter( logging.Formatter('{%(module)s [%(lineno)d]}: %(message)s' ) )
+handler.setLevel( logging.DEBUG )
+logging.root.addHandler( handler )
 
 dlg = xbmcgui.DialogProgress()
 dlg.create( _NAME, "Loading Script..." )
@@ -35,7 +45,7 @@ from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 if _settings.getSetting( "firstrun" ) != "false":
-	log( "First run... showing settings dialog" )
+	log.notice( "First run... showing settings dialog" )
 	_settings.openSettings()
 	_settings.setSetting( "firstrun", "false" )
 
@@ -98,7 +108,7 @@ class Panda:
 
 		#Proxy settings
 		if self.settings.getSetting( "proxy_enable" ) == "true":
-			log( "Proxy Enabled" )
+			log.notice( "Proxy Enabled" )
 			proxy_info = {
 				"host" : self.settings.getSetting( "proxy_server" ),
 				"port" : self.settings.getSetting( "proxy_port" ),
@@ -168,14 +178,14 @@ class Panda:
 		return self.pandora.stations
 
 	def getMoreSongs( self ):
-		log( "getting more songs" )
+		log.info( "getting more songs" )
 		if self.curStation == "":
 			raise PandaException()
 		items = []
 		station = self.pandora.get_station_by_id(self.curStation);
 		songs = station.get_playlist()
 		for song in songs:
-			log( "Adding song '%s'" % song.title )
+			log.notice( "Adding song '%s'" % song.title )
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
@@ -196,7 +206,7 @@ class Panda:
 			if self.settings.getSetting( "scrobble_hack" ) == "true":
 				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
 				info["duration"] = duration
-			log( "item info = %s" % info, xbmc.LOGDEBUG )
+			log.debug( "item info = %s" % info )
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
 
@@ -229,7 +239,7 @@ class Panda:
 				self.gui.getControl(BTN_THUMB_UP).setVisible(False)
 				self.gui.getControl(BTN_THUMBED_UP).setVisible(True)
 			else:
-				log( "!!!! Unrecognised rating", xbmc.LOGWARNING )
+				log.warning( "!!!! Unrecognised rating" )
 		except IndexError:
 			self.curSong = None
 			self.getMoreSongs()
