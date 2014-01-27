@@ -73,6 +73,6 @@ class PandaPlayer( xbmc.Player ):
 			self.timer.start()
 		else:
 			if xbmc.getCondVisibility('Skin.HasSetting(PandoraVis)'):
-				# turn off visualization
+				# show UI
 				xbmc.executebuiltin('Skin.Reset(PandoraVis)')
 			self.panda.stop()
