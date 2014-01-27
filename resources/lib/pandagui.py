@@ -6,11 +6,6 @@ import os, sys
 
 _settings   = xbmcaddon.Addon()
 _name       = _settings.getAddonInfo('name')
-_version    = _settings.getAddonInfo('version')
-_path       = xbmc.translatePath( _settings.getAddonInfo('path') ).decode('utf-8')
-_lib        = xbmc.translatePath( os.path.join( _path, 'resources', 'lib' ) )
-
-sys.path.append (_lib)
 
 from utils import *
 
