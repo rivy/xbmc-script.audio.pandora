@@ -17,11 +17,29 @@ from utils import *
 
 class PandaPlayer( xbmc.Player ):
 
+	class ScreensaverExitMonitor( xbmc.Monitor ):
+		# URLref: [script.screensaver.test] https://github.com/dersphere/script.screensaver.test/blob/master/default.py
+		##def __init__(self, exit_callback):
+		##    self.exit_callback = exit_callback
+		def __init__ ( self ):
+			pass
+
+		def onScreensaverDeactivated(self):
+			##print '3 ExitMonitor: sending exit_callback'
+			##self.exit_callback()
+			# show UI
+			xbmc.executebuiltin('Skin.Reset(PandoraVis)')
+
+	##def do_exitScreensaver(self):
+	##    print '4 Screensaver: Exit requested'
+	##    self.close()
+
 	def __init__( self, core=None, panda=None ):
 		xbmc.Player.__init__( self )
 		self.panda = panda
 		self.timer = None
 		self.playNextSong_delay = 0.5
+		self.monitor = self.ScreensaverExitMonitor()
 
 	def playSong( self, item ):
 		log.debug( "playSong: item[url] %s" % item[0] )
@@ -40,6 +58,7 @@ class PandaPlayer( xbmc.Player ):
 	def onPlayBackStarted( self ):
 		log.debug( "onPlayBackStarted: %s" %self.getPlayingFile() )
 		if self.panda.playing:
+			pass
 			### ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			##if not "pandora.com" in self.getPlayingFile():
 			##	if not "p-cdn.com" in self.getPlayingFile():
@@ -47,7 +66,8 @@ class PandaPlayer( xbmc.Player ):
 			##		self.panda.quit()
 			##else:
 				# show visualization (o/w disappears when song is started...)
-				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+				##xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+				##xbmc.executebuiltin( "ActivateWindow( 12900 )" )
 
 	def onPlayBackEnded( self ):
 		log.debug( "onPlayBackEnded" )

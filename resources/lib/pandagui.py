@@ -49,7 +49,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.panda = panda
 
 	def onInit(self):
-		log( "UI: Window initalized" )
+		log( "Initializing UI" )
 		play_station_n = -1
 		last_station_id = self.panda.settings.getSetting('last_station_id')
 		auto_start = self.panda.settings.getSetting('auto_start')
@@ -86,11 +86,13 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		if self.panda.settings.getSetting( "logo" ) == "false":
 			logo.setPosition(-100, -100)
 
+		if ( play_station_n >= 0 ):
+			self.list.selectItem( play_station_n )
+			self.setFocusId( STATION_LIST_ID )
+
 		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
 			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel() )
 			dlg.update( 0 )
-			self.list.selectItem( play_station_n )
-			self.setFocusId( STATION_LIST_ID )
 			log( "Initiating station stream (station_id = %s)" % last_station_id )
 			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel().encode('utf-8'), station_list[play_station_n].getProperty('stationId')) )
 			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId')) )
@@ -104,6 +106,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK, \
                            ACTION_PARENT_DIR ) ):
 			if xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' ):
+				# show UI
 				xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
 				#xbmc.executebuiltin( "SetProperty(HidePlayer,False)" )
 			else:
@@ -143,6 +146,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:
 				pass #Handled by skin
+				#xbmc.executebuiltin( "ActivateWindow( 12006 )" ) 	# show visualization
+				xbmc.executebuiltin( "ActivateWindow( 12900 )" )	# show screensaver
 
 	def onFocus(self, controlID):
 		pass

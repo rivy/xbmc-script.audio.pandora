@@ -25,6 +25,11 @@ log.notice( "Initializing (v%s)" % _version )
 log.info( "sys.platform = %s" % sys.platform )
 log.info( "python / sys.version = %s.%s.%s" % sys.version_info[:3] )
 
+dlg = xbmcgui.DialogProgress()
+dlg.create( _NAME, "Loading..." )
+dlg.update( 0 )
+
+# ToDO: move this into main() or class
 # override logging for pithos submodules
 # URLref: [Good logging practice in Python] http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python @@http://archive.is/OzHMF @@ http://webcitation.org/6Mvjh4WEz
 # URLref: [Deleting python loggers] http://grokbase.com/t/python/python-list/11bw1zxwnd/proper-way-to-delete-kill-a-logger @@ http://archive.is/4Zkmv @@ http://webcitation.org/6Mvj3fDUS
@@ -34,18 +39,14 @@ handler.setFormatter( logging.Formatter('{%(module)s [%(lineno)d]}: %(message)s'
 handler.setLevel( logging.DEBUG )
 logging.root.addHandler( handler )
 
-dlg = xbmcgui.DialogProgress()
-dlg.create( _NAME, "Loading Script..." )
-dlg.update( 0 )
-
 from pithos.pandora.pandora import Pandora, PandoraError
 import pithos.pandora.data
 
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
-## ToDO: check for user info already being set and skip if so
 if _settings.getSetting( "firstrun" ) != "false":
+	## ToDO: check for user info already being set and skip if so
 	log.notice( "First run... showing settings dialog" )
 	_settings.openSettings()
 	_settings.setSetting( "firstrun", "false" )
