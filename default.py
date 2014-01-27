@@ -44,6 +44,7 @@ import pithos.pandora.data
 from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
+## ToDO: check for user info already being set and skip if so
 if _settings.getSetting( "firstrun" ) != "false":
 	log.notice( "First run... showing settings dialog" )
 	_settings.openSettings()
