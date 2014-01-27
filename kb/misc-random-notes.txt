@@ -1,0 +1,40 @@
+* interesting blog about XBMC programming
+	http://xbmcstuff.bossanova808.net
+
+[ Detect screensaver status ]
+http://forum.xbmc.org/showthread.php?tid=136130
+	Get TimeOut setting
+		screensavertime = xbmc.executehttpapi( "GetGUISetting(0;screensaver.time)" ).replace( "<li>", "" )
+	xbmc.getCondVisibility("System.ScreenSaverActive")
+
+[ Detect Frodo vs Gotham ... ]
+http://forum.xbmc.org/showthread.php?tid=179495
+	Vers = xbmc.getInfoLabel('System.BuildVersion')
+	xbmcaddon.Addon('xbmc.addon').getAddonInfo('version') 
+	xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }') 
+
+[ Frodo vs Gotham detection in skin XML ]
+use Skin.String(str)?
+use Skin.SetString(isFrodo, "true/false") during init .or. Skin.SetBool(isFrodo)
+http://wiki.xbmc.org/?title=XBMC_Skinning_Manual
+http://wiki.xbmc.org/index.php?title=List_of_Boolean_Conditions
+	* look at current usage of PadoraVis setting
+
+[ disable screensaver for script run time ]
+http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=8&ved=0CH8QFjAH&url=http%3A%2F%2Fforum.xbmc.org%2Fshowthread.php%3Ftid%3D98408&ei=PsPmUv7NG-mQyAG_64HYCw&usg=AFQjCNGM-xjQZzHc1pvtpim4AS0_vTjhHw&sig2=uY-FqmQ0cBxNS6305-v6zw&bvm=bv.59930103,d.aWc
+	you can use executehttpapi to do this..
+	first you might want to get what it your current screen saver:
+		screensaver = xbmc.executehttpapi( "GetGUISetting(3;screensaver.mode)" ).replace( "<li>", "" )
+	
+	then to turn off:
+		xbmc.executehttpapi( "SetGUISetting(3,screensaver.mode,None)" )
+	
+	to turn back on:
+		xbmc.executehttpapi( "SetGUISetting(3,screensaver.mode,%s)" % screensaver )
+		
+[ detect screensaver started ... ]
+http://forum.xbmc.org/showthread.php?tid=174621
+
+====
+
+http://superrepo.org/get-started/add-the-super-repo-directory-as-source
