@@ -28,6 +28,7 @@ log.info( "python / sys.version = %s.%s.%s" % sys.version_info[:3] )
 # override logging for pithos submodules
 # URLref: [Good logging practice in Python] http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python @@http://archive.is/OzHMF @@ http://webcitation.org/6Mvjh4WEz
 # URLref: [Deleting python loggers] http://grokbase.com/t/python/python-list/11bw1zxwnd/proper-way-to-delete-kill-a-logger @@ http://archive.is/4Zkmv @@ http://webcitation.org/6Mvj3fDUS
+log.debug( "Setup logging for submodules" )
 logging.root.handlers = [] 	# PORT: not documented in 'logging' module, ? future portability issue
 handler = XBMCLogHandler()
 handler.setFormatter( logging.Formatter('{%(module)s [%(lineno)d]}: %(message)s' ) )
@@ -45,6 +46,7 @@ from pandagui import PandaGUI
 from pandaplayer import PandaPlayer
 
 if _settings.getSetting( "firstrun" ) != "false":
+	log.debug( "First run setup" )
 	if _settings.getSetting( "username" ) == "" \
 		or _settings.getSetting( "password" ) == "":
 		log.notice( "First run... showing settings dialog" )
@@ -64,8 +66,10 @@ BTN_THUMBED_UP = 338
 import urllib2
 class My_Pandora( Pandora ):
 	def __init__( self ):
+		log.debug( "My_Pandora.__init__()" )
 		Pandora.__init__( self )
 		self.set_proxy(None)
+		log.debug( "My_Pandora.__init__() :: end" )
 
 	def set_proxy(self, proxy):
 		if proxy:
@@ -86,6 +90,7 @@ class PandaException( Exception ):
 class Panda:
 
 	def __init__( self ):
+		log.debug( "Panda.__init__()" )
 		self.gui = None
 		self.pandora = None
 		self.playlist = []
@@ -141,6 +146,7 @@ class Panda:
 		self.gui = PandaGUI( "script-pandora.xml", _path, self.skinName )
 
 		self.gui.setPanda( self )
+		log.debug( "Pandora.__init__() :: end" )
 
 	def auth( self ):
 		user = self.settings.getSetting( "username" )
@@ -213,8 +219,10 @@ class Panda:
 			items.append( ( song.audioUrl, item, song ) )
 
 		self.playlist.extend( items )
+		log.debug( "Panda.getMoreSongs() :: end" )
 
 	def playNextSong( self ):
+		log.debug( "Panda.playNextSong()" )
 		if not self.playing:
 			raise PandaException()
 		try:
@@ -249,6 +257,7 @@ class Panda:
 		if len( self.playlist ) == 0:
 			#Out of songs, grab some more while playing
 			self.getMoreSongs()
+		log.debug( "Panda.playNextSong() :: end" )
 
 	def skipSong( self ):
 		self.skip = True
@@ -265,33 +274,41 @@ class Panda:
 		musicId = self.curSong[2].set_tired();
 
 	def main( self ):
+		log.debug( "Panda.main()" )
 		if self.die:
 			return
 		self.gui.doModal()
 		self.cleanup()
 		xbmc.sleep( 500 ) #Wait to make sure everything finishes
+		log.debug( "Panda.main() :: end" )
 
 	def stop( self ):
+		log.debug( "Panda.stop()" )
 		self.playing = False
 		if self.player and self.player.timer\
 				and self.player.timer.isAlive():
 			self.player.timer.stop()
+		log.debug( "Panda.stop() :: end" )
 
 	def cleanup( self ):
+		log.debug( "Panda.cleanup()" )
 		self.skip = False
 		if self.playing:
 			self.playing = False
 			self.player.stop()
 		del self.gui
 		del self.player
+		log.debug( "Panda.cleanup() :: end" )
 
 	def quit( self ):
+		log.debug( "Panda.quit()" )
 		if self.player and self.player.timer\
 				and self.player.timer.isAlive():
 			self.player.timer.stop()
 		if self.gui != None:
 			self.gui.close()
 		self.die = True
+		log.debug( "Panda.quit() :: end" )
 
 if __name__ == '__main__':
 	if _settings.getSetting( "username" ) == "" or \

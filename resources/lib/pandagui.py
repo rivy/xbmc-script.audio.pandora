@@ -44,7 +44,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		self.panda = panda
 
 	def onInit(self):
-		log( "UI: Window initalized" )
+		log.debug( "PandaGUI.onInit()" )
 		play_station_n = -1
 		last_station_id = self.panda.settings.getSetting('last_station_id')
 		auto_start = self.panda.settings.getSetting('auto_start')
@@ -91,9 +91,12 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId')) )
 			self.panda.playStation( last_station_id )
 			dlg.close
+		log( "UI: Window initalized" )
+		log.debug( "PandaGUI.onInit() :: end" )
 
 
 	def onAction(self, action):
+		log.debug( "PandaGUI.onAction( %s )" % action )
 		buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK, \
@@ -105,8 +108,10 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.panda.quit()
 		elif (actionID == ACTION_NEXT_ITEM ):
 			self.panda.skipSong()
+		log.debug( "PandaGUI.onAction() :: end" )
 
 	def onClick(self, controlID):
+		log.debug( "PandaGUI.onClick( %s )" % controlID )
 		if (controlID == STATION_LIST_ID): # station list control
 			selItem = self.list.getSelectedItem()
 			self.panda.playStation( selItem.getProperty("stationId") )
@@ -138,6 +143,7 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:
 				pass #Handled by skin
+		log.debug( "PandaGUI.onClick() :: end" )
 
 	def onFocus(self, controlID):
 		pass

@@ -8,17 +8,22 @@ from utils import *
 class PandaPlayer( xbmc.Player ):
 
 	def __init__( self, core=None, panda=None ):
+		log.debug( "PandaPlayer.__init__( CORE, PANDA )" )
 		xbmc.Player.__init__( self )
 		self.panda = panda
 		self.timer = None
 		self.playNextSong_delay = 0.5
+		log.debug( "PandaPlayer.__init__ :: end" )
 
 	def playSong( self, item ):
-		log.debug( "playSong: item[url] %s" % item[0] )
-		log.debug( "playSong: item[item] %s" % item[1] )
+		log.debug( "PandaPlayer.playSong()" )
+		log.debug( "PandaPlayer.playSong: item[url] %s" % item[0] )
+		log.debug( "PandaPlayer.playSong: item[item] %s" % item[1] )
 		self.play( item[0], item[1] )
+		log.debug( "PandaPlayer.playSong() :: end" )
 
 	def play( self, url, item ):
+		log.debug( "PandaPlayer.play( '%s', '%s' )" % ( url, item ) )
 		# override play() to force use of PLAYER_CORE_MPLAYER
 		xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( url, item )
 
@@ -26,9 +31,10 @@ class PandaPlayer( xbmc.Player ):
 		#   ... unfortunately, using "xbmc.Player([core]) is deprecated [ see URLref: http://forum.xbmc.org/showthread.php?tid=173887&pid=1516662#pid1516662 ]
 		#   ... and it may be removed from Gotham [ see URLref: https://github.com/xbmc/xbmc/pull/1427 ]
 		# ToDO: discuss with the XBMC Team what the solution to this problem would be
+		log.debug( "PandaPlayer.play() :: end" )
 
 	def onPlayBackStarted( self ):
-		log.debug( "onPlayBackStarted: %s" %self.getPlayingFile() )
+		log.debug( "PandaPlayer.onPlayBackStarted: %s" %self.getPlayingFile() )
 		if self.panda.playing:
 			### ToDO: ? remove checks for pandora.com / p-cdn.com (are they needed? could be a maintainence headache if the cdn changes...)
 			##if not "pandora.com" in self.getPlayingFile():
@@ -38,9 +44,10 @@ class PandaPlayer( xbmc.Player ):
 			##else:
 				# show visualization (o/w disappears when song is started...)
 				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+		log.debug( "PandaPlayer.onPlayBackStarted :: end" )
 
 	def onPlayBackEnded( self ):
-		log.debug( "onPlayBackEnded" )
+		log.debug( "PandaPlayer.onPlayBackEnded()" )
 		self.stop()
 		log.debug( "playing = %s" %self.panda.playing )
 		if self.timer and self.timer.isAlive():
@@ -50,9 +57,10 @@ class PandaPlayer( xbmc.Player ):
 		if self.panda.playing:
 			self.timer = Timer( self.playNextSong_delay, self.panda.playNextSong )
 			self.timer.start()
+		log.debug( "PandaPlayer.onPlayBackEnded() :: end" )
 
 	def onPlayBackStopped( self ):
-		log.debug( "onPlayBackStopped" )
+		log.debug( "PandaPlayer.onPlayBackStopped()" )
 		self.stop()
 		log.debug( "playing = %s" %self.panda.playing )
 		if self.timer and self.timer.isAlive():
@@ -66,3 +74,4 @@ class PandaPlayer( xbmc.Player ):
 				# show UI
 				xbmc.executebuiltin('Skin.Reset(PandoraVis)')
 			self.panda.stop()
+		log.debug( "PandaPlayer.onPlayBackStopped() :: end" )
