@@ -43,7 +43,8 @@ class PandaPlayer( xbmc.Player ):
 			##		self.panda.quit()
 			##else:
 				# show visualization (o/w disappears when song is started...)
-				xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+				##xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+			pass
 		log.debug( "PandaPlayer.onPlayBackStarted :: end" )
 
 	def onPlayBackEnded( self ):

@@ -13,15 +13,6 @@
 	</coordinates>
 
 	<controls>
-		<control type="image">
-			<description>Black background to hide menu flashes between songs</description>
-			<visible>!Window.IsVisible(Visualisation)</visible>
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>1280</width>
-			<height>720</height>
-			<texture>pandora-1px-black.png</texture>
-		</control>
 		<control type="button" id="20000">
 			<description>dummy button to set initial view</description>
 			<posx>0</posx>
@@ -337,7 +328,7 @@
 							<aspectratio>keep</aspectratio>
 							<texturefocus>pandora-hide.png</texturefocus>
 							<texturenofocus>pandora-hide-nofocus.png</texturenofocus>
-							<onclick>Skin.SetBool(PandoraVis)</onclick>
+							<onclick>XBMC.ActivateScreensaver</onclick>
 						</control>
 					</control>
 				</control>

@@ -11,7 +11,7 @@ from utils import *
 
 _NAME = _name.upper()
 
-# ToDO: DRY these IDs
+# ToDO: DRY these IDs into constants.py
 ##
 # URLref: https://github.com/xbmc/xbmc/blob/master/xbmc/guilib/Key.h
 KEY_BUTTON_BACK = 275
@@ -35,10 +35,16 @@ BTN_TIRED = 336
 BTN_THUMBED_DN = 337
 BTN_THUMBED_UP = 338
 
-STATION_LIST_ID = 200
+PANDORA_LOGO_ID = 100
+STATION_LISTBOX_ID = 200
 ##
 
 class PandaGUI(xbmcgui.WindowXMLDialog):
+
+	# bind_onAction ( actionID, f( self, action ) )
+	# bind_onClick ( controlID, f( self ) )
+	# mapControlClick ( controlID ): try return self.onControlClick_fmap[ controlID ] except return None
+	# mapAction ( actionID ): try return self.onAction_fmap[ controlID ] except return None
 
 	def setPanda( self, panda ):
 		self.panda = panda
@@ -48,7 +54,12 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 		play_station_n = -1
 		last_station_id = self.panda.settings.getSetting('last_station_id')
 		auto_start = self.panda.settings.getSetting('auto_start')
-		self.list = self.getControl( STATION_LIST_ID )
+
+		self.onControlClick_fmap = {};		# controlID => f( self )
+		self.onControlFocus_fmap = {};		# controlID => f( self )
+		self.onAction_fmap = {}; 			# actionID => f( self, action )
+
+		self.station_listbox = self.getControl( STATION_LISTBOX_ID )
 		dlg = xbmcgui.DialogProgress()
 		dlg.create( _NAME, "Fetching Stations" )
 		dlg.update( 0 )
@@ -72,32 +83,31 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 			if stations[name].getProperty('stationId') == last_station_id:
 				play_station_n = len(station_list) - 1
 			log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( len(station_list)-1, station_list[len(station_list)-1].getLabel(), station_list[len(station_list)-1].getProperty('stationId')) )
-		self.list.addItems( station_list )
+		self.station_listbox.addItems( station_list )
 		dlg.close()
 		self.getControl(BTN_THUMBED_DN).setVisible(False)
 		self.getControl(BTN_THUMBED_UP).setVisible(False)
 
-		logo = self.getControl(100)
+		logo = self.getControl( PANDORA_LOGO_ID )
 		if self.panda.settings.getSetting( "logo" ) == "false":
 			logo.setPosition(-100, -100)
 
 		if ( auto_start == "true" ) & ( play_station_n >= 0 ):
 			dlg.create( _NAME, "Now starting station: "+station_list[play_station_n].getLabel() )
 			dlg.update( 0 )
-			self.list.selectItem( play_station_n )
-			self.setFocusId( STATION_LIST_ID )
+			self.station_listbox.selectItem( play_station_n )
+			self.setFocusId( STATION_LISTBOX_ID )
 			log( "Initiating station stream (station_id = %s)" % last_station_id )
 			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, station_list[play_station_n].getLabel().encode('utf-8'), station_list[play_station_n].getProperty('stationId')) )
-			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.list.getSelectedItem().getLabel().encode('utf-8'), self.list.getSelectedItem().getProperty('stationId')) )
+			##log.debug( "station_list[%s]{name, id} = {%s, %s}" % ( play_station_n, self.station_listbox.getSelectedItem().getLabel().encode('utf-8'), self.station_list.getSelectedItem().getProperty('stationId')) )
 			self.panda.playStation( last_station_id )
 			dlg.close
 		log( "UI: Window initalized" )
 		log.debug( "PandaGUI.onInit() :: end" )
 
-
 	def onAction(self, action):
-		log.debug( "PandaGUI.onAction( %s )" % action )
-		buttonCode =  action.getButtonCode()
+		log.debug( "PandaGUI.onAction( %s )" % action.getId() )
+		##buttonCode =  action.getButtonCode()
 		actionID   =  action.getId()
 		if ( actionID in ( ACTION_PREVIOUS_MENU, ACTION_NAV_BACK, \
                            ACTION_PARENT_DIR ) ):
@@ -112,8 +122,8 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 
 	def onClick(self, controlID):
 		log.debug( "PandaGUI.onClick( %s )" % controlID )
-		if (controlID == STATION_LIST_ID): # station list control
-			selItem = self.list.getSelectedItem()
+		if (controlID == STATION_LISTBOX_ID): # station list control
+			selItem = self.station_list.getSelectedItem()
 			self.panda.playStation( selItem.getProperty("stationId") )
 		elif self.panda.playing:
 			if controlID == BTN_THUMB_DN:
@@ -143,7 +153,64 @@ class PandaGUI(xbmcgui.WindowXMLDialog):
 				self.panda.playNextSong()
 			elif controlID == BTN_HIDE:
 				pass #Handled by skin
+				self.hideUI()
 		log.debug( "PandaGUI.onClick() :: end" )
 
 	def onFocus(self, controlID):
 		pass
+
+	def showUI ( self ):
+		xbmc.executebuiltin( 'Skin.Reset(PandoraVis)' )
+
+	def hideUI ( self ):
+		log( "PandaGUI.hideUI()" )
+		xbmc.executebuiltin( "Skin.SetBool(PandoraVis)" )
+		bg_visuals = ( 'none', 'visualizer', 'screensaver')[ int(self.panda.settings.getSetting( "bg_visuals" )) ]
+		if ( bg_visuals == 'visualizer' ):
+			log( "PandaGUI.hideUI(): activate 'Audio Visualizer'" )
+			#xbmc.executebuiltin( "ActivateWindow( visualiser )" )
+			##xbmc.executebuiltin( "ActivateWindow( 12006 )" )
+		if ( bg_visuals == 'screensaver' ):
+			log( "PandaGUI.hideUI(): activate 'Screensaver'" )
+			xbmc.executebuiltin( "ActivateScreensaver" )
+
+	def isVisibleUI ( self ):
+		return xbmc.getCondVisibility( 'Skin.HasSetting(PandoraVis)' )
+
+	def do_Quit ( self ):
+		self.panda.quit()
+
+	def do_NavigateBack ( self ):
+		if not self.isVisibleUI:
+			self.showUI()
+		else:
+			self.do_Quit()
+
+	def do_NextSong ( self ):
+		self.panda.skipSong()
+
+	def do_station_list_PageNext ( self ):
+		do_station_list_Next ( self, step=10 )
+
+	def do_station_list_PagePrev ( self ):
+		do_station_list_Prev ( self, step=10 )
+
+	def do_station_list_Next ( self, step=1 ):
+		l = self.station_list.size()
+		if ( l > 0 ):
+			n = self.station_list.getSelectedPosition() + step
+			if ( n >= l ):
+				n = l - 1
+			self.station_list.selectItem( n )
+
+	def do_station_list_Prev ( self, step=1 ):
+		l = self.station_list.size()
+		if ( l > 0 ):
+			n = self.station_list.getSelectedPosition() - step
+			if ( n < 0 ):
+				n = 0
+			self.station_list.selectItem( n )
+
+	def do_station_list_Select ( self ):
+		selItem = self.station_list.getSelectedItem()
+		self.panda.playStation( selItem.getProperty("stationId") )

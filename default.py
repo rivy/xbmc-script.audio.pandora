@@ -25,18 +25,18 @@ log.notice( "Initializing (v%s)" % _version )
 log.info( "sys.platform = %s" % sys.platform )
 log.info( "python / sys.version = %s.%s.%s" % sys.version_info[:3] )
 
-# override logging for pithos submodules
+# override logging for submodules using standard python logging
 # URLref: [Good logging practice in Python] http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python @@http://archive.is/OzHMF @@ http://webcitation.org/6Mvjh4WEz
 # URLref: [Deleting python loggers] http://grokbase.com/t/python/python-list/11bw1zxwnd/proper-way-to-delete-kill-a-logger @@ http://archive.is/4Zkmv @@ http://webcitation.org/6Mvj3fDUS
 log.debug( "Setup logging for submodules" )
-logging.root.handlers = [] 	# PORT: not documented in 'logging' module, ? future portability issue
+logging.root.handlers = [] 	# PORT: not documented in 'logging' module; issue in future versions?
 handler = XBMCLogHandler()
 handler.setFormatter( logging.Formatter('{%(module)s [%(lineno)d]}: %(message)s' ) )
 handler.setLevel( logging.DEBUG )
 logging.root.addHandler( handler )
 
 dlg = xbmcgui.DialogProgress()
-dlg.create( _NAME, "Loading Script..." )
+dlg.create( _NAME, "Loading Pandora Player..." )
 dlg.update( 0 )
 
 from pithos.pandora.pandora import Pandora, PandoraError

@@ -29,3 +29,24 @@
 		http://wiki.xbmc.org/index.php?title=HOW-TO:Create_a_repository_for_add-ons
 		http://wiki.xbmc.org/?title=Unofficial_add-on_repositories
 		http://wiki.xbmc.org/index.php?title=Add-on_repositories
+
+****
+
+* SpotiMC @ https://github.com/mazkolain/spotimc
+	* excellent working example similar to Pandora
+	* multi-threaded with background playlist manager
+	* some ideas on logging
+
+How to write an XBMC Addon @ http://t0mm0.github.io/xbmc-urlresolver/tutorials/addon.html
+	* explains a URL resolver plugin
+
+Testing examples
+	see ShoutCast @ https://github.com/dersphere/plugin.audio.shoutcast/blob/master/resources/lib/api.py
+	? The Big Picture screensaver @ https://github.com/dersphere/script.image.bigpictures
+
+xbmcswift2 @ http://www.xbmcswift.com
+	* example usage: (see http://www.xbmcswift.com/en/latest/poweredby.html)
+		RadioDE @ https://github.com/dersphere/plugin.audio.radio_de / http://wiki.xbmc.org/index.php?title=Add-on:Radio
+		WIMP Video @ https://github.com/dersphere/plugin.video.wimp
+		ShoutCast @ https://github.com/dersphere/plugin.audio.shoutcast
+	
