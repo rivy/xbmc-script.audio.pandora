@@ -1,3 +1,4 @@
+* review python coding style & practice ( see http://www.python.org/dev/peps/pep-0008 )
 
 * refactor ratings code out from Panda.playNextSong()
 	- rating a song kicks the focus back to the station list ... should that be changed / fixed?

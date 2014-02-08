@@ -29,3 +29,8 @@
 		http://wiki.xbmc.org/index.php?title=HOW-TO:Create_a_repository_for_add-ons
 		http://wiki.xbmc.org/?title=Unofficial_add-on_repositories
 		http://wiki.xbmc.org/index.php?title=Add-on_repositories
+
+* Review coding practices / threading in XBMCswift @ http://www.xbmcswift.com (by jbeluch)
+	- https://github.com/dersphere/plugin.audio.shoutcast
+	- https://github.com/jbeluch/xbmc-academic-earth
+	- https://github.com/dersphere/plugin.video.wimp
