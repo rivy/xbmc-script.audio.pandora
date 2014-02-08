@@ -1,3 +1,4 @@
+# (emacs/sublime) -*- mode: python; tab-width: 4; -st-draw_white_space: 'all'; -*-
 import xbmc
 import xbmcaddon
 import os, sys
