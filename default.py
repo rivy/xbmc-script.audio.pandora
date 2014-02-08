@@ -317,6 +317,11 @@ if __name__ == '__main__':
 			"Required username and/or password not specified" )
 		_settings.setSetting( "firstrun", "true" )
 	else:
-		panda = Panda()
-		dlg.close()
-		panda.main()
+		try:
+			panda = Panda()
+			dlg.close()
+			panda.main()
+		except Exception as e:
+			log.error( "Unhandled exception: %s" % e )
+		except BaseException as e:
+			log.error( "Unexpected exit: %s" % e )
