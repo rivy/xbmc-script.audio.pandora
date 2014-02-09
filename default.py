@@ -195,10 +195,13 @@ class Panda:
 		songs = station.get_playlist()
 		for song in songs:
 			log.notice( "Adding song '%s'" % song.title )
+			log.info( "Downloading artwork ( for '%s')" % song.title )
 			thumbnailArtwork = self.settings.getSetting( "thumbnailArtwork" )
 			thumbnail = song.artRadio
 
+			log.debug( "Creating XBMC ListItem ( for '%s')" % song.title )
 			item = xbmcgui.ListItem( song.title )
+			log.debug( "Settings item properties ( for '%s')" % song.title )
 			item.setIconImage( thumbnail )
 			item.setThumbnailImage( thumbnail )
 			item.setProperty( "Cover", thumbnail )
@@ -215,10 +218,11 @@ class Panda:
 			if self.settings.getSetting( "scrobble_hack" ) == "true":
 				duration = 60 * ( int(self.settings.getSetting( "scrobble_hack_time" )) + 1 )
 				info["duration"] = duration
-			log.debug( "item info = %s" % info )
+			log.debug( "'%s' info = %s" % (song.title, info) )
 			item.setInfo( "music", info )
 			items.append( ( song.audioUrl, item, song ) )
 
+		log.info( "Extending playlist (with '%s')" % song.title )
 		self.playlist.extend( items )
 		log.debug( "Panda.getMoreSongs() :: end" )
 
